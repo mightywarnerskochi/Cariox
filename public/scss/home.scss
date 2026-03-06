@@ -1,0 +1,25 @@
+// Helpers
+@import "../scss/helpers/variables";
+@import "../scss/helpers/media-queries";
+@import "../scss/helpers/mixins";
+@import "../scss/helpers/font-kit";
+
+
+//Layout
+@import "../scss/layout/reset";
+@import "../scss/layout/header";
+@import "../scss/layout/footer";
+@import "../scss/layout/offcanvas-menu";
+// Components
+@import "../scss/pages/modal";
+
+//pages
+@import "../scss/pages/home";
+@import "../scss/pages/modal";
+
+@import "../scss/components/floatingbutton";
+@import "../scss/components/animations";
+
+// Base 
+
+@import "../scss/base/font-settings";

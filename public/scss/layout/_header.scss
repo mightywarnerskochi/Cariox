@@ -1,0 +1,202 @@
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding-top: 10px;
+    @include  min(576){padding-top: 15px;}
+    @include  min(768){padding-top: 18px;}
+    @include  min(992){padding-top: 20px;}
+    @include  min(1200){padding-top: 22px;}
+    @include  min(1350){padding-top: 26px;}
+    @include  min(1440){padding-top: 28px;}
+    @include  min(1600){padding-top: 30px;}
+    @include  min(1900){padding-top: 35px;}
+
+    .container-ctn {
+        .d-flex {
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    nav {
+        background: $brandGradient;
+        border-radius: 80px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 3px;
+        @include min(768){padding: 4px;}
+        @include min(992){padding: 5px;}
+        @include min(1200){padding: 6px;}
+        @include min(1350){padding: 7px;}
+        @include min(1440){padding: 8px;}
+        @include min(1600){padding: 9px;}
+        @include min(1900){padding: 10px;}
+  
+
+        ul {
+            display: flex;
+            align-items: center;
+
+
+            li {
+                position: relative;
+
+                a {
+                    color: $white;
+                    text-decoration: none;
+                    display: flex;
+                    align-items: center;
+                    transition: all 0.3s ease;
+                    gap: 5px;
+                    padding: 3px 8px;
+                    @include  min(992){padding: 4px 6px;}
+                    @include  min(1200){padding: 5px 7px;}
+                    @include  min(1350){padding: 5.5px 12px;}
+                    @include  min(1440){padding: 6px 13px;}
+                    @include  min(1600){padding: 7px 14px;}
+                    @include  min(1900){padding: 8px 15px;}
+                    
+                    svg {
+                        transition: transform 0.3s ease;
+                    }
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+                &.active,
+                &:hover {
+                    >a {
+                        background: #F04149;
+                        border-radius: 80px;
+
+                        svg {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+
+                &:hover {
+                    .dropdown-submenu {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translateY(0);
+                    }
+                }
+
+                .dropdown-submenu {
+                    position: absolute;
+                    top: calc(100% + 15px);
+                    left: 0;
+                    background: $white;
+                    min-width: 200px;
+                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                    border-radius: 15px;
+                    padding: 10px 0;
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateY(15px);
+                    transition: all 0.3s ease;
+                    z-index: 100;
+                    display: block;
+
+                    li {
+                        padding: 0;
+
+                        a {
+                            color: $black;
+                            background: transparent !important;
+                            padding: 10px 20px;
+                            border-radius: 0;
+                            font-size: 14px;
+                            display: block;
+
+                            &:hover {
+                                background: rgba($brandRed, 0.05) !important;
+                                color: $brandRed;
+                                padding-left: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.mobDropDown {
+    position: relative;
+    // &:hover{
+    //  .dropdown-menu{
+    //   display: block;
+    //   transition: 0.5s ease all;
+    //  }
+    // }
+
+    button {
+        background: unset;
+
+        &:focus-visible {
+            border: unset;
+            overflow: unset;
+        }
+
+        svg {
+            height: auto;
+            width: clamp(15px, 1.3vw, 24px);
+            transform: rotate(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        &.show {
+            svg {
+                transition: transform 0.5s ease;
+                transform: rotate(180deg);
+            }
+
+        }
+    }
+
+    .dropdown-menu {
+        position: unset !important;
+        transform: translate(0) !important;
+        border: unset;
+        padding-top: 15px;
+        padding-left: 15px;
+
+        background: unset;
+
+
+        li {
+
+
+            &:hover {
+                background: $white;
+
+                a {
+                    color: $black;
+
+                }
+            }
+
+        }
+    }
+}
+
+
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

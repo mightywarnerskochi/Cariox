@@ -1,0 +1,54 @@
+// Theme Variables
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --heading-color: #000000;
+    --surface-color: #f5f5f5;
+    --border-color: #e5e5e5;
+    --primary-color: #000000;
+    --accent-color: #4B535D;
+    --brand-gradient: linear-gradient(90deg, #FEB109 0%, #F14448 52.4%, #5B47C9 100%);
+    --brand-yellow: #FEB109;
+    --brand-red: #F14448;
+    --brand-purple: #5B47C9;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0a0a0a;
+    --text-color: #e0e0e0;
+    --heading-color: #ffffff;
+    --surface-color: #1a1a1a;
+    --border-color: #333333;
+    --primary-color: #ffffff;
+    --accent-color: #a0a0a0;
+}
+
+// Colors
+
+
+$greyBg: #EFEFEF !default;
+$subHeadingColor: #584DCA;
+$subHeadingBg: rgba(87, 81, 205, 0.10);
+$headingColor: #1E1E1E;
+$white: #fff !default;
+$black: #000;
+$red: #F1582C;
+$yellow: #E2FF06 !default;
+$accentColor: #4F5762 !default;
+
+// Brand Gradient Colors
+$brandYellow: #FEB109;
+$brandRed: #F14448;
+$brandPurple: #5B47C9;
+$brandGradient: linear-gradient(90deg, $brandYellow 0%, $brandRed 52.4%, $brandPurple 100%);
+
+// Shadows
+
+// Alert Colors
+$success: #28a745 !default;
+$info: #17a2b8 !default;
+$warning: #ffc107 !default;
+$danger: #dc3545 !default;
+
+// Typography
+$primary-font: "Rubik", sans-serif;

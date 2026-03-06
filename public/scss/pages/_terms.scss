@@ -1,0 +1,69 @@
+.policy {
+  @extend .commonPadding-120;
+
+  >svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    height: auto;
+    width: clamp(80px, 20.833vw, 247.692px);
+  }
+
+  ~.footer-cta {
+    display: none;
+  }
+
+  ol,
+  ul {
+    li {
+      color: $black;
+      font-size: clamp(16px, 1.1vw, 20px);
+      line-height: 1.6;
+    }
+  }
+
+  ol {
+    counter-reset: policy-counter;
+
+    li {
+      list-style: none;
+      counter-increment: policy-counter;
+
+      h3::before {
+        content: counter(policy-counter) ". ";
+        margin-right: 5px;
+      }
+
+      ul,
+      ol {
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  h3 {
+    color: $black;
+    font-weight: 700;
+    font-size: clamp(15px, 1.5vw, 18px);
+    margin-bottom: clamp(10px, 1vw, 12px);
+    display: inline-block;
+
+  }
+
+  p+h3,
+  li+li {
+    margin-top: clamp(20px, 2vw, 38px);
+  }
+}
+
+.inner-banner {
+  .title {
+    font-size: clamp(30px, 4vw, 60px);
+    font-weight: 700;
+    margin-top: 20px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+}

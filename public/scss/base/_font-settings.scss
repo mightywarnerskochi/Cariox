@@ -1,0 +1,160 @@
+h1,
+.h1,
+h2,
+.h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height:  100% ;
+  font-weight: 500;
+}
+
+h2 span,
+h1 span {}
+
+h1,
+.h1,
+h1 span {
+
+    font-size: 40px;
+
+    @include min(768) {
+      font-size: 56px;
+    }
+
+    @include min(992) {
+      font-size: 64px;
+    }
+
+    @include min(1200) {
+      font-size: 72px;
+    }
+
+    @include min(1360) {
+      font-size: 80px;
+    }
+
+    @include min(1440) {
+      font-size: 88px;
+    }
+
+    @include min(1900) {
+      font-size: 96px;
+    
+  }
+
+}
+
+h2,
+.h2,
+h2 span,
+.h2 span,
+h2 strong {
+  font-weight: 700;
+
+  font-size: 30px;
+
+  @include min(768) {
+    font-size: 33px;
+  }
+
+  @include min(992) {
+    font-size: 36px;
+  }
+
+  @include min(1200) {
+    font-size: 39px;
+  }
+
+  @include min(1360) {
+    font-size: 42px;
+  }
+
+  @include min(1440) {
+    font-size: 45px;
+  }
+
+  @include min(1900) {
+    font-size: 48px;
+  }
+}
+
+h3,
+.h3,
+.h3 strong {
+  font-size: 15px;
+
+  @include min(1200) {
+    font-size: 16px;
+  }
+
+  @include min(1350) {
+    font-size: 17px;
+  }
+
+  @include min(1440) {
+    font-size: 18px;
+  }
+
+  @include min(1600) {
+    font-size: 19px;
+  }
+
+  @include min(1900) {
+    font-size: 20px;
+  }
+}
+
+h4,
+.h4,
+.h4 strong {
+  font-size: 12px;
+
+
+
+}
+
+
+h5,
+.h5,
+.h5 strong {
+
+  font-size: 12px;
+
+  @include min(768) {
+    font-size: 13px;
+  }
+
+  @include min(992) {
+    font-size: 12px;
+  }
+
+  @include min(1200) {
+    font-size: 13px;
+
+  }
+
+  @include min(1350) {
+    font-size: 14px;
+
+  }
+
+  @include min(1440) {
+    font-size: 15px;
+  }
+
+  @include min(1600) {
+    font-size: 16px;
+  }
+
+  @include min(1900) {
+    font-size: 18px;
+  }
+
+
+}
+
+p {
+  margin-bottom: 0;
+}

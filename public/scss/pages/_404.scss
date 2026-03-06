@@ -1,0 +1,279 @@
+.not-found {
+    >svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        height: auto;
+        width: clamp(80px, 20.833vw, 247.692px);
+    }
+
+    padding-top: clamp(80px, 7.97vw, 153px);
+    padding-bottom: clamp(80px, 7.97vw, 120px);
+
+
+    .container-short {
+
+        img,
+        svg {
+
+            margin-bottom: clamp(10px, 1.407vw, 27px);
+            width: 70.726%;
+            // margin-top: -100px;
+            height: fit-content;
+            // height: 300px;
+
+            // @include min(576) {
+            //     height: 340px;
+            // }
+
+            @include min(768) {
+                width: 44.666%;
+
+            }
+
+            // @include min(768) {
+            //     height: 520px;
+            // }
+
+            // @include min(992) {
+            //     height: 590px;
+            // }
+
+            @include min(1200) {
+                margin-top: -80px;
+            }
+
+            // @include min(1440) {
+            //     height: 684px;
+            // }
+
+            // @include min(1600) {
+            //     height: 820px;
+            // }
+        }
+    }
+
+    span {
+        line-height: normal;
+        font-weight: 400;
+        font-size: 22px;
+
+        @include min(768) {
+            font-size: 24px;
+        }
+
+        @include min(992) {
+            font-size: 28px;
+        }
+
+        @include min(1200) {
+            font-size: 30px;
+        }
+
+        @include min(1280) {
+            font-size: 32px;
+        }
+
+        @include min(1440) {
+            font-size: 34px;
+        }
+    }
+
+    p {
+        color: #3E444A;
+
+        line-height: 111.111%;
+        //  width: 32.218%;
+        width: 80%;
+        font-size: 18px;
+
+
+        @include min(768) {
+            width: clamp(498px, 32.084vw, 616px);
+
+        }
+
+
+    }
+
+    h1 {
+        color: $black;
+        line-height: 100%;
+        font-weight: 700;
+        @extend .h-21;
+
+        @include max(575) {
+            margin-bottom: 20px;
+        }
+
+
+    }
+
+    .buttonwrapper {
+        margin-top: clamp(18px, 1.98vw, 38px);
+        gap: clamp(11px, 1.1vw, 21px);
+
+        a+a {
+            border: 1px solid #000;
+
+            &:hover {
+                border: 1px solid #7a7a7a;
+            }
+        }
+    }
+
+    ~.footer-cta {
+        display: none;
+    }
+}
+
+
+
+
+
+// =================Thank you=========================
+section.thank-you {
+
+    padding-top: clamp(80px, 7.97vw, 153px);
+    padding-bottom: clamp(80px, 7.97vw, 120px);
+
+    >svg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        height: auto;
+        width: clamp(80px, 20.833vw, 247.692px);
+    }
+
+    ~.footer-cta {
+        display: none;
+    }
+
+    h1 {
+        font-weight: 700;
+        margin-bottom: clamp(8px, 0.94vw, 18px);
+
+    }
+
+
+    picture {
+        margin-bottom: clamp(10px, 2.11vw, 40.5px);
+        width: 65%;
+        margin-left: auto;
+        margin-right: auto;
+
+        @include min(768) {
+            width: 21.429%;
+
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+
+    p {
+        color: #3E444A;
+        line-height: 160%;
+
+        margin-bottom: clamp(10px, 2.1vw, 36px);
+    }
+
+}
+
+@keyframes tailWag {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    35% {
+        transform: rotate(-4deg);
+    }
+
+    85% {
+        transform: rotate(6deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.cat-tail {
+    transform-box: view-box;
+    transform-origin: 504px 515px;
+    animation: tailWag 5s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+@keyframes eyebrowRaise {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+.eybrow-left,
+.eybrow-right {
+    animation: eyebrowRaise 3s infinite ease-in-out;
+}
+
+.eybrow-right {
+    animation-delay: 0.2s;
+}
+
+@keyframes whiskerTwitchLeft {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-3deg);
+    }
+}
+
+@keyframes whiskerTwitchRight {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+.moustache-left-top,
+.moustache-left-bottom {
+    transform-box: fill-box;
+    transform-origin: right center;
+    /* Pivot from the face */
+    animation: whiskerTwitchLeft 1s infinite ease-in-out;
+}
+
+.moustache-right-top,
+.moustache-right-bottom {
+    transform-box: fill-box;
+    transform-origin: left center;
+    /* Pivot from the face */
+    animation: whiskerTwitchRight 1s infinite ease-in-out;
+}
+
+.moustache-left-top {
+    animation-delay: 0.1s;
+}
+
+.moustache-right-top {
+    animation-delay: 0.3s;
+}
