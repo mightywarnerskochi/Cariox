@@ -973,10 +973,10 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     ],
   })
-  $(".photos-slider").slick({
+  $(".brand-slider").slick({
     slidesToShow: 6,
     slidesToScroll: 1,
-    dots: true,
+    dots: false,
     arrows: false,
     speed: 1000,
     autoplay: true,
@@ -1008,27 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   if (document.querySelector('.testimonialSwiper')) {
-    new Swiper('.testimonialSwiper', {
-      slidesPerView: 1,
-      spaceBetween: 30,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next-custom',
-        prevEl: '.swiper-button-prev-custom',
-      },
-      breakpoints: {
-        768: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        }
-      }
-    });
+
 
     // Initialize Star Rating
     $(".my-rating-readonly, .jq-stars").each(function () {
@@ -1075,4 +1055,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  if (document.querySelector('.products-slider')) {
+    $('.products-slider .slider-wrapper').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      infinite: true,
+      dots: true,
+      arrows: false,
+      variableWidth: true,
+      responsive: [
+
+      ]
+
+    });
+  }
+
 });
+
+
+/* ============================================================
+   4. Equal Height Utility
+============================================================ */
+
+const setEqualHeightFor = (selector) => {
+  const items = document.querySelectorAll(selector);
+  if (!items.length) return;
+
+  let max = 0;
+  items.forEach((el) => {
+    el.style.height = "auto";
+    if (el.offsetHeight > max) max = el.offsetHeight;
+  });
+  items.forEach((el) => {
+    el.style.height = `${max}px`;
+  });
+};
+
+const equalHeightTargets = [
+  ".products-slider .card-content .text",
+  // ".review-card",
+];
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    equalHeightTargets.forEach(setEqualHeightFor);
+  }, 300);
+});
+
+window.addEventListener("resize", () => {
+  equalHeightTargets.forEach(setEqualHeightFor);
+});
+

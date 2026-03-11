@@ -6,8 +6,7 @@ h3,
 h4,
 h5,
 h6 {
-  line-height:  100% ;
-  font-weight: 500;
+  line-height: 100%;
 }
 
 h2 span,
@@ -17,31 +16,31 @@ h1,
 .h1,
 h1 span {
 
-    font-size: 40px;
+  font-size: 40px;
 
-    @include min(768) {
-      font-size: 56px;
-    }
+  @include min(768) {
+    font-size: 56px;
+  }
 
-    @include min(992) {
-      font-size: 64px;
-    }
+  @include min(992) {
+    font-size: 64px;
+  }
 
-    @include min(1200) {
-      font-size: 72px;
-    }
+  @include min(1200) {
+    font-size: 72px;
+  }
 
-    @include min(1360) {
-      font-size: 80px;
-    }
+  @include min(1360) {
+    font-size: 80px;
+  }
 
-    @include min(1440) {
-      font-size: 88px;
-    }
+  @include min(1440) {
+    font-size: 88px;
+  }
 
-    @include min(1900) {
-      font-size: 96px;
-    
+  @include min(1900) {
+    font-size: 96px;
+
   }
 
 }
@@ -51,7 +50,7 @@ h2,
 h2 span,
 .h2 span,
 h2 strong {
-  font-weight: 700;
+  font-weight: 500;
 
   font-size: 30px;
 

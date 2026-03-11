@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-weight: 400;
   font-family: $primary-font;
+  line-height: 160%;
   font-size: 15px;
 
 
@@ -49,7 +50,7 @@ body {
   }
 
   @include min(1200) {
-    max-width: 87.187%;
+    max-width: 87.8662%;
   }
 }
 
@@ -1084,13 +1085,34 @@ input[type=number] {
   text-decoration: none;
   transition: all 0.3s ease;
   padding: 8px 15px;
-  @include min(768){padding: 9px 17px;}
-  @include min(992){padding: 10px 18px;}
-  @include min(1200){padding: 11px 16px;}
-  @include min(1350){padding: 12px 20px;}
-  @include min(1440){padding: 13px 21px;}
-  @include min(1600){padding: 14px 23px;}
-  @include min(1900){  padding: 16px 25px;}
+
+  @include min(768) {
+    padding: 9px 17px;
+  }
+
+  @include min(992) {
+    padding: 10px 18px;
+  }
+
+  @include min(1200) {
+    padding: 11px 16px;
+  }
+
+  @include min(1350) {
+    padding: 12px 20px;
+  }
+
+  @include min(1440) {
+    padding: 13px 21px;
+  }
+
+  @include min(1600) {
+    padding: 14px 23px;
+  }
+
+  @include min(1900) {
+    padding: 16px 25px;
+  }
 
   &:hover {
     background: linear-gradient($black, $black) padding-box, $brandGradient border-box;
@@ -1280,7 +1302,7 @@ input[type=number] {
   color: #fff;
   line-height: normal;
 
-  padding: 17px 24px;
+  padding: 15px 24px;
   border-radius: 80px;
   display: inline-block;
   font-weight: 500;
@@ -1321,6 +1343,6 @@ input[type=number] {
     border-radius: 80px;
     margin-bottom: 16px;
     font-size: 16px;
-    padding: 8px 26px;
+    padding: 8px 14.5px;
   }
 }
