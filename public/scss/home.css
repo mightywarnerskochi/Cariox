@@ -3395,7 +3395,7 @@ footer li {
   margin: 0 4px;
 }
 .featured-products .products-slider-wrapper .slick-dots li button {
-  width: clamp(15px, 1vw, 38px);
+  width: clamp(15px, 3.7vw, 104px);
   height: 8px;
   border-radius: 4px;
   background: #E4E8ED;
@@ -3411,7 +3411,6 @@ footer li {
 }
 .featured-products .products-slider-wrapper .slick-dots li.slick-active button {
   background: #5E47C6;
-  width: clamp(40px, 3.7vw, 104px);
 }
 
 .products-slider-wrapper {
