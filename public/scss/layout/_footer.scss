@@ -429,3 +429,267 @@ footer {
         }
     }
 }
+
+// Footer Cariox - Light gray design variant (exact UI match)
+.footer-cariox {
+    background: #F0F0F0;
+    padding: 0;
+
+    @include max(991) {
+        padding-bottom: 0;
+    }
+
+    a,
+    p,
+    li {
+        color: #4A4A4A;
+    }
+
+    .footer-cariox-main {
+        padding: clamp(40px, 5vw, 80px) 0 clamp(30px, 4vw, 60px);
+        background: #FFFFFF;
+    }
+
+    .footer-cariox-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(30px, 4vw, 50px);
+
+        @include min(768) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @include min(992) {
+            grid-template-columns: 1.2fr 1fr 1.2fr 1fr 1fr 1fr;
+        }
+    }
+
+    .footer-cariox-about {
+        @include min(992) {
+            grid-column: span 1;
+        }
+
+        picture img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        p {
+            font-size: clamp(13px, 0.9vw, 15px);
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+    }
+
+    .footer-cariox-menu,
+    .footer-cariox-quicklinks {
+        span {
+            font-weight: 600;
+            font-size: clamp(14px, 1vw, 16px);
+            color: #2D2D2D;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: clamp(13px, 0.85vw, 14px);
+                    text-decoration: none;
+                    transition: color 0.2s ease;
+
+                    &::before {
+                        content: '>';
+                        color: #4A4A4A;
+                        font-size: 12px;
+                    }
+
+                    &:hover {
+                        color: #5E47C6;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-cariox-contact {
+        span {
+            font-weight: 600;
+            font-size: clamp(14px, 1vw, 16px);
+            color: #2D2D2D;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .contact-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: clamp(12px, 0.8vw, 14px);
+
+            img {
+                flex-shrink: 0;
+                margin-top: 2px;
+                opacity: 0.7;
+            }
+
+            p,
+            a {
+                margin: 0;
+                line-height: 1.5;
+            }
+
+            a {
+                text-decoration: none;
+
+                &:hover {
+                    color: #5E47C6;
+                }
+            }
+        }
+    }
+
+    .footer-cariox-social-newsletter {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 25px;
+        margin-top: clamp(30px, 4vw, 50px);
+        padding-top: clamp(25px, 3vw, 40px);
+        border-top: 1px solid #E8E8E8;
+
+        @include max(767) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    .footer-cariox-social {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        gap: clamp(15px, 2vw, 25px);
+
+        img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        a:hover img {
+            opacity: 0.85;
+        }
+    }
+
+    .footer-cariox-newsletter {
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: #2D2D2D;
+            margin-bottom: 10px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            max-width: 340px;
+
+            input {
+                flex: 1;
+                border: 1px solid #D0D0D0;
+                border-right: none;
+                border-radius: 8px 0 0 8px;
+                background: #FFFFFF;
+                padding: 12px 16px;
+                font-size: 14px;
+                color: #4A4A4A;
+
+                &::placeholder {
+                    color: #A0A0A0;
+                }
+            }
+
+            button {
+                background: #FFFFFF;
+                border: 1px solid #4A4A4A;
+                border-radius: 0 8px 8px 0;
+                padding: 10px 14px;
+                cursor: pointer;
+                color: #4A4A4A;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .footer-cariox-copyright {
+        background: #E8E8E8;
+        padding: 15px 0;
+
+        .container-ctn {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        p {
+            font-size: 13px;
+            margin: 0;
+            color: #6B6B6B;
+
+            a {
+                color: #6B6B6B;
+                text-decoration: none;
+
+                &:hover {
+                    color: #5E47C6;
+                }
+            }
+        }
+
+        .footer-cariox-policy {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+            gap: 0;
+
+            li {
+                &:not(:last-child)::after {
+                    content: ' | ';
+                    margin-left: 10px;
+                    color: #8C94A6;
+                    font-weight: normal;
+                }
+            }
+
+            a {
+                font-size: 13px;
+                color: #6B6B6B;
+                text-decoration: none;
+
+                &:hover {
+                    color: #5E47C6;
+                }
+            }
+        }
+    }
+}

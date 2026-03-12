@@ -3258,9 +3258,11 @@ footer li {
 .featured-products .products-slider-wrapper .product-card .brand-logo {
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 .featured-products .products-slider-wrapper .product-card .brand-logo img {
-  max-width: 60px;
+  max-width: clamp(60px, 5.59vw, 95px);
   height: auto;
   -o-object-fit: contain;
      object-fit: contain;
