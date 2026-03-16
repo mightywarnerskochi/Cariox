@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ------------------------------
      1. Sticky Header & Bottom Menu
   ------------------------------ */
-  const header = document.getElementById("header");
+  const header = document.getElementById("header") || document.querySelector("header");
   const bottomMenu = document.querySelector(".bottomFixedMenu");
 
   if (header || bottomMenu) {
@@ -255,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (header) {
         header.classList.toggle("scrolled", scrolled);
+        header.classList.toggle("sticky", scrolled);
       }
 
       if (bottomMenu) {
@@ -597,56 +598,129 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         breakpoint: 575,
         settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  })
+  $(".timeline-slider").slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    initialSlide: 2,
+    focusOnSelect: true,
+    dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 600,
+    autoplay: true,
+    autoplaySpeed: 2600,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          variableWidth: true,
+
+        },
+      },
+    ],
+  })
+  $(".news-events-slider").slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
+    speed: 1000,
+    autoplay: true,
+    cssEase: "linear",
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+
+      {
+        breakpoint: 575,
+        settings: {
           slidesToShow: 1,
         },
       },
     ],
   })
 
-  if (document.querySelector('.testimonialSwiper')) {
+  if (document.querySelector('.testimonial-slider')) {
+    const testimonialProgressItems = document.querySelectorAll('.customer-words-progress span');
+    const testimonialSlider = $('.testimonial-slider-track');
+    const testimonialNav = $('.customer-avatars');
 
-
-    // Initialize Star Rating
-    $(".my-rating-readonly, .jq-stars").each(function () {
-      var rating = $(this).data('rating');
-      $(this).starRating({
-        initialRating: rating,
-        readOnly: true,
-        starSize: 15,
-        useGradient: false,
-        activeColor: '#FEB109',
-        strokeWidth: 0,
+    const setActiveTestimonialProgress = (index) => {
+      testimonialProgressItems.forEach((item, itemIndex) => {
+        item.classList.toggle('active', itemIndex === index);
       });
+    };
+
+    testimonialSlider.on('init', function (_event, slick) {
+      setActiveTestimonialProgress(slick.currentSlide || 0);
     });
 
-    // Banner Video Play Logic
-    document.addEventListener('click', (e) => {
-      const playBtn = e.target.closest('.banner .play-btn');
-      if (playBtn) {
-        const slide = playBtn.closest('.swiper-slide');
-        const bannerVideo = slide.querySelector('video');
+    testimonialSlider.on('afterChange', function (_event, _slick, currentSlide) {
+      setActiveTestimonialProgress(currentSlide);
+    });
 
-        if (bannerVideo) {
-          if (bannerVideo.paused) {
-            bannerVideo.play();
-            playBtn.style.opacity = '0';
-          } else {
-            bannerVideo.pause();
-            playBtn.style.opacity = '1';
-          }
+    testimonialNav.slick({
+      slidesToShow:3,
+      slidesToScroll: 1,
+      asNavFor: '.testimonial-slider-track',
+      arrows: false,
+      dots: false,
+      infinite: true,
+      focusOnSelect: true,
+      centerMode: true,
+      centerPadding: '0px',
+    });
+
+    testimonialSlider.slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      infinite: true,
+      arrows: false,
+      dots: false,
+      adaptiveHeight: true,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      speed: 700,
+      pauseOnHover: false,
+      pauseOnFocus: false,
+      asNavFor: '.customer-avatars',
+    });
+
+    testimonialProgressItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const index = Number(item.dataset.index);
+        if (!Number.isNaN(index)) {
+          testimonialSlider.slick('slickGoTo', index);
         }
-      }
-    });
-
-    // Handle video end to reveal play button
-    document.querySelectorAll('.banner video').forEach(video => {
-      video.addEventListener('pause', () => {
-        const playBtn = video.closest('.video-container').querySelector('.play-btn');
-        if (playBtn) playBtn.style.opacity = '1';
-      });
-      video.addEventListener('play', () => {
-        const playBtn = video.closest('.video-container').querySelector('.play-btn');
-        if (playBtn) playBtn.style.opacity = '0';
       });
     });
   }

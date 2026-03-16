@@ -1,202 +1,127 @@
 .leftFixedBox {
   position: fixed;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  right: 20px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10000;
-  padding: 15px 10px;
-  background: #1a1a1a;
-  border-radius: 50px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 62px;
+  padding: 8px;
+  background: rgba(14, 19, 30, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
 
-  >div:first-child {
-    img {
-      animation: pulse 2s infinite;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), transparent 35%, rgba(255, 255, 255, 0.03));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
   }
 
   @media (max-width: 991px) {
     display: none;
   }
 
-  .dropdown-menu {
-    min-width: 40px;
-    width: auto;
-    height: 50px;
-    background: transparent;
-    padding: 0;
-    border: 0;
+  .QuickSideRightBar {
+    position: relative;
+    z-index: 1;
 
-    .iconBox {
-      background: linear-gradient(45deg, black, transparent);
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
+    > a {
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: none;
-      box-shadow: 0px 2px 10px 2px rgba(56, 52, 52, 0.2);
+      padding: 8px;
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
       text-decoration: none;
-
-      i {
-        color: #ffffff;
-        font-size: 18px;
-      }
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
-        background: #0a1821;
+        transform: translateX(-4px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.16);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
       }
     }
 
-    &.show {
+    .iconBox {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
       display: flex;
-      flex-direction: row;
       align-items: center;
-      grid-gap: 5px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      grid-gap: 5px;
-    }
-  }
-
-  .iconBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px; // Increased for touch target
-    height: 48px; // Increased for touch target
-
-    border-radius: 50%;
-    background: transparent;
-    transition: all 0.3s ease;
-    position: relative;
-
-    @include min(1600) {
-      width: 50px;
-      height: 50px;
-    }
-
-    svg {
-      width: 24px;
-      height: 24px;
-      transition: all 0.3s ease;
-
-      path {
-        fill: rgba(255, 255, 255, 0.8);
-      }
-    }
-
-    img {
-      height: auto;
-      width: 40px;
-
-      @include min(768) {
-        width: 48px;
-      }
-
-      @include min(992) {
-        width: 50px;
-      }
-
-      @include min(1200) {
-        width: 52px;
-      }
-
-      @include min(1360) {
-        width: 54px;
-      }
-
-      @include min(1440) {
-        width: 56px;
-      }
-
-      @include min(1600) {
-        width: 58px;
-      }
-
-      @include min(1900) {
-        width: 60px;
-      }
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.1);
+      justify-content: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 
       svg {
-        transform: scale(1.1);
+        width: 18px;
+        height: 18px;
+        z-index: 1;
+        transition: all 0.3s ease;
 
         path {
           fill: #fff;
+          transition: all 0.3s ease;
         }
       }
     }
-  }
 
-  // Tooltip / Slide out text
-  .QuickSideRightBar {
-    position: relative;
-
-    +div {
-      margin-top: 5px;
-    }
-
-    .slideLeft {
-      position: absolute;
-      right: 120%;
-      top: 50%;
-      transform: translateY(-50%) translateX(10px);
-      background: #1a1a1a;
-      color: #fff;
-      padding: 5px 12px;
-      border-radius: 4px;
-      font-size: 14px;
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      pointer-events: none;
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        right: -4px;
-        transform: translateY(-50%) rotate(45deg);
-        width: 8px;
-        height: 8px;
-        background: #1a1a1a;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    &.QuickSideRightBarWhatsapp {
+      .iconBox {
+        background: linear-gradient(180deg, rgba(37, 211, 102, 0.35), rgba(37, 211, 102, 0.16));
+        border-color: rgba(37, 211, 102, 0.34);
       }
 
-      .textRight {
-        // Keep existing class for compatibility if needed, but styling is handled by parent
-        font-family: "Roboto", sans-serif;
-        font-weight: 500;
+      > a:hover .iconBox {
+        transform: scale(1.04);
+        box-shadow: 0 12px 24px rgba(37, 211, 102, 0.28);
       }
     }
 
-    &:hover {
-      .slideLeft {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(-50%) translateX(0);
+    &.QuickSideRightBarPhone {
+      .iconBox {
+        background: linear-gradient(180deg, rgba(254, 177, 9, 0.38), rgba(241, 68, 72, 0.16));
+        border-color: rgba(254, 177, 9, 0.3);
+      }
+
+      > a:hover .iconBox {
+        transform: scale(1.04);
+        box-shadow: 0 12px 24px rgba(254, 177, 9, 0.24);
+      }
+    }
+
+    &.QuickSideRightBarEnquiry {
+      .iconBox {
+        background: linear-gradient(180deg, rgba(241, 68, 72, 0.36), rgba(241, 68, 72, 0.14));
+        border-color: rgba(241, 68, 72, 0.28);
+      }
+
+      > a:hover .iconBox {
+        transform: scale(1.04);
+        box-shadow: 0 12px 24px rgba(241, 68, 72, 0.24);
       }
     }
   }
 }
+
 
 
 .bottomFixedMenu {

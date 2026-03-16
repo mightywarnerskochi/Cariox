@@ -1346,3 +1346,28 @@ input[type=number] {
     padding: 8px 14.5px;
   }
 }
+
+.slick-dots ,.news-events-dots, .customer-words-progress{
+    li {
+            margin: 0 4px;
+          }
+          button,span {
+              width: clamp(15px, 5.48vw, 104px);
+              height: 8px;
+              border-radius: 4px;
+              background: #E4E8ED;
+              opacity: 1;
+              padding: 0;
+              font-size: 0;
+              color: transparent;
+              border: none;
+              transition: all 0.3s ease;
+              &::before {
+                  display: none;
+              }
+          }
+          .slick-active button,
+          .active {
+              background: #5E47C6;
+          }
+}

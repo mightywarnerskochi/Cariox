@@ -14,6 +14,23 @@ header {
     @include  min(1600){padding-top: 30px;}
     @include  min(1900){padding-top: 35px;}
 
+    &.sticky{
+        position: fixed;
+            padding: 20px 0px;
+        background: rgba($white, 0.95);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        animation: slideUpFade 0.5s ease forwards;
+        picture img {
+    width: 130px;
+}
+        nav ul{
+            gap: 10px;
+             li a {
+        padding: 0px 10px;
+    }
+        }
+    }
+
     .container-ctn {
         .d-flex {
             align-items: center;
