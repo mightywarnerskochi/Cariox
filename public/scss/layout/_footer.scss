@@ -394,7 +394,7 @@ footer {
     padding: 0;
 
     @include max(991) {
-        padding-bottom: 0;
+        padding-bottom: 50px;
     }
 
     a,
@@ -650,8 +650,10 @@ footer {
 
         @include max(575) {
             padding: 15px;
+            background: unset;
             flex-direction: column;
             gap: 5px;
+            margin-bottom: 20px;
         }
 
         @include min(768) {

@@ -13,6 +13,11 @@ header {
     @include  min(1440){padding-top: 28px;}
     @include  min(1600){padding-top: 30px;}
     @include  min(1900){padding-top: 35px;}
+    @include max(575){
+        img{
+            width: 130px;
+        }    
+    }
 
     &.sticky{
         position: fixed;
@@ -21,7 +26,10 @@ header {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         animation: slideUpFade 0.5s ease forwards;
         picture img {
-    width: 130px;
+    width: 100px;
+    @include min(576){
+        width: 130px;
+    }
 }
         nav ul{
             gap: 10px;

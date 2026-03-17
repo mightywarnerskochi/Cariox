@@ -587,19 +587,19 @@ document.addEventListener("DOMContentLoaded", () => {
         settings: {
           slidesToShow: 3,
         },
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
+      // },
+      // {
+      //   breakpoint: 767,
+      //   settings: {
+      //     slidesToShow: 2,
+      //   },
+      // },
 
-      {
-        breakpoint: 575,
-        settings: {
-          slidesToShow: 2,
-        },
+      // {
+      //   breakpoint: 575,
+      //   settings: {
+      //     slidesToShow: 3,
+      //   },
       },
     ],
   })
@@ -629,8 +629,9 @@ document.addEventListener("DOMContentLoaded", () => {
         breakpoint: 767,
         settings: {
           slidesToShow: 1,
+          centerMode: true,
+          centerPadding: "0px",
           variableWidth: true,
-
         },
       },
     ],

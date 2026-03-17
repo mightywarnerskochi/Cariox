@@ -288,7 +288,7 @@
     </div>
 
     <!-- FIXED BOTTOM MENU (MOBILE) -->
-    <div class="bottomFixedMenu d-lg-none">
+    <div class="bottomFixedMenu bottomFixedMenu--brand d-lg-none">
         <ul>
             <li> <a href="https://wa.me/+971545864310?text=Can%20I%20get%20more%20details%20about%20your%20service?"
                     aria-label="Chat with us on WhatsApp" target="_blank" rel="noopener">

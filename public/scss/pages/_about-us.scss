@@ -1,9 +1,16 @@
 .vision-mission{
+  &-wrapper{
+    gap: 20px;
+  }
   .vision,.mission{
     border-radius: 20px;
-    width: 48.989%;
     padding: clamp(20px, 1.7vw, 40px);
-  
+    
+    width: 100%;
+    @include min(576){
+      width: 48.989%;
+
+    }
   }
   h3{
     color: #000;
@@ -93,6 +100,7 @@ padding-top: 85px;
 border-radius: 100px;
     background: #fff;
 border: 1px solid #90A1B8;
+padding-right: clamp(13px, 1.5vw, 26px);
 
 box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.13);
     font-size: 16px;
@@ -263,13 +271,34 @@ filter: blur(25px);
   }
 
   @media (max-width: 991px) {
+    .content {
+      padding: 64px 24px 32px;
+    }
+
+    p {
+      max-width: 78%;
+    }
+
     &__frame {
-      padding-inline: 0;
+      max-width: 100%;
+      margin-top: 40px;
+      margin-bottom: 56px;
+    }
+
+    &__badges {
+      width: 100%;
+      gap: 16px;
     }
 
     &__badge {
       font-size: 15px;
-      padding-inline: 16px;
+      width: calc(50% - 8px);
+      justify-content: flex-start;
+      padding-inline: 14px;
+    }
+
+    &__image {
+      width: min(100%, 520px);
     }
 
     &__side-art {
@@ -291,27 +320,49 @@ filter: blur(25px);
   @media (max-width: 767px) {
     .content {
       border-radius: 24px;
-      padding-inline: 16px;
+      padding: 44px 16px 24px;
+    }
+
+    h2 {
+      font-size: 27px;
+      margin-bottom: 10px;
     }
 
     p {
+      max-width: 100%;
       font-size: 15px;
       line-height: 1.7;
     }
 
     &__frame {
-      padding-bottom: 0;
+      max-width: 100%;
+      margin-top: 28px;
+      margin-bottom: 32px;
     }
 
     &__badges {
+      width: 100%;
       gap: 12px;
     }
 
     &__badge {
-      justify-content: center;
-      width: 100%;
-      max-width: 320px;
+      justify-content: flex-start;
+      width: fit-content;
+      max-width: none;
       font-size: 14px;
+      min-height: 0;
+      padding:5px 15px 5px 5px;
+
+      .icon {
+     width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+        padding: 5px
+      }
+      img{
+        height: auto;
+        width: 18px;
+      }
     }
 
     &__node {
@@ -323,8 +374,9 @@ filter: blur(25px);
     }
 
     &__image {
-      width: min(100%, 360px);
-      border-radius: 22px;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 22px 0 22px 0;
     }
   }
 }
@@ -364,6 +416,7 @@ filter: blur(25px);
     }
 
     .slick-slide {
+      flex: 0 0 auto;
       height: auto;
       padding: 0 12px;
           margin: 0px 10px;
@@ -580,12 +633,15 @@ filter: blur(25px);
 
       .slick-slide {
         padding: 0 8px;
-        width: 220px;
       }
 
       .slick-list {
         padding: 0 8px;
       }
+    }
+
+    &__slide {
+      width: 220px;
     }
 
     &__milestone {
@@ -618,7 +674,7 @@ filter: blur(25px);
     }
 
     &__slide {
-      min-height: 400px;
+      min-height: 310px;
     }
 
     &__milestone p,
