@@ -797,7 +797,7 @@
         background: url(../images/home/who-we-are/bg.png) no-repeat center right;
         background-size: contain;
         z-index: -1;
-        opacity: 0.5;
+        opacity: 0.7;
     }
 }
 
@@ -1057,9 +1057,11 @@
     .testimonial-slide {
         height: auto;
     }
-     .testimonial-slide{
+
+    .testimonial-slide {
         position: relative;
-        &::after{
+
+        &::after {
             @extend .position;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M30.5565 1.30664C29.363 1.30664 28.2184 1.78075 27.3745 2.62466C26.5306 3.46857 26.0565 4.61317 26.0565 5.80664V19.3066C26.0565 20.5001 26.5306 21.6447 27.3745 22.4886C28.2184 23.3325 29.363 23.8066 30.5565 23.8066C31.1532 23.8066 31.7255 24.0437 32.1474 24.4657C32.5694 24.8876 32.8065 25.4599 32.8065 26.0566V28.3066C32.8065 29.5001 32.3324 30.6447 31.4884 31.4886C30.6445 32.3325 29.4999 32.8066 28.3065 32.8066C27.7097 32.8066 27.1374 33.0437 26.7155 33.4656C26.2935 33.8876 26.0565 34.4599 26.0565 35.0566V39.5566C26.0565 40.1534 26.2935 40.7257 26.7155 41.1476C27.1374 41.5696 27.7097 41.8066 28.3065 41.8066C31.8869 41.8066 35.3207 40.3843 37.8524 37.8526C40.3841 35.3208 41.8065 31.8871 41.8065 28.3066V5.80664C41.8065 4.61317 41.3324 3.46857 40.4884 2.62466C39.6445 1.78075 38.4999 1.30664 37.3065 1.30664H30.5565ZM5.80646 1.30664C4.61298 1.30664 3.46839 1.78075 2.62448 2.62466C1.78056 3.46857 1.30646 4.61317 1.30646 5.80664V19.3066C1.30646 20.5001 1.78056 21.6447 2.62448 22.4886C3.46839 23.3325 4.61298 23.8066 5.80646 23.8066C6.40319 23.8066 6.97549 24.0437 7.39745 24.4657C7.8194 24.8876 8.05646 25.4599 8.05646 26.0566V28.3066C8.05646 29.5001 7.58235 30.6447 6.73844 31.4886C5.89452 32.3325 4.74993 32.8066 3.55646 32.8066C2.95972 32.8066 2.38742 33.0437 1.96547 33.4656C1.54351 33.8876 1.30646 34.4599 1.30646 35.0566V39.5566C1.30646 40.1534 1.54351 40.7257 1.96547 41.1476C2.38742 41.5696 2.95972 41.8066 3.55646 41.8066C7.13688 41.8066 10.5707 40.3843 13.1024 37.8526C15.6341 35.3208 17.0565 31.8871 17.0565 28.3066V5.80664C17.0565 4.61317 16.5824 3.46857 15.7384 2.62466C14.8945 1.78075 13.7499 1.30664 12.5565 1.30664H5.80646Z" stroke="%23DEDEDE" stroke-width="2.6129" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             width: 44px;
@@ -1074,7 +1076,7 @@
     .customer-words-copy {
         width: 100%;
 
-      
+
     }
 
     .customer-meta {
@@ -1126,7 +1128,7 @@
         }
 
         .slick-slide {
-     
+
             cursor: pointer;
         }
     }
@@ -1139,14 +1141,35 @@
         position: relative;
         transition: width 0.25s ease, height 0.25s ease, padding 0.25s ease;
         padding: 6px;
-        @include min(768){   padding: 9px;}
-        @include min(992){   padding: 10px;}
-        @include min(1200){   padding: 11px;}
-        @include min(1350){   padding: 12px;}
-        @include min(1440){   padding: 13px;}
-        @include min(1600){   padding: 14px;}
-        @include min(1900){   padding: 15px;}
-        
+
+        @include min(768) {
+            padding: 9px;
+        }
+
+        @include min(992) {
+            padding: 10px;
+        }
+
+        @include min(1200) {
+            padding: 11px;
+        }
+
+        @include min(1350) {
+            padding: 12px;
+        }
+
+        @include min(1440) {
+            padding: 13px;
+        }
+
+        @include min(1600) {
+            padding: 14px;
+        }
+
+        @include min(1900) {
+            padding: 15px;
+        }
+
         &::after {
             @extend .position;
             content: '';
@@ -1195,7 +1218,7 @@
             margin-top: 72px;
         }
 
-       
+
     }
 }
 
@@ -1539,7 +1562,7 @@
                 right: 0;
                 width: 180px;
                 height: 180px;
-                background: url('../images/prdoucts/card00bg.png') no-repeat bottom right;
+                background: url('../images/products/card00bg.png') no-repeat bottom right;
                 background-size: contain;
                 z-index: 0;
                 opacity: 1;
@@ -1580,7 +1603,7 @@
                 z-index: 1;
                 display: flex;
                 justify-content: flex-end;
-            
+
 
                 img {
                     max-width: clamp(60px, 5.59vw, 95px);
@@ -1622,7 +1645,11 @@
                     color: #1A1C24;
                     margin-bottom: 5px;
                     transition: color 0.3s ease;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
+                
 
                 p {
                     font-size: clamp(12px, 1vw, 14px);
@@ -1688,7 +1715,7 @@
 
         .slick-dots {
             bottom: -35px;
-            display: flex;
+
             position: absolute;
             left: 50%;
 
@@ -1731,7 +1758,7 @@
             }
 
 
-        
+
         }
     }
 }
@@ -1884,13 +1911,16 @@
 
 .brand-slider {
     margin-top: clamp(30px, 3.5vw, 71px);
-    .slick-slide{
-        &:focus-visible{
+
+    .slick-slide {
+        &:focus-visible {
             border: unset;
         }
-        @include max(575){
+
+        @include max(575) {
             margin: 0px 20px;
-            img{
+
+            img {
                 width: 100%;
                 height: auto;
             }
@@ -1920,7 +1950,7 @@
 
     .news-events-head {
         margin-bottom: clamp(30px, 3.5vw, 60px);
-   
+
 
         .head-left {
             flex: 1 1 100%;
@@ -1964,14 +1994,15 @@
     }
 
     .news-events-slider {
-            .slick-list{
-    margin-left: clamp(-25px, -1.31vw, 0px);
-    margin-right: clamp(-25px, -1.31vw, 0px);
-            }
-            .slick-slide{
-                margin-left: clamp(0px, 1.31vw, 25px);
-                margin-right: clamp(0px, 1.31vw, 25px) ;
-            }
+        .slick-list {
+            margin-left: clamp(-25px, -1.31vw, 0px);
+            margin-right: clamp(-25px, -1.31vw, 0px);
+        }
+
+        .slick-slide {
+            margin-left: clamp(0px, 1.31vw, 25px);
+            margin-right: clamp(0px, 1.31vw, 25px);
+        }
     }
 
     .news-card {
@@ -2020,7 +2051,7 @@
                 font-weight: 600;
                 color: #1A1C24;
                 margin-bottom: 33px;
-                line-height:160%;
+                line-height: 160%;
                 -webkit-line-clamp: 2;
                 line-clamp: 2;
                 -webkit-box-orient: vertical;
@@ -2028,7 +2059,7 @@
             }
 
             .btn-gradient {
-             margin-bottom: 24px;
+                margin-bottom: 24px;
             }
         }
     }
@@ -2052,7 +2083,8 @@
             }
         }
     }
-    .slick-dots{
+
+    .slick-dots {
         justify-content: center;
         margin-top: 72px;
     }

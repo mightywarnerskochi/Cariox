@@ -1,0 +1,67 @@
+/* Custom overrides for intl-tel-input to match form UI globally */
+.iti {
+  display: block;
+  width: 100%;
+
+  .iti__flag-container {
+    padding: 0 10px;
+  }
+
+  .iti__selected-flag {
+    padding: 0 20px 0 24px; // match form-control left padding
+    border-radius: 80px 0 0 80px;
+    background-color: transparent !important;
+  }
+
+  .iti__country-list {
+    border-radius: 16px;
+    border: 1px solid #BABEC3;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    font-family: inherit;
+    margin-top: 5px;
+    width: 100%; // matches the parent input roughly
+    min-width: 250px;
+    padding: 10px 0;
+    max-height: 250px;
+    
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #E2E8F0;
+        border-radius: 10px;
+    }
+
+    .iti__country {
+      padding: 12px 24px;
+      transition: background 0.2s ease;
+      font-size: 14px;
+      color: #4F5762;
+      
+      .iti__country-name {
+          color: #4F5762;
+      }
+      
+      .iti__dial-code {
+          color: #909090;
+      }
+
+      &:hover, &.iti__highlight {
+        background-color: #f1444814;
+      }
+    }
+
+    .iti__divider {
+      border-bottom: 1px solid #E2E8F0;
+      margin: 5px 0;
+    }
+  }
+}
+
+// Override input instances initialized globally to avoid dial code overlapping
+.iti.iti--allow-dropdown input[type="tel"],
+.iti.iti--allow-dropdown input.form-control,
+.iti.iti--allow-dropdown input.phone_number {
+  padding-left: 95px !important; // standard offset for flag + caret space
+}

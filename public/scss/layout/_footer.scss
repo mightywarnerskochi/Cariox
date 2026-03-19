@@ -620,7 +620,7 @@ footer {
 
         @include max(767) {
             flex-direction: column;
-            align-items: flex-start;
+            // align-items: flex-start;
         }
     }
 

@@ -1,0 +1,295 @@
+.services-page-main {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        width: 832px;
+        height: 100%;
+        top: -12%;
+        right: 0;
+        background: url(../images/home/who-we-are/bg.png) no-repeat center right;
+        background-size: contain;
+        z-index: -1;
+        opacity: 0.7;
+    }
+
+    &::before {
+        @extend .position;
+        width: 100%;
+        height: clamp(350px, 20vw, 787px);
+        background: url(../images/contact/bg-bottom.png) no-repeat;
+        background-size: cover;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+    }
+
+    .services-header {
+        h2 {
+            color: #000;
+        }
+
+        .header-left {
+            width: 100%;
+
+            @include max(767) {
+                h2 {
+                    margin-bottom: 10px;
+                }
+            }
+
+            @include min(768) {
+                width: 30%;
+
+            }
+
+            @include min(1200) {
+                width: 25%;
+
+            }
+        }
+
+        .header-right {
+            width: 100%;
+
+            @include min(768) {
+                width: 65.953%;
+
+            }
+
+            @include min(1200) {
+                width: 50.953%;
+
+            }
+
+            p {
+                color: #666D84;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+        }
+    }
+
+    .services-grid-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px 1.8%;
+
+        @include min(1200) {
+            gap: 30px 1.8%;
+
+        }
+
+        .grid-left-col {
+            flex: 1 1 49.551%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .grid-right-col {
+            flex: 1 1 20%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        @include max(991) {
+
+            .grid-left-col,
+            .grid-right-col {
+                flex: 1 1 100%;
+            }
+        }
+
+        h3 {
+            font-size: clamp(24px, 1.7vw, 32px);
+            font-weight: 500;
+            margin-bottom: clamp(12px, 1.25vw, 16px);
+        }
+    }
+
+    .service-detail-card {
+        border-radius: 30px;
+        position: relative;
+        overflow: hidden;
+        padding: clamp(20px, 3vw, 45px);
+        // min-height: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .text-content {
+            z-index: 2;
+
+
+
+            p {
+                color: #4F5762;
+                padding-bottom: 33px;
+            }
+        }
+
+        .card-num {
+            color: rgba(255, 255, 255, 0.36);
+            font-size: clamp(100px, 10vw, 180px);
+            font-weight: 700;
+            line-height: 100%;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .card-image {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: clamp(200px, 20vw, 350px);
+            z-index: 1;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+
+        .arrow-icon {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            width: clamp(40px, 4.16vw, 60px);
+            height: clamp(40px, 4.16vw, 60px);
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            z-index: 3;
+            transition: transform 0.3s ease;
+
+            svg {
+                width: clamp(18px, 1.66vw, 24px);
+                height: clamp(18px, 1.66vw, 24px);
+            }
+
+            &:hover {
+                transform: scale(1.1) rotate(45deg);
+            }
+        }
+
+        &.card-supply {
+            background: linear-gradient(135deg, #E2E1FF 0%, #DEDAF9 100%);
+
+            h3 {
+                color: #5C47C7;
+            }
+
+            .card-num {
+                // color: #5C47C7;
+            }
+        }
+
+        &.card-installation {
+            background: linear-gradient(135deg, #D6EEFF 0%, #B8DDF5 100%);
+
+            h3 {
+                color: #0753F1;
+            }
+        }
+
+        &.card-amc {
+            background: #F0CFDF;
+            flex-grow: 1;
+
+            h3 {
+                color: #F2523F;
+            }
+
+
+            // min-height: 600px;
+        }
+    }
+
+}
+
+.contact-now-card {
+    background: #FFE5BE; // Light orange/yellow
+    border-radius: 30px;
+    padding: clamp(20px, 3vw, 30px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h3 {
+        color: #000;
+        font-size: clamp(20px, 1.5vw, 24px);
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .method-item {
+            background: #FF5C00;
+            border-radius: 10px;
+            padding: 5px 5px 5px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+
+            @include min(768) {
+                gap: 10px;
+                padding: 10px 10px 10px 20px;
+            }
+
+            .val {
+                color: #fff;
+                @include min(992){
+                    font-size: clamp(12px, 1.25vw, 24px);
+                }
+            }
+
+            .method-btn {
+                background: #FFE8A2;
+                color: #000;
+                border-radius: 5px;
+                text-align: center;
+                text-decoration: none;
+                transition: background 0.3s ease;
+                padding: 7.5px 0px;
+                width: 95px;
+
+                @include min(768) {
+                    width: clamp(80px, 7.813vw, 150px);
+                    padding: 7.5px 0px;
+                }
+
+                @include min(1200) {
+                    padding: 10.5px 0px;
+                }
+
+                @include min-max(992, 1199) {
+                    font-size: 13px;
+                }
+
+                &:hover {
+                    background: #FFE0B2;
+                }
+            }
+        }
+    }
+
+    .whatsapp-wrapper {
+        a {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+    }
+}

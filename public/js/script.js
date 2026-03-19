@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
   /* ------------------------------
     0. Banner
   ------------------------------ */
@@ -331,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         dots: false,
-        arrows: true,
+        arrows: false,
         infinite: true,
         autoplay: true,
         autoplaySpeed: 2500,
@@ -587,19 +586,19 @@ document.addEventListener("DOMContentLoaded", () => {
         settings: {
           slidesToShow: 3,
         },
-      // },
-      // {
-      //   breakpoint: 767,
-      //   settings: {
-      //     slidesToShow: 2,
-      //   },
-      // },
+        // },
+        // {
+        //   breakpoint: 767,
+        //   settings: {
+        //     slidesToShow: 2,
+        //   },
+        // },
 
-      // {
-      //   breakpoint: 575,
-      //   settings: {
-      //     slidesToShow: 3,
-      //   },
+        // {
+        //   breakpoint: 575,
+        //   settings: {
+        //     slidesToShow: 3,
+        //   },
       },
     ],
   })
@@ -670,6 +669,62 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   })
 
+
+  const majorProductsSlider = $(".major-products-slider");
+
+  function updateMajorProductsDots(slick) {
+    const visibleDotCount = 7;
+    const $dots = $(slick.$dots).find("li");
+    const totalDots = $dots.length;
+
+    if (!totalDots) {
+      return;
+    }
+
+    if (totalDots <= visibleDotCount) {
+      $dots.show();
+      return;
+    }
+
+    const maxStart = totalDots - visibleDotCount;
+    const halfWindow = Math.floor(visibleDotCount / 2);
+    const currentIndex = Math.min(slick.currentSlide, totalDots - 1);
+    const start = Math.max(0, Math.min(currentIndex - halfWindow, maxStart));
+    const end = start + visibleDotCount - 1;
+
+    $dots.each(function (index) {
+      $(this).toggle(index >= start && index <= end);
+    });
+  }
+
+  majorProductsSlider.on("init afterChange", function (event, slick) {
+    updateMajorProductsDots(slick);
+  });
+
+  majorProductsSlider.slick({
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    dots: true,
+    arrows: false,
+    speed: 1000,
+    autoplay: true,
+    cssEase: "linear",
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    variableWidth: true,
+    responsive: [
+
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToScroll: 1,
+        },
+      },
+
+
+    ],
+  })
   if (document.querySelector('.testimonial-slider')) {
     const testimonialProgressItems = document.querySelectorAll('.customer-words-progress span');
     const testimonialSlider = $('.testimonial-slider-track');
@@ -690,7 +745,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     testimonialNav.slick({
-      slidesToShow:3,
+      slidesToShow: 3,
       slidesToScroll: 1,
       asNavFor: '.testimonial-slider-track',
       arrows: false,
@@ -777,3 +832,322 @@ window.addEventListener("resize", () => {
   equalHeightTargets.forEach(setEqualHeightFor);
 });
 
+
+// -- Product mobile navigation (Sort & Filter) ------------------------------
+(function () {
+  document.addEventListener('click', function (e) {
+    // Selectors
+    var filterBtn = e.target.closest('#productFilterToggle');
+    var sortBtn = e.target.closest('#productSortToggle');
+    var filterClose = e.target.closest('#productSidebarClose');
+    var sortClose = e.target.closest('#productSortClose');
+    var overlay = e.target.closest('#productSidebarOverlay');
+
+    // Elements
+    var filterDrawer = document.getElementById('productSidebarDrawer');
+    var sortDrawer = document.getElementById('productSortDrawer');
+    var overlayEl = document.getElementById('productSidebarOverlay');
+
+    if (!filterDrawer || !sortDrawer || !overlayEl) return;
+
+    // Handle Filter Open
+    if (filterBtn) {
+      e.preventDefault();
+      closeAll();
+      filterDrawer.classList.add('is-open');
+      overlayEl.classList.add('is-visible');
+      filterBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    // Handle Sort Open
+    else if (sortBtn) {
+      e.preventDefault();
+      closeAll();
+      sortDrawer.classList.add('is-open');
+      overlayEl.classList.add('is-visible');
+      sortBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    // Handle Close
+    else if (filterClose || sortClose || overlay) {
+      closeAll();
+    }
+
+    function closeAll() {
+      filterDrawer.classList.remove('is-open');
+      sortDrawer.classList.remove('is-open');
+      overlayEl.classList.remove('is-visible');
+      document.body.style.overflow = '';
+
+      var fToggle = document.getElementById('productFilterToggle');
+      var sToggle = document.getElementById('productSortToggle');
+      if (fToggle) fToggle.setAttribute('aria-expanded', 'false');
+      if (sToggle) sToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var overlayEl = document.getElementById('productSidebarOverlay');
+      if (overlayEl && overlayEl.classList.contains('is-visible')) {
+        // Trigger click on overlay to trigger existing closeAll logic
+        overlayEl.click();
+      }
+    }
+  });
+})();
+
+
+
+//Product Detail Image sldier
+
+$(document).ready(function () {
+  $(".product-main-slider").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    asNavFor: ".product-thumb-slider",
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: false,
+
+    fade: true,
+    cssEase: "linear",
+    speed: 800,
+    draggable: true,
+    dots: false,
+    lazyLoad: 'progressive',
+    infinite: true   // ✅ ADD THIS
+  });
+
+  $(".product-thumb-slider").slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    asNavFor: ".product-main-slider",
+    dots: true,
+    appendDots: ".product-slider-dots",
+    draggable: true,
+
+    arrows: false,
+    speed: 800,
+
+    infinite: true,  // ✅ ADD THIS
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {}
+      }
+    ]
+  });
+});
+// Products Slider (Major Products)
+// $(".products-slider").slick({
+//   slidesToShow: 4,
+//   slidesToScroll: 1,
+//   dots: false,
+//   arrows: true,
+//   infinite: true,
+//   autoplay: true,
+//   autoplaySpeed: 3000,
+//   responsive: [
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         slidesToShow: 2,
+//       }
+//     },
+//     {
+//       breakpoint: 768,
+//       settings: {
+//         slidesToShow: 1,
+//       }
+//     }
+//   ]
+// });
+
+// Tab Switching Function for Product Detail
+function switchTab(tabId, element) {
+  const tabs = document.querySelectorAll('.tab-pane');
+  const navItems = document.querySelectorAll('.product-tabs__nav li');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  navItems.forEach(item => item.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+  element.classList.add('active');
+}
+
+function setVideoCardState(card, isPlaying) {
+  const poster = card.querySelector('.video-poster');
+  const video = card.querySelector('.product-video');
+  const pauseBtn = card.querySelector('.pause-btn');
+
+  if (!poster || !video || !pauseBtn) {
+    return;
+  }
+
+  poster.style.display = isPlaying ? 'none' : '';
+  video.style.display = isPlaying ? 'block' : 'none';
+  pauseBtn.style.display = isPlaying ? 'flex' : 'none';
+}
+
+document.querySelectorAll('.video-card').forEach(card => {
+  const playBtn = card.querySelector('.play-btn');
+  const pauseBtn = card.querySelector('.pause-btn');
+  const video = card.querySelector('.product-video');
+
+  if (!playBtn || !pauseBtn || !video) {
+    return;
+  }
+
+  playBtn.addEventListener('click', () => {
+    setVideoCardState(card, true);
+    video.play();
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    video.pause();
+    setVideoCardState(card, false);
+  });
+
+  video.addEventListener('ended', () => {
+    setVideoCardState(card, false);
+    video.currentTime = 0;
+  });
+});
+
+/* ------------------------------
+   Mobile Menu Sub-menu Toggle
+------------------------------ */
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtns = document.querySelectorAll('.sub-menu-toggle');
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const parent = this.closest('.has-submenu');
+      const subMenu = parent.querySelector('.mobile-sub-menu');
+
+      this.classList.toggle('active');
+      subMenu.classList.toggle('open');
+
+      // Toggle visibility for sub-menu
+      if (subMenu.classList.contains('open')) {
+        subMenu.style.maxHeight = subMenu.scrollHeight + "px";
+        subMenu.style.opacity = "1";
+        subMenu.style.visibility = "visible";
+        subMenu.style.marginTop = "10px";
+      } else {
+        subMenu.style.maxHeight = "0";
+        subMenu.style.opacity = "0";
+        subMenu.style.visibility = "hidden";
+        subMenu.style.marginTop = "0";
+      }
+    });
+  });
+});
+
+
+// ==========================contry dorp down=============================
+
+function initializePhoneInput(selector) {
+  const shippingFormWrapper = document.querySelector(selector + ' .phone_number');
+  if (shippingFormWrapper !== null) {
+    const phoneInput = window.intlTelInput(shippingFormWrapper, {
+      preferredCountries: ["ae", "sa", "kw", "bh", "qa", "om"],
+      excludeCountries: ["ru", "cu", "sy", "ir", "sd", "ss", "kp", "ye", "KR", "UA"],
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    shippingFormWrapper._iti = phoneInput;
+
+      // Auto-insert default country code on load
+      let initialDialCode = phoneInput.getSelectedCountryData().dialCode;
+      let $input = $(selector + ' .phone_number');
+      $input.attr('data-dial-code', initialDialCode);
+      
+      if (!$input.val()) {
+          $input.val('+' + initialDialCode);
+      }
+
+      $input.on('input', function () {
+        let val = $(this).val();
+        let valRaw = val.replace(/(?!^\+)[^\d]/g, '');
+        let digitsOnly = valRaw.replace(/\D/g, '');
+        if (digitsOnly.length > 15) {
+          valRaw = (valRaw.charAt(0) === '+' ? '+' : '') + digitsOnly.substring(0, 15);
+          $(this).val(valRaw);
+        } else if (valRaw.length > 16) {
+           $(this).val(valRaw.substring(0, 16));
+        }
+      });
+      $input.on('blur', function () {
+        contactPhone(selector, phoneInput);
+      });
+      shippingFormWrapper.addEventListener('countrychange', function() {
+        let newDialCodeData = phoneInput.getSelectedCountryData();
+        let newDialCode = '+' + newDialCodeData.dialCode;
+        let oldDialCode = '+' + $input.attr('data-dial-code');
+        
+        let currentVal = $input.val() || '';
+        
+        if (currentVal.startsWith(oldDialCode)) {
+            // Replace old dial code with new dial code
+            currentVal = currentVal.replace(oldDialCode, newDialCode);
+        } else if (!currentVal.startsWith('+')) {
+            // Prepend new dial code if it lacks a plus
+            currentVal = newDialCode + currentVal.replace(/[^\d]/g, '');
+        } else {
+            // It has a plus, but not the old dial code (user changed it manually wildly).
+            // Just replace the whole thing with the new dial code to be safe.
+            currentVal = newDialCode;
+        }
+
+        $input.val(currentVal);
+        $input.attr('data-dial-code', newDialCodeData.dialCode);
+        
+        // trigger blur to format
+        contactPhone(selector, phoneInput);
+      });
+    }
+}
+
+function contactPhone(selector, phoneInput) {
+  let phoneNumber = phoneInput.getNumber(); // Get full international number
+
+  // If getNumber() returns empty (which happens if it thinks the number is completely invalid),
+  // fallback to the raw input value so we don't clear out what the user typed.
+  let rawVal = $(selector + ' .phone_number').val() || '';
+  if (!phoneNumber && rawVal) {
+      phoneNumber = rawVal;
+  }
+
+  // Remove all non-digit characters except the leading +
+  phoneNumber = phoneNumber.replace(/(?!^\+)[^\d]/g, '');
+
+  if (phoneNumber.startsWith('+')) {
+    let countryCode = phoneInput.getSelectedCountryData().dialCode; // Get country code only
+    let localNumber = phoneNumber.replace('+' + countryCode, ''); // Remove country code from full number
+    phoneNumber = `+${countryCode}${localNumber}`; // Add country code strictly without separator
+  } else {
+    // If it doesn't start with +, prepend the dial code explicitly
+    let countryCode = phoneInput.getSelectedCountryData().dialCode;
+    let localNumber = phoneNumber.replace(/[^\d]/g, ''); 
+    phoneNumber = `+${countryCode}${localNumber}`;
+  }
+
+  // Force limit to 15 digits with country code (e.g. +966XXXXXXXXX = 15 digits)
+  var digitsOnly = phoneNumber.replace(/\D/g, '');
+  if (digitsOnly.length > 15) {
+    phoneNumber = '+' + digitsOnly.substring(0, 15);
+  }
+
+  $(selector + ' .phone_number').val(phoneNumber);
+}
+
+
+initializePhoneInput(".sidebar-enquire-form");
+initializePhoneInput("#contactForm");
+initializePhoneInput("#contactPageForm");
+initializePhoneInput("#careerForm");
+initializePhoneInput("#productEnquiryForm");

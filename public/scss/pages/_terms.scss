@@ -45,9 +45,8 @@
 
   h3 {
     color: $black;
-    font-weight: 700;
-    font-size: clamp(15px, 1.5vw, 18px);
-    margin-bottom: clamp(10px, 1vw, 12px);
+    font-weight: 500;
+    margin-bottom: clamp(10px, 0.62498vw, 12px);
     display: inline-block;
 
   }
@@ -57,4 +56,3 @@
     margin-top: clamp(20px, 2vw, 38px);
   }
 }
-

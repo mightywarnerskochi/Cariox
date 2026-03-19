@@ -1,33 +1,20 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
-$page_title = "Spotcast - Premium Podcast Production in Dubai";
-$page_desc = "Spotcast brings the studio to you. We record podcasts anywhere in Dubai - indoors, outdoors, or on-location. High-quality video and audio production.";
+$page_title = "Cariox - Industrial Automation Solutions";
+$page_desc = "Cariox provides cutting-edge industrial automation, marking, coding, and inspection systems for modern manufacturing.";
 
 switch ($current_page) {
     case 'about.php':
-        $page_title = "About Us | Spotcast - Your Story, Anywhere";
-        $page_desc = "Learn about Spotcast, a flexible podcast production crew in Dubai giving creators freedom and authenticity with diverse backdrops.";
+        $page_title = "About Us | Cariox";
         break;
     case 'services.php':
-        $page_title = "Our Services | Spotcast - Mobile & Studio Podcasting";
-        $page_desc = "Explore Spotcast services: Mobile Podcast Production, Cinematic Sets, Studio Recording, and Professional Video Editing in Dubai.";
+        $page_title = "Our Services | Cariox";
         break;
-    case 'work.php':
-        $page_title = "Our Work | Spotcast - Podcast Portfolio";
-        $page_desc = "View our portfolio of podcasts produced in Dubai's most unique settings. From industry leaders to rising creators.";
+    case 'products.php':
+        $page_title = "Our Products | Cariox";
         break;
-    case 'contact-us.php':
-        $page_title = "Contact Us | Spotcast - Book Your Session";
-        $page_desc = "Get in touch with Spotcast for your podcast production needs in Dubai. Call us or book a free quote online.";
-        break;
-    case 'work-details.php':
-        $page_title = "Project Details | Spotcast";
-        break;
-    case 'privacy-policy.php':
-        $page_title = "Privacy Policy | Spotcast";
-        break;
-    case 'terms-and-conditions.php':
-        $page_title = "Terms & Conditions | Spotcast";
+    case 'contact.php':
+        $page_title = "Contact Us | Cariox";
         break;
 }
 ?>
@@ -52,45 +39,158 @@ switch ($current_page) {
     <link rel="apple-touch-icon" sizes="128x128" href="public/images/fav.png" />
 
     <!-- Libraries -->
-    <link rel="stylesheet" href="public/css/lib/slick-full.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <!-- <link rel="stylesheet" href="public/css/lib/slick-full.css" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
     <link rel="stylesheet" href="public/css/lib/bootstrap.min.css" />
     <link rel="stylesheet" href="public/css/lib/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 
     <!-- Main Style -->
     <link rel="stylesheet" href="public/scss/style.css" />
 </head>
 
 <body>
-
-    <header id="header" role="banner" class="site-header">
+    <header>
         <div class="container-ctn">
-            <div class="d-flex justify-content-between align-items-center flex-wrap header-row">
-                <!-- Logo with alt text for screen readers -->
-                <a href="index.php" aria-label="Website Logo" class="brand">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <a href="index.php">
                     <picture>
-                        <img src="public/images/logo.png" alt="Spotcast logo" width="178" height="54" loading="lazy" />
+                        <img src="public/images/logo.png" width="180" height="70" class="img-fluid" alt="Cariox">
                     </picture>
                 </a>
+                <nav class="d-none d-xl-block">
+                    <ul>
+                        <li class="<?php echo $current_page === 'index.php' ? 'active' : ''; ?>"><a
+                                href="index.php">Home</a></li>
+                        <li class="<?php echo $current_page === 'about.php' ? 'active' : ''; ?>"><a
+                                href="about.php">About Us</a></li>
+                        <li class="mega-menu-item">
+                            <a href="products.php"
+                                class="<?php echo in_array($current_page, ['products.php', 'product-detail.php']) ? 'active' : ''; ?>">
+                                Products
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <path d="M5.25 7.5L9 11.25L12.75 7.5" stroke="white" stroke-width="1.125"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-submenu category-mega-menu">
+                                <div class="mega-menu-grid">
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Ink-Jet</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">EBS 6500 Series</a></li>
+                                            <li><a href="product-detail.php">EBS 6600 Series</a></li>
+                                            <li><a href="product-detail.php">EBS 6900 Series</a></li>
+                                            <li><a href="product-detail.php">EBS Bolt Series</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Marking & Coding</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">Handjet Handheld</a></li>
+                                            <li><a href="product-detail.php">Drop on Demand</a></li>
+                                            <li><a href="product-detail.php">High Definition</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Inspection</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">X-Ray Systems</a></li>
+                                            <li><a href="product-detail.php">Metal Detectors</a></li>
+                                            <li><a href="product-detail.php">Checkweighers</a></li>
+                                            <li><a href="product-detail.php">Vision Systems</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Packing</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">VFFS Machines</a></li>
+                                            <li><a href="product-detail.php">Flow Wrap</a></li>
+                                            <li><a href="product-detail.php">Carton Sealers</a></li>
+                                            <li><a href="product-detail.php">Pallet Wrappers</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Labelling</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">Label Applicators</a></li>
+                                            <li><a href="product-detail.php">Print & Apply</a></li>
+                                            <li><a href="product-detail.php">Rotary Labellers</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Handheld</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">EBS-250 Handjet</a></li>
+                                            <li><a href="product-detail.php">EBS-260 Handjet</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Conveyors</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">Belt Conveyors</a></li>
+                                            <li><a href="product-detail.php">Roller Systems</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Laser</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">CO2 Lasers</a></li>
+                                            <li><a href="product-detail.php">Fiber Lasers</a></li>
+                                            <li><a href="product-detail.php">UV Lasers</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Consumables</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">Inks & Solvents</a></li>
+                                            <li><a href="product-detail.php">Ribbons</a></li>
+                                            <li><a href="product-detail.php">Labels</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-menu-col">
+                                        <h4 class="mega-menu-title">Spares</h4>
+                                        <ul>
+                                            <li><a href="product-detail.php">Filters</a></li>
+                                            <li><a href="product-detail.php">Pumps</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mega-menu-footer">
+                                    <a href="products.php" class="view-all-link">
+                                        <span>Discover All Products</span>
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4.16669 10H15.8334M15.8334 10L10 4.16669M15.8334 10L10 15.8334"
+                                                stroke="white" stroke-width="1.66667" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="services.php">Services</a></li>
+                        <li><a href="">News & Events</a></li>
+                        <li class="<?php echo $current_page === 'blogs.php' ? 'active' : ''; ?>"><a href="blogs.php">Blogs</a></li>
+                        <li class="<?php echo $current_page === 'contact.php' ? 'active' : ''; ?>"><a
+                                href="contact.php">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <a href="products.php" class="header-btn d-none d-lg-block">Industrial Automation</a>
 
-                <div class="header-right d-flex align-items-center">
-                    <!-- Navigation bar for desktop users -->
-                    <nav class="d-none d-md-block" role="navigation">
-                        <ul class="d-flex flex-wrap">
-                            <li><a href="services.php" aria-label="Explore our services">Services</a></li>
-                            <li><a href="contact-us.php" aria-label="Contact us">Contact</a></li>
-                        </ul>
-                    </nav>
-
-                    <!-- Hamburger menu for mobile (trigger for offcanvas menu) -->
-                    <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas"
-                        aria-label="Click to open menu" aria-controls="burgerMenu" data-bs-target="#burgerMenu">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48" fill="none">
-                            <path d="M8 12H40M8 24H24M8 36H40" stroke="black" stroke-width="4" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
-                </div>
+                <button class="navbar-toggler d-xl-none" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#burgerMenu">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 7H25M5 15H25M5 23H25" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
