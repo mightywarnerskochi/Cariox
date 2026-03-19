@@ -46,7 +46,7 @@ include __DIR__ . '/includes/header.php';
                 <div class="action-footer">
                     <div class="meta-info">
                         <div class="meta-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="#4A5568" stroke-width="1.5"/><path d="M16 16C16 14.3431 14.2091 13 12 13C9.79086 13 8 14.3431 8 16" stroke="#4A5568" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="9" r="2" stroke="#4A5568" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
                             <span>Post By : Admin</span>
                         </div>
                         <div class="meta-item border-left-divider">
@@ -68,7 +68,7 @@ include __DIR__ . '/includes/header.php';
                         <h5>What is a Handjet EBS 260 Printer?</h5>
                         <div class="meta-info">
                             <div class="meta-item">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="#8A92A6" stroke-width="1.5"/><path d="M16 16C16 14.3431 14.2091 13 12 13C9.79086 13 8 14.3431 8 16" stroke="#8A92A6" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="9" r="2" stroke="#8A92A6" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 20px; height: 20px; object-fit: cover;">
                                 <span>Post By: Admin</span>
                             </div>
                             <div class="meta-item border-left-divider">
@@ -94,7 +94,7 @@ include __DIR__ . '/includes/header.php';
                         <h5>Benefits of Continuous Inkjet printing...</h5>
                         <div class="meta-info">
                             <div class="meta-item">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="#8A92A6" stroke-width="1.5"/><path d="M16 16C16 14.3431 14.2091 13 12 13C9.79086 13 8 14.3431 8 16" stroke="#8A92A6" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="9" r="2" stroke="#8A92A6" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 16px; height: 16px; object-fit: cover;">
                                 <span>Post By: Admin</span>
                             </div>
                             <div class="meta-item border-left-divider">
