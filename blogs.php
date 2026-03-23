@@ -37,7 +37,7 @@ include __DIR__ . '/includes/header.php';
             
             <div class="featured-main-blog">
                 <div class="img-wrapper">
-                    <img src="public/images/services/blog.jpg" alt="Featured Blog" class="img-fluid">
+                    <img src="public/images/blogs/1.jpg" alt="Featured Blog" width="1056" height="470" class="img-fluid">
                 </div>
                 <div class="content">
                     <h2>Introduction to Industrial Inkjet Printing and Inkjet Printers</h2>
@@ -46,7 +46,7 @@ include __DIR__ . '/includes/header.php';
                 <div class="action-footer">
                     <div class="meta-info">
                         <div class="meta-item">
-                            <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                            <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" >
                             <span>Post By : Admin</span>
                         </div>
                         <div class="meta-item border-left-divider">
@@ -54,21 +54,23 @@ include __DIR__ . '/includes/header.php';
                             <span>01 Jul, 2019</span>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-gradient">Learn More</a>
+                    <div class="btn-wrap">
+                        <a href="#" class="btn btn-gradient">Learn More</a>
+                    </div>
                 </div>
             </div>
 
             <div class="featured-sidebar-blogs">
-                <?php for($i=1; $i<=4; $i++): ?>
+                <?php for ($i = 1; $i <= 4; $i++): ?>
                 <div class="list-blog-item">
                     <div class="img-wrapper">
-                        <img src="public/images/services/blog-2.jpg" alt="Sidebar Blog" class="img-fluid">
+                        <img src="public/images/blogs/2.jpg" alt="Sidebar Blog" width="152" height="183" class="img-fluid">
                     </div>
                     <div class="content">
                         <h5>What is a Handjet EBS 260 Printer?</h5>
                         <div class="meta-info">
                             <div class="meta-item">
-                                <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 20px; height: 20px; object-fit: cover;">
+                                <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle">
                                 <span>Post By: Admin</span>
                             </div>
                             <div class="meta-item border-left-divider">
@@ -79,33 +81,39 @@ include __DIR__ . '/includes/header.php';
                         <a href="#" class="read-more-link">Read More</a>
                     </div>
                 </div>
-                <?php endfor; ?>
+                <?php
+endfor; ?>
             </div>
         </div>
 
         <div class="blog-grid-section">
             <div class="blog-grid">
-                <?php for($i=1; $i<=8; $i++): ?>
+                <?php for ($i = 1; $i <= 8; $i++): ?>
                 <div class="grid-blog-item">
-                    <div class="img-wrapper">
-                        <img src="public/images/services/blog.jpg" alt="Grid Blog" class="img-fluid">
-                    </div>
-                    <div class="content">
-                        <h5>Benefits of Continuous Inkjet printing...</h5>
-                        <div class="meta-info">
-                            <div class="meta-item">
-                                <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" style="width: 16px; height: 16px; object-fit: cover;">
-                                <span>Post By: Admin</span>
-                            </div>
-                            <div class="meta-item border-left-divider">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="#8A92A6" stroke-width="1.5"/><path d="M16 3V7M8 3V7M4 10H20" stroke="#8A92A6" stroke-width="1.5" stroke-linecap="round"/></svg>
-                                <span>01 Oct, 2021</span>
+                    <div class="blog-card">
+                        <div class="img-wrapper">
+                            <img src="public/images/blogs/3.jpg" width="359" height="270" alt="Grid Blog" class="img-fluid">
+                        </div>
+                        <div class="content">
+                            <h5>Benefits of Continuous Inkjet printing...</h5>
+                            <div class="meta-info">
+                                <div class="meta-item">
+                                    <img src="public/images/testimonial/1.png" alt="Admin" class="img-fluid rounded-circle" >
+                                    <span>Post By: Admin</span>
+                                </div>
+                                <div class="meta-item border-left-divider">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none"> <path d="M13.5 3H4.5C2.84315 3 1.5 4.34315 1.5 6V13.5C1.5 15.1569 2.84315 16.5 4.5 16.5H13.5C15.1569 16.5 16.5 15.1569 16.5 13.5V6C16.5 4.34315 15.1569 3 13.5 3Z" stroke="#666D84" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M6 1.5V4.5M12 1.5V4.5M1.5 7.5H16.5" stroke="#666D84" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>
+                                    <span>01 Oct, 2021</span>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="button-wrapper">
                         <a href="#" class="read-more-link">Read More</a>
                     </div>
                 </div>
-                <?php endfor; ?>
+                <?php
+endfor; ?>
             </div>
             
             <div class="load-more-btn text-center mt-5 pt-3">
