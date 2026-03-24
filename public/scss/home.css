@@ -53,7 +53,12 @@
   font-weight: 400;
   font-family: "Rubik", sans-serif;
   line-height: 160%;
-  font-size: 15px;
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  * {
+    font-size: 15px;
+  }
 }
 @media (min-width: 1350px) {
   * {
@@ -1003,12 +1008,17 @@ input[type=number] {
   background: linear-gradient(90deg, #FFBF00 0%, #F04149 53.37%, #5347CF 100%);
   color: #fff;
   line-height: normal;
-  padding: 15px 24px;
+  padding: 10px 17px;
   border-radius: 80px;
   display: inline-block;
   font-weight: 500;
   position: relative;
   transition: 0.3s ease all;
+}
+@media (min-width: 992px) {
+  .btn-gradient {
+    padding: 15px 24px;
+  }
 }
 .btn-gradient::after {
   width: 124px;

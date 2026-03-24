@@ -5,8 +5,12 @@
   font-weight: 400;
   font-family: $primary-font;
   line-height: 160%;
-  font-size: 15px;
+  font-size: 14px;
 
+
+  @include min(768) {
+    font-size: 15px;
+  }
 
   @include min(1350) {
     font-size: 17px;
@@ -1301,14 +1305,18 @@ input[type=number] {
   background: linear-gradient(90deg, #FFBF00 0%, #F04149 53.37%, #5347CF 100%);
   color: #fff;
   line-height: normal;
-
-  padding: 15px 24px;
+  padding: 10px 17px;
   border-radius: 80px;
   display: inline-block;
   font-weight: 500;
   position: relative;
 
   transition: 0.3s ease all;
+
+  @include min(992) {
+    padding: 15px 24px;
+
+  }
 
   &::after {
     width: 124px;

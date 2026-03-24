@@ -36,16 +36,25 @@
 
         justify-content: space-between;
 
-        margin-bottom: clamp(60px, 3.9584vw, 76px);
+        margin-bottom: clamp(20px, 3.9584vw, 76px);
 
         .featured-main-blog {
-            width: 66.072%;
             background: #fff;
             border-radius: 10px;
             border: 1px solid #97B4C7;
             transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
+            width: 64.072%;
+
+            @include max(991) {
+                margin-bottom: 20px;
+            }
+
+            @include min(1200) {
+                width: 66.072%;
+
+            }
 
             @include max(991) {
                 flex: 1 1 100%;
@@ -63,6 +72,12 @@
                     object-fit: cover;
                     border-radius: 8px;
                     transition: transform 0.5s ease;
+                    height: 200PX;
+
+                    @include min(992) {
+                        height: clamp(250px, 23vw, 470px);
+
+                    }
                 }
             }
 
@@ -71,14 +86,58 @@
             }
 
             .content {
-                padding: 0 24px;
+                padding: 0 16px;
+
+                @include min(992) {
+                    padding: 0 18px;
+                }
+
+                @include min(1200) {
+                    padding: 0 20px;
+                }
+
+                @include min(1350) {
+                    padding: 0 21px;
+                }
+
+                @include min(1440) {
+                    padding: 0 22px;
+                }
+
+                @include min(1600) {
+                    padding: 0 23px;
+                }
+
+                @include min(1900) {
+                    padding: 0 24px;
+                }
 
                 h2 {
-                    font-size: clamp(24px, 2.5vw, 48px);
+                    font-size: clamp(18px, 2.5vw, 48px);
                     // font-weight: 600;
-                    margin-bottom: 26px;
                     line-height: 108.333%;
                     color: $black;
+                    margin-bottom: 12px;
+
+                    @include min(1200) {
+                        margin-bottom: 18px;
+                    }
+
+                    @include min(1350) {
+                        margin-bottom: 20px;
+                    }
+
+                    @include min(1440) {
+                        margin-bottom: 22px;
+                    }
+
+                    @include min(1600) {
+                        margin-bottom: 24px;
+                    }
+
+                    @include min(1900) {
+                        margin-bottom: 26px;
+                    }
                 }
 
                 p {
@@ -103,8 +162,20 @@
                 border-radius: 0 0 10px 10px;
                 margin-top: auto;
 
+                @include max(991) {
+                    .meta-info {
+                        width: 60%;
+
+                    }
+                }
+
                 >div {
-                    padding: clamp(15px, 1.6vw, 30px);
+                    padding: 6px;
+
+                    @include min(992) {
+                        padding: clamp(15px, 1.6vw, 30px);
+
+                    }
 
                     +div {
                         border-left: 1px solid #97B4C7;
@@ -115,14 +186,29 @@
         }
 
         .featured-sidebar-blogs {
-            width: 31.667%;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            gap: clamp(12px, 1.2vw, 16px);
+            gap: 20px 2%;
+            width: 100%;
+
+            @include min(992) {
+                flex-wrap: wrap;
+                width: 33.5%;
+                gap: clamp(12px, 1.2vw, 16px);
+            }
+
+            @include min(1200) {
+                width: 31.667%;
+            }
 
             @include max(991) {
-                flex: 1 1 100%;
+                flex-wrap: wrap;
+            }
+
+            .img-wrapper {
+                @include max(991) {
+                    margin-bottom: clamp(10px, 1vw, 13px);
+                }
             }
 
             .list-blog-item {
@@ -131,16 +217,26 @@
                 justify-content: space-between;
                 align-items: center;
                 background: #fff;
-                padding: clamp(8px, 1vw, 16px);
-                padding-right: clamp(15px, 1.72vw, 33px);
+                padding: clamp(6px, 1vw, 13px) clamp(6px, 1.2vw, 16px);
+
                 border-radius: clamp(8px, 1vw, 10px);
                 border: 1px solid #EBEBEB;
                 transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-                @include max(480) {
-                    flex-direction: column;
-                    align-items: flex-start;
+                @include min(992) {
+                    padding: clamp(8px, 0.84vw, 16px);
+                    padding-right: clamp(15px, 1.7188vw, 33px);
                 }
+
+                @include max(991) {
+                    flex-wrap: wrap;
+                    width: 49%;
+                }
+
+                // @include max(480) {
+                //     flex-direction: column;
+                //     align-items: flex-start;
+                // }
 
                 &:hover {
                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
@@ -153,16 +249,24 @@
 
                 .img-wrapper {
                     flex-shrink: 0;
-                    width: 31.602%;
-                    height: 100%;
+                    width: 100%;
                     border-radius: clamp(6px, 1vw, 8px);
                     overflow: hidden;
+                    height: auto;
+
+
+
+                    @include min(992) {
+                        height: 100%;
+
+                        width: 31.602%;
+                    }
 
                     @include min(1900) {
                         height: 183px;
                     }
 
-                    @include max(480) {
+                    @include max(767) {
                         width: 100%;
                         aspect-ratio: 16/9;
                     }
@@ -177,29 +281,38 @@
                 }
 
                 .content {
-                    width: 66.321%;
+                    width: 100%;
+
+                    @include min(992) {
+                        width: 66.321%;
+
+                    }
 
                     h5 {
-                        font-size: clamp(14px, 1.1vw, 20px);
+                        font-size: clamp(13px, 1.1vw, 20px);
                         font-weight: 500;
                         margin-bottom: 20px;
 
                         color: $black;
 
+                        @include min(992) {
+                            margin-bottom: 15px;
+                        }
+
                         @include min(1200) {
-                            margin-bottom: 23px;
+                            margin-bottom: 20px;
                         }
 
                         @include min(1350) {
-                            margin-bottom: 27px;
+                            margin-bottom: 22px;
                         }
 
                         @include min(1440) {
-                            margin-bottom: 30px;
+                            margin-bottom: 25px;
                         }
 
                         @include min(1600) {
-                            margin-bottom: 33px;
+                            margin-bottom: 28px;
                         }
 
                         @include min(1900) {
@@ -208,7 +321,12 @@
                     }
 
                     .meta-info {
-                        margin-bottom: clamp(10px, 1.5vw, 15px);
+                        margin-bottom: 8px;
+
+                        @include min(1200) {
+                            margin-bottom: clamp(7px, 1.5vw, 15px);
+
+                        }
                     }
 
                     .read-more-link {
@@ -241,16 +359,50 @@
     .meta-info {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+
+        // gap: clamp(10px, 1.05vw, 20px);
+        gap: 6px;
+
+        @include max(575) {
+            // flex-wrap: wrap;
+        }
+
+        @include min(1200) {
+            gap: 6px;
+        }
+
+        @include min(1350) {
+            gap: 8px;
+        }
+
+        @include min(1440) {
+            gap: 9px;
+        }
+
+        @include min(1600) {
+            gap: 10px;
+        }
+
+        @include min(1900) {
+            gap: 20px;
+        }
 
         .meta-item {
             display: flex;
             align-items: center;
             color: #4F5762;
             font-size: clamp(12px, 1vw, 13px);
-            gap: 8px;
+            gap: 2px;
 
-            @include min(1440) {
+            @include max(575) {
+                width: 100%;
+            }
+
+            @include min(576) {
+                gap: 4px;
+            }
+
+            @include min(1200) {
                 gap: 8px;
             }
 
@@ -265,39 +417,112 @@
             span {
                 color: #666D84;
                 font-size: clamp(8px, 0.85vw, 16px);
-                line-height: 200%;
+                line-height: normal;
                 display: block;
 
             }
 
             &.border-left-divider {
                 position: relative;
-                padding-left: clamp(12px, 1.05vw, 20px);
 
-                &::before {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    background-color: #666D84;
-                    width: 1px;
-                    height: 75%;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    position: absolute;
+
+                @include min(576) {
+                    padding-left: 6px;
+                }
+
+
+                @include min(1350) {
+                    padding-left: 8px;
+                }
+
+                @include min(1440) {
+                    padding-left: 9px;
+                }
+
+                @include min(1600) {
+                    padding-left: 10px;
+                }
+
+                @include min(1900) {
+                    padding-left: 20px;
+                }
+
+                @include min(576) {
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        background-color: #666D84;
+                        width: 1px;
+                        height: 75%;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        position: absolute;
+                    }
                 }
             }
 
             svg {
                 flex-shrink: 0;
-                width: 18px;
-                height: 18px;
+                width: 12px;
+                height: 12px;
+
+                @include min(1200) {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                @include min(1350) {
+                    width: 15px;
+                    height: 15px;
+                }
+
+                @include min(1440) {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                @include min(1600) {
+                    width: 17px;
+                    height: 17px;
+                }
+
+                @include min(1900) {
+                    width: 18px;
+                    height: 18px;
+                }
             }
 
             img {
-                width: clamp(24px, 2vw, 30px);
-                height: clamp(24px, 2vw, 30px);
                 border-radius: 50%;
                 object-fit: cover;
+                width: 14px;
+                height: 14px;
+
+                @include min(1200) {
+                    width: 22px;
+                    height: 22px;
+                }
+
+                @include min(1350) {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                @include min(1440) {
+                    width: 26px;
+                    height: 26px;
+                }
+
+                @include min(1600) {
+                    width: 28px;
+                    height: 28px;
+                }
+
+                @include min(1900) {
+                    width: 30px;
+                    height: 30px;
+                }
             }
         }
     }
@@ -306,8 +531,8 @@
         font-size: clamp(13px, 1.2vw, 15px);
 
         img {
-            width: clamp(30px, 3vw, 40px);
-            height: clamp(30px, 3vw, 40px);
+            width: clamp(20px, 3vw, 40px);
+            height: clamp(20px, 3vw, 40px);
         }
 
 
@@ -317,13 +542,25 @@
         .blog-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: clamp(24px, 2.5vw, 46px) 2.3%;
+            gap: 20px 2%;
+
+            @include min(992) {
+                gap: clamp(24px, 2.4vw, 46px) 2.3%;
+
+            }
 
             .grid-blog-item {
-                width: 23.274%;
-                border-radius: clamp(8px, 1vw, 12px);
+                border-radius: 8px;
                 background: #fff;
-                border: 1px solid #97B4C7;
+                border: 1px solid #EBEBEB;
+                width: 49%;
+
+                @include min(992) {
+                    border: 1px solid #97B4C7;
+                    border-radius: clamp(8px, 1vw, 12px);
+                    width: 23.274%;
+
+                }
 
 
                 &:hover {
@@ -335,11 +572,15 @@
                 }
 
                 .blog-card {
-                    padding: clamp(10px, 1vw, 13px) clamp(12px, 1.2vw, 16px);
+                    padding: clamp(6px, 1vw, 13px) clamp(6px, 1.2vw, 16px);
                     transition: transform 0.3s ease;
                     display: flex;
                     flex-direction: column;
 
+                    @include min(992) {
+                        padding: clamp(10px, 1vw, 13px) clamp(12px, 1.2vw, 16px);
+
+                    }
 
                 }
 
@@ -347,10 +588,11 @@
                     border-radius: clamp(6px, 1vw, 8px);
                     overflow: hidden;
                     margin-bottom: clamp(10px, 1vw, 13px);
+                    aspect-ratio: 16/9;
 
                     img {
                         width: 100%;
-                        height: clamp(200px, 20vw, 270px);
+                        height: clamp(160px, 14.0625vw, 270px);
                         object-fit: cover;
                         transition: transform 0.5s ease;
                     }
@@ -362,7 +604,7 @@
                     flex-grow: 1;
 
                     h5 {
-                        font-size: clamp(18px, 1.2vw, 24px);
+                        font-size: clamp(13px, 1.2vw, 24px);
                         font-weight: 500;
                         margin-bottom: clamp(20px, 2.07vw, 44px);
                         color: $black;
@@ -370,23 +612,78 @@
                     }
 
                     .meta-info {
-                        margin-bottom: clamp(12px, 1vw, 16px);
 
                         .meta-item {
                             font-size: clamp(12px, 1vw, 13px);
 
                             &.border-left-divider {
-                                padding-left: clamp(12px, 1.2vw, 16px);
+                                @include min(992) {
+                                    padding-left: clamp(12px, 1.2vw, 16px);
+
+                                }
                             }
 
                             img {
-                                width: clamp(24px, 2vw, 30px);
-                                height: clamp(24px, 2vw, 30px);
+                                @include min(1200) {
+                                    width: 22px;
+                                    height: 22px;
+                                }
+
+                                @include min(1350) {
+                                    width: 24px;
+                                    height: 24px;
+                                }
+
+                                @include min(1440) {
+                                    width: 26px;
+                                    height: 26px;
+                                }
+
+                                @include min(1600) {
+                                    width: 28px;
+                                    height: 28px;
+                                }
+
+                                @include min(1900) {
+                                    width: 30px;
+                                    height: 30px;
+                                }
                             }
 
                             svg {
-                                width: 18px;
-                                height: 18px;
+                                flex-shrink: 0;
+                                width: 12px;
+                                height: 12px;
+
+                                @include min(992) {
+                                    width: 13px;
+                                    height: 13px;
+                                }
+
+                                @include min(1200) {
+                                    width: 14px;
+                                    height: 14px;
+                                }
+
+                                @include min(1350) {
+                                    width: 15px;
+                                    height: 15px;
+                                }
+
+                                @include min(1440) {
+                                    width: 16px;
+                                    height: 16px;
+                                }
+
+                                @include min(1600) {
+                                    width: 17px;
+                                    height: 17px;
+                                }
+
+                                @include min(1900) {
+                                    width: 18px;
+                                    height: 18px;
+                                }
                             }
                         }
                     }
@@ -445,7 +742,7 @@
     padding-top: clamp(40px, 4vw, 80px);
 
     .blog-header-content {
-        max-width: 900px;
+        max-width: 55.179%;
         margin: 0 auto;
         margin-bottom: clamp(30px, 4vw, 50px);
 
@@ -461,16 +758,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 27px;
 
             .meta-item {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                padding: 6px 16px;
-                border-radius: 50px;
-                font-size: 14px;
-                font-weight: 500;
+                padding: 7px 19px;
+                border-radius: 80px;
+
+                span {
+                    display: block;
+                    line-height: 100%;
+                }
 
                 &.author-pill {
                     background: #FFF1E6;
@@ -504,12 +804,29 @@
                 }
             }
         }
+
+    }
+
+    .blog-featured-img {
+        margin-bottom: clamp(30px, 4vw, 50px);
+        border-radius: 12px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 20px;
+
+        }
     }
 
     .blog-detail-layout {
         display: flex;
         flex-wrap: wrap;
         gap: clamp(30px, 4vw, 60px);
+
+
 
         .main-content {
             flex: 1 1 65%;
@@ -519,17 +836,6 @@
                 flex: 1 1 100%;
             }
 
-            .blog-featured-img {
-                margin-bottom: clamp(30px, 4vw, 50px);
-                border-radius: 12px;
-                overflow: hidden;
-
-                img {
-                    width: 100%;
-                    height: auto;
-                    object-fit: cover;
-                }
-            }
 
             .blog-text-content {
                 h4 {
