@@ -295,7 +295,7 @@ a:focus, a:active {
   }
 }
 
-.position, .product-videos::before, .product-gallery__thumbs .thumb::after,
+.position, .blog-detail-page:before, .product-videos::before, .product-gallery__thumbs .thumb::after,
 .product-gallery .product-thumb-slider .thumb::after, .services-page-main::before, .contact-page::before, .contact-page::after, .timeline picture::after, .reason-for-choosing::before, .customer-words .customer-avatar::after, .customer-words .testimonial-slide::after, .banner .banner-right .banner-media-slide::before, .banner .banner-left .banner-product-item picture:before, .banner::before, .footer-cariox .footer-cariox-menu ul li a::before,
 .footer-cariox .footer-cariox-quicklinks ul li a::before, .footer-copyright .policy-links li + li::before, .footer-copyright .footer-left p + ul::before,
 .footer-copyright .footer-left ul + p::before, .btn-gradient::after, label.error::after, .list ul li::before {
@@ -9000,6 +9000,17 @@ footer li {
   position: relative;
   padding-top: clamp(40px, 4vw, 80px);
 }
+.blog-detail-page:before {
+  left: 0;
+  top: 40%;
+  width: 100%;
+  height: 40%;
+  background: url(../images/blogs/bg.png);
+  background-size: cover;
+  z-index: -1;
+  background-position: center;
+  filter: blur(10px);
+}
 .blog-detail-page .blog-header-content {
   max-width: 55.179%;
   margin: 0 auto;
@@ -9070,23 +9081,28 @@ footer li {
 .blog-detail-page .blog-detail-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(30px, 4vw, 60px);
+  justify-content: space-between;
 }
 .blog-detail-page .blog-detail-layout .main-content {
-  flex: 1 1 65%;
-  width: 100%;
+  width: 57.71%;
 }
 @media (max-width: 991px) {
   .blog-detail-page .blog-detail-layout .main-content {
     flex: 1 1 100%;
   }
 }
+.blog-detail-page .blog-detail-layout .main-content .blog-text-content h3,
+.blog-detail-page .blog-detail-layout .main-content .blog-text-content h2 {
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 16px;
+}
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content h4 {
-  font-size: clamp(20px, 2vw, 24px);
+  font-size: clamp(16px, 2vw, 22px);
   font-weight: 600;
   margin-bottom: 16px;
   margin-top: clamp(20px, 3vw, 40px);
-  color: #111;
+  color: #000;
 }
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content h4:first-child {
   margin-top: 0;
@@ -9094,7 +9110,7 @@ footer li {
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content p {
   color: #555;
   line-height: 1.7;
-  margin-bottom: 20px;
+  margin-bottom: 23px;
   font-size: clamp(14px, 1.2vw, 16px);
 }
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content .process-images {
@@ -9109,8 +9125,9 @@ footer li {
 }
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content .process-images .process-img-box {
   flex: 1;
-  border: 1px solid #EBEBEB;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid #97B4C7;
+  background: #FFF;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -9119,8 +9136,10 @@ footer li {
 }
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content .process-images .process-img-box img {
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 4px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .blog-detail-page .blog-detail-layout .main-content .blog-text-content .process-images .process-img-box .img-caption {
   font-size: 14px;
@@ -9150,8 +9169,7 @@ footer li {
   font-weight: 600;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column {
-  flex: 1 1 30%;
-  width: 100%;
+  width: 33.232%;
 }
 @media (max-width: 991px) {
   .blog-detail-page .blog-detail-layout .sidebar-column {
@@ -9159,10 +9177,10 @@ footer li {
   }
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget {
-  background: #F9FAFB;
-  border-radius: 12px;
-  padding: clamp(20px, 2vw, 30px);
-  border: 1px solid #EBEBEB;
+  border-radius: 10px;
+  border: 1px solid #97B4C7;
+  background: #FFF;
+  padding: clamp(20px, 1.982vw, 38px);
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .widget-title {
   font-size: clamp(18px, 1.5vw, 22px);
@@ -9177,16 +9195,13 @@ footer li {
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item {
   display: flex;
+  padding: 15px;
   gap: 16px;
   align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #F7F8FA;
   text-decoration: none;
   transition: transform 0.3s ease;
-}
-.blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item:hover {
   transform: translateX(5px);
@@ -9196,9 +9211,9 @@ footer li {
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item .img-wrapper {
   flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
   overflow: hidden;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item .img-wrapper img {
@@ -9212,7 +9227,7 @@ footer li {
   position: relative;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item .content h5 {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
   color: #111;
   line-height: 1.4;
@@ -9221,11 +9236,8 @@ footer li {
   padding-right: 20px;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .sidebar-article-list .article-item .content .corner-arrow {
-  position: absolute;
-  right: 0;
-  bottom: -2px;
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9237,8 +9249,9 @@ footer li {
   stroke: #111;
 }
 .blog-detail-page .blog-detail-layout .sidebar-column .new-articles-widget .read-more-btn-gradient {
-  width: 100%;
-  border-radius: 50px;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-weight: 400;
 }
 
 .leftFixedBox {

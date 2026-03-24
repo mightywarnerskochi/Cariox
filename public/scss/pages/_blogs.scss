@@ -741,6 +741,20 @@
     position: relative;
     padding-top: clamp(40px, 4vw, 80px);
 
+    &:before {
+        @extend .position;
+        left: 0;
+        top: 40%;
+        width: 100%;
+        height: 40%;
+
+        background: url(../images/blogs/bg.png);
+        background-size: cover;
+        z-index: -1;
+        background-position: center;
+        filter: blur(10px);
+    }
+
     .blog-header-content {
         max-width: 55.179%;
         margin: 0 auto;
@@ -824,13 +838,12 @@
     .blog-detail-layout {
         display: flex;
         flex-wrap: wrap;
-        gap: clamp(30px, 4vw, 60px);
+        justify-content: space-between;
 
 
 
         .main-content {
-            flex: 1 1 65%;
-            width: 100%;
+            width: 57.71%;
 
             @include max(991) {
                 flex: 1 1 100%;
@@ -838,12 +851,21 @@
 
 
             .blog-text-content {
+
+                h3,
+                h2 {
+                    font-weight: 500;
+                    color: #000;
+                    margin-bottom: 16px;
+
+                }
+
                 h4 {
-                    font-size: clamp(20px, 2vw, 24px);
+                    font-size: clamp(16px, 2vw, 22px);
                     font-weight: 600;
                     margin-bottom: 16px;
                     margin-top: clamp(20px, 3vw, 40px);
-                    color: #111;
+                    color: #000;
 
                     &:first-child {
                         margin-top: 0;
@@ -853,7 +875,7 @@
                 p {
                     color: #555;
                     line-height: 1.7;
-                    margin-bottom: 20px;
+                    margin-bottom: 23px;
                     font-size: clamp(14px, 1.2vw, 16px);
                 }
 
@@ -868,8 +890,9 @@
 
                     .process-img-box {
                         flex: 1;
-                        border: 1px solid #EBEBEB;
-                        border-radius: 8px;
+                        border-radius: 10px;
+                        border: 1px solid #97B4C7;
+                        background: #FFF;
                         padding: 10px;
                         display: flex;
                         flex-direction: column;
@@ -878,8 +901,9 @@
 
                         img {
                             width: 100%;
-                            height: auto;
+                            height: 100%;
                             border-radius: 4px;
+                            object-fit: cover;
                         }
 
                         .img-caption {
@@ -920,18 +944,20 @@
         }
 
         .sidebar-column {
-            flex: 1 1 30%;
-            width: 100%;
+
+            width: 33.232%;
+
 
             @include max(991) {
                 flex: 1 1 100%;
             }
 
             .new-articles-widget {
-                background: #F9FAFB;
-                border-radius: 12px;
-                padding: clamp(20px, 2vw, 30px);
-                border: 1px solid #EBEBEB;
+                border-radius: 10px;
+                border: 1px solid #97B4C7;
+                background: #FFF;
+                padding: clamp(20px, 1.982vw, 38px);
+
 
                 .widget-title {
                     font-size: clamp(18px, 1.5vw, 22px);
@@ -947,17 +973,13 @@
 
                     .article-item {
                         display: flex;
+                        padding: 15px;
                         gap: 16px;
                         align-items: center;
-                        padding-bottom: 20px;
-                        border-bottom: 1px solid #E5E7EB;
+                        border-radius: 10px;
+                        background: #F7F8FA;
                         text-decoration: none;
                         transition: transform 0.3s ease;
-
-                        &:last-child {
-                            border-bottom: none;
-                            padding-bottom: 0;
-                        }
 
                         &:hover {
                             transform: translateX(5px);
@@ -969,9 +991,9 @@
 
                         .img-wrapper {
                             flex-shrink: 0;
-                            width: 80px;
-                            height: 80px;
-                            border-radius: 8px;
+                            width: 110px;
+                            height: 110px;
+                            border-radius: 10px;
                             overflow: hidden;
 
                             img {
@@ -986,7 +1008,7 @@
                             position: relative;
 
                             h5 {
-                                font-size: 15px;
+                                font-size: 20px;
                                 font-weight: 500;
                                 color: #111;
                                 line-height: 1.4;
@@ -996,11 +1018,9 @@
                             }
 
                             .corner-arrow {
-                                position: absolute;
-                                right: 0;
-                                bottom: -2px;
-                                width: 24px;
-                                height: 24px;
+
+                                width: 40px;
+                                height: 40px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
@@ -1017,8 +1037,8 @@
                 }
 
                 .read-more-btn-gradient {
-                    width: 100%;
-                    border-radius: 50px;
+                    width: fit-content;
+                    font-weight: 400;
                 }
             }
         }

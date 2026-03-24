@@ -64,63 +64,53 @@ include __DIR__ . '/includes/header.php';
         <div class="blog-detail-layout">
             <div class="main-content">
                 
-                <div class="blog-text-content">
-                    <h4>Inkjet Technology</h4>
+                <div class="blog-text-content features-list">
+                    <h3>Inkjet Technology</h3>
                     <p>Inkjet technology has turned into a household word through its quality and presence on the user desktop as a reliable, low cost, quick, and convenient technique for printing digital files. In spite of the fact that inkjet technology has been around since the 1950s in printing special things, the advent of the Internet and a wide scope of industrial applications is just presently becoming clear.</p>
 
-                    <h4>Simple in Theory; Complex in Practice</h4>
+                    <h3>Simple in Theory; Complex in Practice</h3>
                     <p>The essentially the inkjet head concept is simple since a jet is easily split in a uniform file of drops, some are given an electric charge and separated out to form an image. The drops copy a fixed check exactly due to guaranteed drops list, we make photo-quality images.</p>
                     <p>However, guaranteeing a smooth implementation and continuous ink stream drops are very well complex. The drops second non-image out drops could hit them, streaming therefore as a function of head, and they should be unassumingly precise only begin to take set position on field solid inkjet printing works. The gear currently to make this process scatter this tiny continuous printing jet streaming mechanism works by continuous jet phrases, over hardware out most accommodating.</p>
 
-                    <h4>Industrial Inkjet Printing</h4>
+                    <h3>Industrial Inkjet Printing</h3>
                     <p>Industrial inkjet printing is typically known utilizing the inkjet technology to print on or past materials on a fast speed line in a producing process. During present industrial conditions, the principle may get for the inkjet printers is working on pre-printed surfaces, those sources in profoundly test in terms of two reactive layers on line, and furthermore in a variety of fluids that react on its chemistries. The combination of industry inkjet printing technology with manufacturing environments completely cross appropriately adopting its printing capacities with modern commercial elements.</p>
                     <p>The potential meaning of small inkjet printing are not worthy and inestimable the provision of higher quality output, the decrease of manufacturing costs, charge of process to fit moving to digital directions.</p>
 
-                    <h4>Inkjet Technology for Industrial Printing</h4>
+                    <h3>Inkjet Technology for Industrial Printing</h3>
                     <p>Industrial inkjet printing systems and their printheads are comprehensively classified as either CIJ (Continuous Inkjet) or DOD (Drop on Demand) inkjet printing, with variations inside every classification. As the name infers, the DOD technology ejects ink drops from the printhead only when it is required. On the other hand, CIJ technology ejects drops from the printhead continuously. These drops are then either coordinated to the substrate as printing drops or to a collector for re-circulation and re-use.</p>
 
                     <div class="process-images">
                         <div class="process-img-box">
                             <img src="public/images/blogs/9.jpg" alt="Continuous Inkjet (CIJ)">
-                            <div class="img-caption">Continuous Inkjet (CIJ)</div>
                         </div>
                         <div class="process-img-box">
                             <img src="public/images/blogs/6.jpg" alt="Drop on Demand Inkjet (DOD)">
-                            <div class="img-caption">Drop on Demand Inkjet (DOD)</div>
                         </div>
                     </div>
 
                     <ul class="custom-arrow-list">
                         <li>
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="url(#paint0_linear)"/><path d="M10.5 7L15.5 12L10.5 17" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 12H5.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="paint0_linear" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F8A51C"/><stop offset="0.4" stop-color="#ED5D47"/><stop offset="1" stop-color="#A94FDA"/></linearGradient></defs></svg>
-                            </span>
+                     
                             <div class="text">
-                                <strong>Continuous inkjet printing (CIJ):</strong> Continuous inkjet printing (CIJ) is primarily used for coding and marking of products and packages.
+                             Continuous inkjet printing (CIJ) is primarily used for coding and marking of products and packages.
                             </div>
                         </li>
                         <li>
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="url(#paint0_linear_2)"/><path d="M10.5 7L15.5 12L10.5 17" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 12H5.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="paint0_linear_2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F8A51C"/><stop offset="0.4" stop-color="#ED5D47"/><stop offset="1" stop-color="#A94FDA"/></linearGradient></defs></svg>
-                            </span>
+                       
                             <div class="text">
-                                <strong>Drop-on-demand inkjet printing (DOD):</strong> Drop-on-demand (DOD) is a broad classification of inkjet printing technology where drops are ejected from the printhead only when required. There are two sub-categories of this DOD, one is Thermal inkjets and
+                               Drop-on-demand (DOD) is a broad classification of inkjet printing technology where drops are ejected from the printhead only when required. There are two sub-categories of this DOD, one is Thermal inkjets and
                             </div>
                         </li>
                         <li>
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="url(#paint0_linear_3)"/><path d="M10.5 7L15.5 12L10.5 17" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 12H5.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="paint0_linear_3" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F8A51C"/><stop offset="0.4" stop-color="#ED5D47"/><stop offset="1" stop-color="#A94FDA"/></linearGradient></defs></svg>
-                            </span>
+                  
                             <div class="text">
-                                <strong>Thermal inkjet technology (TIJ):</strong> In this technology, drops are formed by rapidly heating a resistive element in a small chamber containing the ink.
+                              In this technology, drops are formed by rapidly heating a resistive element in a small chamber containing the ink.
                             </div>
                         </li>
                         <li>
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="url(#paint0_linear_4)"/><path d="M10.5 7L15.5 12L10.5 17" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 12H5.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="paint0_linear_4" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F8A51C"/><stop offset="0.4" stop-color="#ED5D47"/><stop offset="1" stop-color="#A94FDA"/></linearGradient></defs></svg>
-                            </span>
+                 
                             <div class="text">
-                                <strong>Piezoelectric inkjet technology (PIJ):</strong> In this technology, the drop ejection is generated by a piezo electricity which changes volume or shape when an electric field is applied.
+                                In this technology, the drop ejection is generated by a piezo electricity which changes volume or shape when an electric field is applied.
                             </div>
                         </li>
                     </ul>
