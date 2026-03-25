@@ -44,9 +44,9 @@ include __DIR__ . '/includes/header.php';
                 <div class="sidebar-box">
                     <h3 class="sidebar-title">Our Services</h3>
                     <ul class="sidebar-services-list">
-                        <li><a href="#">Supply</a></li>
-                        <li class="active"><a href="#">Installation</a></li>
-                        <li><a href="#">Annual Maintenance</a></li>
+                        <li><a href="service-detail.php">Supply</a></li>
+                        <li class="active"><a href="service-detail.php">Installation</a></li>
+                        <li><a href="service-detail.php">Annual Maintenance</a></li>
                     </ul>
 
                     <div class="contact-now-card sidebar-contact-card">

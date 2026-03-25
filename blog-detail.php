@@ -146,7 +146,7 @@ foreach ($articles as $article): ?>
 endforeach; ?>
                     </div>
                     <div class="text-center mt-4">
-                        <button class="btn btn-gradient read-more-btn-gradient">Read more article</button>
+                        <a href="blogs.php" class="btn btn-gradient read-more-btn-gradient">Read more article</a>
                     </div>
                 </div>
             </div>

@@ -67,7 +67,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="card-image">
                         <img src="public/images/home/services/1.png" alt="Supply">
                     </div>
-                    <a href="contact.php" class="arrow-icon">
+                    <a href="service-detail.php" class="arrow-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 17L17 7M17 7H7M17 7V17" stroke="black" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -91,7 +91,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="card-image">
                         <img src="public/images/home/services/2.png" alt="Installation">
                     </div>
-                    <a href="contact.php" class="arrow-icon">
+                    <a href="service-detail.php" class="arrow-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 17L17 7M17 7H7M17 7V17" stroke="black" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -115,7 +115,7 @@ include __DIR__ . '/includes/header.php';
                     <div class="card-image">
                         <img src="public/images/home/services/3.png" alt="Annual Maintenance">
                     </div>
-                    <a href="contact.php" class="arrow-icon">
+                    <a href="service-detail.php" class="arrow-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 17L17 7M17 7H7M17 7V17" stroke="black" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />

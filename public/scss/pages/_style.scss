@@ -89,14 +89,20 @@
   .breadcrumb {
     display: inline-flex;
     align-items: center;
-    border: 1px solid #cfd8e3;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.78);
     font-size: 12px;
     color: #8a8f98;
-    padding: 6px 10px;
+
+    @include min(768) {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid #cfd8e3;
+      padding: 6px 10px;
+
+    }
+
     gap: 5px;
     margin-bottom: 25px;
+    max-width: 100%;
 
     @include min(768) {
       gap: 10px;
@@ -108,7 +114,7 @@
     a {
       color: #8a8f98;
       text-decoration: none;
-
+      flex-shrink: 0;
     }
 
     svg {
@@ -158,6 +164,22 @@
 
     span:last-child {
       color: #f04a52;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+
+      svg {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 7px;
+        margin-bottom: 3px;
+
+        @include min(768) {
+          margin-right: 12px;
+        }
+      }
     }
   }
 

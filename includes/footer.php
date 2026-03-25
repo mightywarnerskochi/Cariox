@@ -17,23 +17,23 @@
                             <li><a href="index.php">Home</a></li>
                             <li><a href="about.php">About Us</a></li>
                             <li><a href="products.php">Products</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">News & Events</a></li>
-                            <li><a href="#">Blogs</a></li>
+                            <li><a href="services.php">Services</a></li>
+                            <li><a href="blogs.php">News & Events</a></li>
+                            <li><a href="blogs.php">Blogs</a></li>
                             <li><a href="contact.php">Contact Us</a></li>
                         </ul>
                     </div>
                     <div class="footer-cariox-quicklinks">
                         <span>Quick Links</span>
                         <ul>
-                            <li><a href="#">X-Ray Inspection System</a></li>
-                            <li><a href="#">Food Inspection System</a></li>
-                            <li><a href="#">Continuous Inkjet Printer</a></li>
-                            <li><a href="#">Portable Inkjet Printer</a></li>
-                            <li><a href="#">Metal Detector Machine</a></li>
-                            <li><a href="#">EBS 260 handheld inkjet printer</a></li>
-                            <li><a href="#">EBS 250 handheld inkjet printer</a></li>
-                            <li><a href="#">EBS 6900 Continuous Inkjet Printer</a></li>
+                            <li><a href="product-detail.php">X-Ray Inspection System</a></li>
+                            <li><a href="product-detail.php">Food Inspection System</a></li>
+                            <li><a href="product-detail.php">Continuous Inkjet Printer</a></li>
+                            <li><a href="product-detail.php">Portable Inkjet Printer</a></li>
+                            <li><a href="product-detail.php">Metal Detector Machine</a></li>
+                            <li><a href="product-detail.php">EBS 260 handheld inkjet printer</a></li>
+                            <li><a href="product-detail.php">EBS 250 handheld inkjet printer</a></li>
+                            <li><a href="product-detail.php">EBS 6900 Continuous Inkjet Printer</a></li>
                         </ul>
                     </div>
                     <div class="footer-cariox-contact">
@@ -211,7 +211,7 @@
                 <span>Whatsapp</span>
             </a></li>
         <li>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#siteEnquiryForm"
+            <button type="button" data-bs-toggle="modal" data-bs-target="#siteGeneralEnquiryForm"
                 aria-label="Open enquiry form">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 512 513" fill="none">
                     <path
@@ -265,7 +265,7 @@
         </a>
     </div>
     <div class="QuickSideRightBar QuickSideRightBarEnquiry">
-        <a data-bs-toggle="modal" data-bs-target="#siteEnquiryForm" role="button" aria-label="Open enquiry form">
+        <a data-bs-toggle="modal" data-bs-target="#siteGeneralEnquiryForm" role="button" aria-label="Open enquiry form">
             <div class="iconBox">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 512 513" fill="none">
                     <path
@@ -279,6 +279,8 @@
 </div>
 
 <?php include __DIR__ . '/enquiry-popup.php'; ?>
+<?php include __DIR__ . '/general-enquiry-popup.php'; ?>
+<?php include __DIR__ . '/download-brochure-popup.php'; ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.0/slick.min.js"></script> -->

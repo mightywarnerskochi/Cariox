@@ -67,7 +67,7 @@ include __DIR__ . '/includes/header.php';
                             width="120" height="51"></div>
                     <button class="btn btn-gradient" data-bs-toggle="modal" data-bs-target="#siteEnquiryForm"
                         role="button" aria-label="Open enquiry form">Enquire Now</button>
-                    <button class="btn-brochure">Download Brochure</button>
+                    <button class="btn-brochure"  data-bs-toggle="modal" data-bs-target="#downloadBrochureForm" role="button" aria-label="Open enquiry form">Download Brochure</button>
                     <a href="https://wa.me/+971545864310?text=Can%20I%20get%20more%20details%20about%20your%20service?"
                         class="btn-whatsapp" target="_blank">
                         <svg viewBox="0 0 24 24">

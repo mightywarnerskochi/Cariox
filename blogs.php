@@ -55,7 +55,7 @@ include __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="btn-wrap">
-                        <a href="#" class="btn btn-gradient">Learn More</a>
+                        <a href="blog-detail.php" class="btn btn-gradient">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@ include __DIR__ . '/includes/header.php';
                                 <span>01 Sep, 2021</span>
                             </div>
                         </div>
-                        <a href="#" class="read-more-link">Read More</a>
+                        <a href="blog-detail.php" class="read-more-link">Read More</a>
                     </div>
                 </div>
                 <?php

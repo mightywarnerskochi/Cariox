@@ -22,7 +22,7 @@ include __DIR__ . '/includes/header.php';
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                         been
                         the industry's standard dummy text ever since the 1500s.</p>
-                    <a href="" class="btn btn-border-gradient">Learn More</a>
+                    <a href="about.php" class="btn btn-border-gradient">Learn More</a>
                 </div>
                 <div class="clients-and-reviews d-flex flex-wrap align-items-center">
                     <div class="clients d-flex align-items-md-center">
@@ -258,7 +258,7 @@ include __DIR__ . '/includes/header.php';
                             centuries, but also the leap into electronic typesetting, remaining essentially
                             unchanged. 
                         </p>
-                        <a href="#" class="btn btn-gradient">Learn More</a>
+                        <a href="about.php" class="btn btn-gradient">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -278,7 +278,7 @@ include __DIR__ . '/includes/header.php';
                 been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                 galley of type and scrambled it to make a type specimen book.
             </p>
-            <a href="#" class="btn btn-gradient">Learn More</a>
+            <a href="services.php" class="btn btn-gradient">Learn More</a>
         </div>
         <div class="special-services-wrapper">
             <div class="special-service-card card-purple">
@@ -639,7 +639,7 @@ include __DIR__ . '/includes/header.php';
                         05 Oct 2019
                     </span>
                     <h3>Astropack Gulf Exhibiting in Gulfood Manufacturing 2019</h3>
-                    <a href="#" class="btn btn-gradient">Learn More</a>
+                    <a href="blogs.php" class="btn btn-gradient">Learn More</a>
                 </div>
             </div>
             <div class="news-card">
@@ -659,7 +659,7 @@ include __DIR__ . '/includes/header.php';
                         05 Oct 2019
                     </span>
                     <h3>Astropack Gulf Exhibiting in Gulfood Manufacturing 2019</h3>
-                    <a href="#" class="btn btn-gradient">Learn More</a>
+                    <a href="blogs.php" class="btn btn-gradient">Learn More</a>
                 </div>
             </div>
             <div class="news-card">
@@ -679,7 +679,7 @@ include __DIR__ . '/includes/header.php';
                         05 Oct 2019
                     </span>
                     <h3>Astropack Gulf Exhibiting in Gulfood Manufacturing 2019</h3>
-                    <a href="#" class="btn btn-gradient">Learn More</a>
+                    <a href="blogs.php" class="btn btn-gradient">Learn More</a>
                 </div>
             </div>
             <div class="news-card">

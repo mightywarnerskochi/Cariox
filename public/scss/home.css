@@ -2873,12 +2873,23 @@ footer li {
 }
 .banner > SVG {
   position: absolute;
-  bottom: 0;
   width: 87%;
   height: -moz-fit-content;
   height: fit-content;
   left: 50%;
   transform: translateX(-50%);
+  margin-left: -10px;
+  bottom: 3%;
+}
+@media (min-width: 1200px) {
+  .banner > SVG {
+    bottom: 3%;
+  }
+}
+@media (min-width: 1350px) {
+  .banner > SVG {
+    bottom: 6%;
+  }
 }
 .banner .container-ctn {
   padding-bottom: clamp(15px, 1.9vw, 36px);
@@ -2942,7 +2953,7 @@ footer li {
 }
 .banner .banner-left .clients-and-reviews {
   display: flex;
-  gap: clamp(15px, 1.79vw, 34px);
+  gap: 12px;
   margin-bottom: 20px;
   margin-top: 26px;
 }
@@ -2954,6 +2965,7 @@ footer li {
 @media (min-width: 992px) {
   .banner .banner-left .clients-and-reviews {
     margin-top: 30px;
+    gap: 15px;
   }
 }
 @media (min-width: 1200px) {
@@ -2963,6 +2975,7 @@ footer li {
 }
 @media (min-width: 1350px) {
   .banner .banner-left .clients-and-reviews {
+    gap: clamp(15px, 1.79vw, 34px);
     margin-top: 34px;
     margin-bottom: clamp(50px, 5.9vw, 113px);
   }

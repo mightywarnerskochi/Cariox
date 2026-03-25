@@ -43,7 +43,7 @@ include __DIR__ . '/includes/header.php';
                             <input type="email" name="email" placeholder="Email" >
                         </div>
                         <div class="formGroup">
-                                <input type="tel" name="phone" placeholder="Phone" >
+                                <input type="tel" name="phone" placeholder="Phone" class="phone_number" >
                             </label>
                         </div>
                         <div class="formGroup">

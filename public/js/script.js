@@ -1061,55 +1061,55 @@ function initializePhoneInput(selector) {
     });
     shippingFormWrapper._iti = phoneInput;
 
-      // Auto-insert default country code on load
-      let initialDialCode = phoneInput.getSelectedCountryData().dialCode;
-      let $input = $(selector + ' .phone_number');
-      $input.attr('data-dial-code', initialDialCode);
-      
-      if (!$input.val()) {
-          $input.val('+' + initialDialCode);
+    // Auto-insert default country code on load
+    let initialDialCode = phoneInput.getSelectedCountryData().dialCode;
+    let $input = $(selector + ' .phone_number');
+    $input.attr('data-dial-code', initialDialCode);
+
+    if (!$input.val()) {
+      $input.val('+' + initialDialCode);
+    }
+
+    $input.on('input', function () {
+      let val = $(this).val();
+      let valRaw = val.replace(/(?!^\+)[^\d]/g, '');
+      let digitsOnly = valRaw.replace(/\D/g, '');
+      if (digitsOnly.length > 15) {
+        valRaw = (valRaw.charAt(0) === '+' ? '+' : '') + digitsOnly.substring(0, 15);
+        $(this).val(valRaw);
+      } else if (valRaw.length > 16) {
+        $(this).val(valRaw.substring(0, 16));
+      }
+    });
+    $input.on('blur', function () {
+      contactPhone(selector, phoneInput);
+    });
+    shippingFormWrapper.addEventListener('countrychange', function () {
+      let newDialCodeData = phoneInput.getSelectedCountryData();
+      let newDialCode = '+' + newDialCodeData.dialCode;
+      let oldDialCode = '+' + $input.attr('data-dial-code');
+
+      let currentVal = $input.val() || '';
+
+      if (currentVal.startsWith(oldDialCode)) {
+        // Replace old dial code with new dial code
+        currentVal = currentVal.replace(oldDialCode, newDialCode);
+      } else if (!currentVal.startsWith('+')) {
+        // Prepend new dial code if it lacks a plus
+        currentVal = newDialCode + currentVal.replace(/[^\d]/g, '');
+      } else {
+        // It has a plus, but not the old dial code (user changed it manually wildly).
+        // Just replace the whole thing with the new dial code to be safe.
+        currentVal = newDialCode;
       }
 
-      $input.on('input', function () {
-        let val = $(this).val();
-        let valRaw = val.replace(/(?!^\+)[^\d]/g, '');
-        let digitsOnly = valRaw.replace(/\D/g, '');
-        if (digitsOnly.length > 15) {
-          valRaw = (valRaw.charAt(0) === '+' ? '+' : '') + digitsOnly.substring(0, 15);
-          $(this).val(valRaw);
-        } else if (valRaw.length > 16) {
-           $(this).val(valRaw.substring(0, 16));
-        }
-      });
-      $input.on('blur', function () {
-        contactPhone(selector, phoneInput);
-      });
-      shippingFormWrapper.addEventListener('countrychange', function() {
-        let newDialCodeData = phoneInput.getSelectedCountryData();
-        let newDialCode = '+' + newDialCodeData.dialCode;
-        let oldDialCode = '+' + $input.attr('data-dial-code');
-        
-        let currentVal = $input.val() || '';
-        
-        if (currentVal.startsWith(oldDialCode)) {
-            // Replace old dial code with new dial code
-            currentVal = currentVal.replace(oldDialCode, newDialCode);
-        } else if (!currentVal.startsWith('+')) {
-            // Prepend new dial code if it lacks a plus
-            currentVal = newDialCode + currentVal.replace(/[^\d]/g, '');
-        } else {
-            // It has a plus, but not the old dial code (user changed it manually wildly).
-            // Just replace the whole thing with the new dial code to be safe.
-            currentVal = newDialCode;
-        }
+      $input.val(currentVal);
+      $input.attr('data-dial-code', newDialCodeData.dialCode);
 
-        $input.val(currentVal);
-        $input.attr('data-dial-code', newDialCodeData.dialCode);
-        
-        // trigger blur to format
-        contactPhone(selector, phoneInput);
-      });
-    }
+      // trigger blur to format
+      contactPhone(selector, phoneInput);
+    });
+  }
 }
 
 function contactPhone(selector, phoneInput) {
@@ -1119,7 +1119,7 @@ function contactPhone(selector, phoneInput) {
   // fallback to the raw input value so we don't clear out what the user typed.
   let rawVal = $(selector + ' .phone_number').val() || '';
   if (!phoneNumber && rawVal) {
-      phoneNumber = rawVal;
+    phoneNumber = rawVal;
   }
 
   // Remove all non-digit characters except the leading +
@@ -1132,7 +1132,7 @@ function contactPhone(selector, phoneInput) {
   } else {
     // If it doesn't start with +, prepend the dial code explicitly
     let countryCode = phoneInput.getSelectedCountryData().dialCode;
-    let localNumber = phoneNumber.replace(/[^\d]/g, ''); 
+    let localNumber = phoneNumber.replace(/[^\d]/g, '');
     phoneNumber = `+${countryCode}${localNumber}`;
   }
 
@@ -1147,7 +1147,8 @@ function contactPhone(selector, phoneInput) {
 
 
 initializePhoneInput(".sidebar-enquire-form");
-initializePhoneInput("#contactForm");
-initializePhoneInput("#contactPageForm");
-initializePhoneInput("#careerForm");
+initializePhoneInput(".contact-page__form");
+initializePhoneInput("#downloadBrochureForm");
+initializePhoneInput("#siteGeneralEnquiryForm");
+initializePhoneInput("#siteEnquiryForm");
 initializePhoneInput("#productEnquiryForm");

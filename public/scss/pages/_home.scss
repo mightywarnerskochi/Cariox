@@ -50,11 +50,20 @@
         }
 
         position: absolute;
-        bottom: 0;
         width: 87%;
         height: fit-content;
         left: 50%;
         transform: translateX(-50%);
+        margin-left: -10px;
+        bottom: 3%;
+
+        @include min(1200) {
+            bottom: 3%;
+        }
+
+        @include min(1350) {
+            bottom: 6%;
+        }
 
         //  @include min(1440){width: 1560px;}
         //  @include min(1600){width: 1570px;}
@@ -143,16 +152,18 @@
 
         .clients-and-reviews {
             display: flex;
-            gap: clamp(15px, 1.79vw, 34px);
+            gap: 12px;
             margin-bottom: 20px;
             margin-top: 26px;
 
             @include min(768) {
                 margin-top: 28px;
+
             }
 
             @include min(992) {
                 margin-top: 30px;
+                gap: 15px;
             }
 
             @include min(1200) {
@@ -160,6 +171,7 @@
             }
 
             @include min(1350) {
+                gap: clamp(15px, 1.79vw, 34px);
                 margin-top: 34px;
                 margin-bottom: clamp(50px, 5.9vw, 113px);
             }
@@ -1649,7 +1661,7 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                
+
 
                 p {
                     font-size: clamp(12px, 1vw, 14px);

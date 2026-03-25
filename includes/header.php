@@ -176,8 +176,8 @@ switch ($current_page) {
                                 </div>
                             </div>
                         </li>
-                        <li><a href="services.php">Services</a></li>
-                        <li><a href="">News & Events</a></li>
+                        <li class="<?php echo $current_page === 'services.php' ? 'active' : ''; ?>"><a href="services.php">Services</a></li>
+                        <li class="<?php echo $current_page === 'blogs.php' ? 'active' : ''; ?>"><a href="blogs.php">News & Events</a></li>
                         <li class="<?php echo $current_page === 'blogs.php' ? 'active' : ''; ?>"><a href="blogs.php">Blogs</a></li>
                         <li class="<?php echo $current_page === 'contact.php' ? 'active' : ''; ?>"><a
                                 href="contact.php">Contact Us</a></li>
