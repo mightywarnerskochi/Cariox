@@ -34,8 +34,4 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/scss/**
-            **/*.scss
-            **/*.map
-            iploy.yml
             deploy.yml
