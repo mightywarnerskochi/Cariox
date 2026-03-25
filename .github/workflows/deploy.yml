@@ -10,7 +10,6 @@ on:
         type: choice
         options:
           - production
-          - staging
 
 jobs:
   deploy:
@@ -29,7 +28,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ./
           port: 21
-          protocol: ftp
+          secure: false
           exclude: |
             **/.git*
             **/.git*/**
