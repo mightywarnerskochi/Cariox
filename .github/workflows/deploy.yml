@@ -1,80 +1,57 @@
-name: Manual Deployment
+name: Deploy to cPanel
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: Environment to deploy to
-        required: true
-        default: production
-        type: choice
-        options:
-          - production
-
-concurrency:
-  group: deploy-${{ github.event.inputs.environment }}
-  cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy Laravel App
+  ftp-deploy:
+    name: Upload files via FTP
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    timeout-minutes: 120
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Deploy Laravel app to candoo
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          node-version: 22
-          cache: npm
+          server: ${{ secrets.FTP_HOST || vars.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || vars.FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: ./
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/tests/**
+            **/.env
+            **/.env.example
+            **/README.md
+            **/docs/**
+            **/public/**
+            **/storage/framework/cache/**
+            **/storage/framework/sessions/**
+            **/storage/framework/views/**
+            **/storage/logs/**
+            **/bootstrap/cache/*.php
+          dangerous-clean-slate: false
 
-      - name: Install frontend dependencies
-        run: npm ci
-
-      - name: Build frontend assets
-        run: npm run build
-
-      - name: Create deployment archive
-        run: |
-          tar \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='node_modules' \
-            --exclude='vendor' \
-            --exclude='tests' \
-            --exclude='.env' \
-            --exclude='storage/*.key' \
-            -czf release.tar.gz .
-
-      - name: Upload release archive
-        uses: appleboy/scp-action@v0.1.7
+      - name: Deploy public directory to public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT || 22 }}
-          source: release.tar.gz
-          target: /tmp
+          server: ${{ secrets.FTP_HOST || vars.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME || vars.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD || vars.FTP_PASSWORD }}
+          protocol: ftp
+          server-dir: /public_html/
+          local-dir: ./public/
+          exclude: |
+            **/storage/framework/cache/**
+            **/storage/framework/sessions/**
+            **/storage/framework/views/**
+            **/storage/logs/**
+          dangerous-clean-slate: false
 
-      - name: Run Laravel deployment
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: ${{ secrets.DEPLOY_PORT || 22 }}
-          script_stop: true
-          script: |
-            set -e
-            mkdir -p ${{ secrets.DEPLOY_PATH }}
-            cd ${{ secrets.DEPLOY_PATH }}
-            tar -xzf /tmp/release.tar.gz -C ${{ secrets.DEPLOY_PATH }}
-            rm -f /tmp/release.tar.gz
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            php artisan migrate --force
-            php artisan optimize:clear
-            php artisan storage:link || true
-            php artisan optimize
