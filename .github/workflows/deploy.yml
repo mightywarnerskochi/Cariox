@@ -41,14 +41,7 @@ jobs:
             **/node_modules/**
             **/tests/**
             **/.env
-            **/.env.example
-            **/README.md
-            **/docs/**
-            
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
             **/storage/logs/**
-            **/bootstrap/cache/*.php
+      
           dangerous-clean-slate: false
 
