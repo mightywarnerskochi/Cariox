@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /*.html
+Disallow: /*.shtml
+Disallow: /*.htm
+Disallow: /*?l=
+Disallow: /cgi-bin/
+
+Site Map URL: 
