@@ -1,0 +1,1185 @@
+
+/* ============================================================
+   MAIN SCRIPT
+============================================================ */
+
+
+
+
+// ==========What we offer========================
+document.addEventListener('DOMContentLoaded', function () {
+
+  const letterEls = document.querySelectorAll('.tabLetter');
+  const buttons = document.querySelectorAll('#offerTabs button');
+
+  function updateLetter(btn) {
+    if (!btn || !letterEls.length) return;
+
+    const letter = btn.textContent.trim().charAt(0);
+    letterEls.forEach(el => {
+      el.textContent = letter;
+    });
+  }
+
+  // init on load
+  updateLetter(document.querySelector('#offerTabs button.active'));
+
+  // update on click
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      updateLetter(this);
+    });
+  });
+
+  const counterEls = document.querySelectorAll('[data-counter-target]');
+
+  if (counterEls.length) {
+    const animateCounter = (el) => {
+      const target = parseInt(el.dataset.counterTarget || el.textContent, 10);
+      if (Number.isNaN(target)) return;
+
+      const duration = 1200;
+      const startTime = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        el.textContent = Math.floor(progress * target);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.4 });
+
+    counterEls.forEach((el) => {
+      el.textContent = '0';
+      counterObserver.observe(el);
+    });
+  }
+
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  /* ------------------------------
+    0. Banner
+  ------------------------------ */
+  if (document.querySelector('.heroSwiper')) {
+    const swiper = new Swiper('.heroSwiper', {
+      slidesPerView: 1,
+      loop: true,
+      on: {
+        slideChangeTransitionStart() {
+          resetAll();
+        },
+        slideChangeTransitionEnd() {
+          playActiveVideo();
+          setActiveFooter();
+        }
+      }
+    });
+
+    const footerItems = document.querySelectorAll('.hero-item');
+
+    function resetAll() {
+      swiper.el.querySelectorAll('video').forEach(v => {
+        v.pause();
+        v.currentTime = 0;
+      });
+
+      document.querySelectorAll('.progress-bar span').forEach(p => {
+        p.style.width = '0%';
+      });
+
+      footerItems.forEach(i => i.classList.remove('active'));
+    }
+
+    function setActiveFooter() {
+      const realIndex = swiper.realIndex;
+      if (footerItems[realIndex]) {
+        footerItems[realIndex].classList.add('active'); // Added check to prevent undefined error
+      }
+    }
+
+    function playActiveVideo() {
+      const slide = swiper.slides[swiper.activeIndex];
+      const video = slide.querySelector('video');
+      // Added check for footerItems to avoid errors
+      const footerItem = footerItems[swiper.realIndex];
+      const progress = footerItem ? footerItem.querySelector('.progress-bar span') : null;
+
+      if (!video) return;
+
+      video.play();
+
+      video.ontimeupdate = () => {
+        if (progress) {
+          progress.style.width = (video.currentTime / video.duration) * 100 + '%';
+        }
+      };
+
+      video.addEventListener('playing', () => {
+        setTimeout(() => updateMenuColor(video), 200);
+      }, {
+        once: true
+      });
+
+
+      video.onended = () => {
+        swiper.slideNext();
+      };
+    }
+
+    // initial
+    setActiveFooter();
+    playActiveVideo();
+
+    footerItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const index = parseInt(item.dataset.index, 10);
+        swiper.slideToLoop(index);
+      });
+    });
+
+
+
+    function getBrightness(pixels) {
+      let total = 0;
+
+      for (let i = 0; i < pixels.length; i += 4) {
+        total +=
+          0.299 * pixels[i] +
+          0.587 * pixels[i + 1] +
+          0.114 * pixels[i + 2];
+      }
+
+      return total / (pixels.length / 4);
+    }
+
+    function updateMenuColor(video) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = 80;
+      canvas.height = 40;
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      const brightness = getBrightness(pixels);
+
+      const header = document.querySelector('header');
+
+      // realistic cinematic threshold
+      if (brightness < 150) {
+        header.classList.add('light');
+        header.classList.remove('dark');
+      } else {
+        header.classList.add('dark');
+        header.classList.remove('light');
+      }
+    }
+  }
+
+
+  // ===================video work============
+
+
+  const workSection = document.querySelector('.work-section');
+
+  if (workSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Logic starts when section is visible
+          startVideoLogic();
+        }
+      });
+    }, {
+      threshold: 0.1
+    }); // Trigger when 10% of the section is visible
+
+    observer.observe(workSection);
+  }
+
+  function startVideoLogic() {
+    document.querySelectorAll('.hero-video').forEach(video => {
+      // Ensure muted is set (required for JS play)
+      video.muted = true;
+
+      // 1. Force play immediately
+      video.play().catch(e => console.log("Play blocked until user interaction"));
+
+      // 2. Prevent pausing
+      video.addEventListener('pause', () => {
+        video.play();
+      });
+
+      // 3. Prevent stuck state
+      video.addEventListener('waiting', () => {
+        video.play();
+      });
+
+      // 4. Handle visibility changes
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          video.play();
+        }
+      });
+    });
+  }
+
+
+  /* ------------------------------
+     1. Sticky Header & Bottom Menu
+  ------------------------------ */
+  const header = document.getElementById("header") || document.querySelector("header");
+  const bottomMenu = document.querySelector(".bottomFixedMenu");
+
+  if (header || bottomMenu) {
+    window.addEventListener("scroll", () => {
+      const scrolled = window.scrollY >= 220;
+
+      if (header) {
+        header.classList.toggle("scrolled", scrolled);
+        header.classList.toggle("sticky", scrolled);
+      }
+
+      if (bottomMenu) {
+        bottomMenu.classList.toggle("visible", scrolled);
+      }
+    });
+  }
+
+
+  /* ============================================================
+     2. Slick Sliders
+  ============================================================ */
+
+  // Helper: generic progress slider initializer
+  $(document).ready(function () {
+
+    const slider = $('.what-we-offer-slider');
+
+    if (slider.length) {
+      slider.slick({
+        dots: false,
+        arrows: false,
+        infinite: true,
+        autoplay: true,
+        slidesToShow: 1,
+      });
+
+      // Get number of slick slides
+      const totalSlides = slider.slick("getSlick").slideCount;
+
+      // Build steps dynamically
+      const stepsContainer = document.querySelector('.steps-list');
+      if (stepsContainer) {
+        for (let i = 1; i <= totalSlides; i++) {
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${i}</span>`;
+          if (i === 1) li.classList.add("active");
+          stepsContainer.appendChild(li);
+        }
+      }
+
+      document.querySelectorAll(".what-we-offer-item").forEach((slide, index) => {
+        const slideNum = slide.querySelector(".slide-number");
+        if (slideNum) slideNum.textContent = String(index).padStart(2, '0');
+      });
+
+      const lineFill = document.querySelector(".line-fill");
+
+      if (lineFill) {
+        // ========================
+        // FIX: INITIAL PROGRESS
+        // ========================
+        lineFill.style.width = (0 / (totalSlides - 1)) * 100 + "%";
+
+
+        // Update on slide change
+        slider.on('afterChange', function (event, slick, current) {
+
+          document.querySelectorAll(".steps-list li").forEach((li, index) => {
+            li.classList.toggle("active", index === current);
+          });
+
+          const percentage = (current / (totalSlides - 1)) * 100;
+          lineFill.style.width = percentage + "%";
+        });
+      }
+    }
+
+    // initialize banner product slick
+    const bannerSlider = $('.banner-product-slider');
+    const bannerMediaSlider = $('.banner-media-slider');
+
+    if (bannerSlider.length) {
+      bannerSlider.slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: false,
+        arrows: true,
+        prevArrow: $('.banner-product-wrapper .prev'),
+        nextArrow: $('.banner-product-wrapper .next'),
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        asNavFor: '.banner-media-slider',
+        cssEase: 'linear',
+      });
+    }
+
+
+    if (bannerMediaSlider.length) {
+      let isPlaying = true;
+      const ensureVideoPlay = function (videoEl) {
+        if (!videoEl) return;
+        videoEl.muted = true;
+        videoEl.playsInline = true;
+
+        const tryPlay = () => {
+          videoEl.play().catch(() => { });
+        };
+
+        if (videoEl.readyState >= 2) {
+          tryPlay();
+        } else {
+          videoEl.addEventListener('loadeddata', tryPlay, { once: true });
+          videoEl.addEventListener('canplay', tryPlay, { once: true });
+          videoEl.load();
+        }
+      };
+
+      const syncBannerMediaVideo = function () {
+        const executeSync = function () {
+          try {
+            if (!bannerMediaSlider || !bannerMediaSlider.length) return;
+
+            const allVideos = bannerMediaSlider.find('video');
+            allVideos.each(function () {
+              this.pause();
+              this.onended = null;
+            });
+
+            if (!isPlaying) return;
+
+            const activeVideo = bannerMediaSlider.find('.slick-current video').get(0);
+            if (activeVideo) {
+              if (bannerMediaSlider.data('slick')) {
+                try {
+                  bannerMediaSlider.slick('slickPause');
+                } catch (e) {
+                  console.warn('Slick pause failed:', e);
+                }
+              }
+
+              activeVideo.currentTime = 0;
+              activeVideo.onended = function () {
+                if (isPlaying && bannerMediaSlider.data('slick')) {
+                  try {
+                    bannerMediaSlider.slick('slickNext');
+                  } catch (e) { }
+                }
+              };
+              ensureVideoPlay(activeVideo);
+            } else {
+              if (bannerMediaSlider.data('slick')) {
+                try {
+                  bannerMediaSlider.slick('slickPlay');
+                } catch (e) { }
+              }
+            }
+          } catch (error) {
+            console.error('Error in syncBannerMediaVideo:', error);
+          }
+        };
+
+        // Small delay to ensure Slick has finished its internal event cycle
+        setTimeout(executeSync, 100);
+      };
+
+      bannerMediaSlider.on('init afterChange', syncBannerMediaVideo);
+
+      bannerMediaSlider.slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true,
+        appendDots: $('.banner-media-dots'),
+        arrows: false,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        speed: 700,
+        fade: true,
+        asNavFor: '.banner-product-slider',
+        customPaging: function (slider, i) {
+          return `<span class="banner-dot"></span>`;
+        },
+        cssEase: 'linear'
+      });
+
+      try {
+        if ($('.client-slider').length) {
+          $('.client-slider').slick({
+            slidesToShow: 6,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            arrows: false,
+            dots: false,
+            infinite: true,
+            pauseOnHover: false,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 4
+                }
+              },
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 3
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 2
+                }
+              }
+            ]
+          });
+        }
+      } catch (err) {
+        console.error('Client slider init failed:', err);
+      }
+
+      const bannerMediaPlayBtn = document.querySelector('.banner-media-play');
+      if (bannerMediaPlayBtn) {
+        bannerMediaPlayBtn.addEventListener('click', function () {
+          const activeVideo = bannerMediaSlider.find('.slick-current video').get(0);
+
+          if (isPlaying) {
+            isPlaying = false;
+            bannerMediaSlider.slick('slickPause');
+            if (activeVideo) activeVideo.pause();
+            this.classList.add('is-paused');
+            this.setAttribute('aria-label', 'Play slider');
+            this.setAttribute('title', 'Play slider');
+          } else {
+            isPlaying = true;
+            syncBannerMediaVideo();
+            if (activeVideo) ensureVideoPlay(activeVideo);
+            this.classList.remove('is-paused');
+            this.setAttribute('aria-label', 'Pause slider');
+            this.setAttribute('title', 'Pause slider');
+          }
+        });
+      }
+    }
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+  /* ============================================================
+     5. Lazy Loading for Images
+  ============================================================ */
+
+  const lazyImages = document.querySelectorAll("img[data-src][loading='lazy']");
+  if (lazyImages.length) {
+    const lazyObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const img = entry.target;
+        img.src = img.dataset.src;
+        if (img.dataset.alt) img.alt = img.dataset.alt;
+        img.removeAttribute("data-src");
+        img.removeAttribute("loading");
+        obs.unobserve(img);
+      });
+    });
+
+    lazyImages.forEach((img) => lazyObserver.observe(img));
+  }
+
+
+
+
+
+
+});
+
+/* ============================================================
+  6. Other Works
+============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  $(".episodes-slider").slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
+    speed: 1000,
+    autoplay: true,
+    cssEase: "linear",
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  })
+  $(".brand-slider").slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    dots: false,
+    arrows: false,
+    speed: 1000,
+    autoplay: true,
+    cssEase: "linear",
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        },
+        // },
+        // {
+        //   breakpoint: 767,
+        //   settings: {
+        //     slidesToShow: 2,
+        //   },
+        // },
+
+        // {
+        //   breakpoint: 575,
+        //   settings: {
+        //     slidesToShow: 3,
+        //   },
+      },
+    ],
+  })
+  $(".timeline-slider").slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    initialSlide: 2,
+    focusOnSelect: true,
+    dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 600,
+    autoplay: true,
+    autoplaySpeed: 2600,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          centerMode: true,
+          centerPadding: "0px",
+          variableWidth: true,
+        },
+      },
+    ],
+  })
+  $(".news-events-slider").slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    dots: true,
+    customPaging: function(slider, i) {
+        return '<button type="button" role="tab"></button>';
+    },
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          dots: true
+        },
+      }
+    ],
+  })
+
+
+  const majorProductsSlider = $(".major-products-slider");
+
+  function updateMajorProductsDots(slick) {
+    const visibleDotCount = 7;
+    const $dots = $(slick.$dots).find("li");
+    const totalDots = $dots.length;
+
+    if (!totalDots) {
+      return;
+    }
+
+    if (totalDots <= visibleDotCount) {
+      $dots.show();
+      return;
+    }
+
+    const maxStart = totalDots - visibleDotCount;
+    const halfWindow = Math.floor(visibleDotCount / 2);
+    const currentIndex = Math.min(slick.currentSlide, totalDots - 1);
+    const start = Math.max(0, Math.min(currentIndex - halfWindow, maxStart));
+    const end = start + visibleDotCount - 1;
+
+    $dots.each(function (index) {
+      $(this).toggle(index >= start && index <= end);
+    });
+  }
+
+  majorProductsSlider.on("init afterChange", function (event, slick) {
+    updateMajorProductsDots(slick);
+  });
+
+  majorProductsSlider.slick({
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    dots: true,
+    arrows: false,
+    speed: 1000,
+    autoplay: true,
+    cssEase: "linear",
+    infinite: true,
+    pauseOnHover: true,
+    pauseOnFocus: false,
+    variableWidth: true,
+    responsive: [
+
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToScroll: 1,
+        },
+      },
+
+
+    ],
+  })
+  if (document.querySelector('.testimonial-slider')) {
+    const testimonialProgressItems = document.querySelectorAll('.customer-words-progress span');
+    const testimonialSlider = $('.testimonial-slider-track');
+    const testimonialNav = $('.customer-avatars');
+
+    const setActiveTestimonialProgress = (index) => {
+      testimonialProgressItems.forEach((item, itemIndex) => {
+        item.classList.toggle('active', itemIndex === index);
+      });
+    };
+
+    testimonialSlider.on('init', function (_event, slick) {
+      setActiveTestimonialProgress(slick.currentSlide || 0);
+    });
+
+    testimonialSlider.on('afterChange', function (_event, _slick, currentSlide) {
+      setActiveTestimonialProgress(currentSlide);
+    });
+
+    testimonialNav.slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      asNavFor: '.testimonial-slider-track',
+      arrows: false,
+      dots: false,
+      infinite: true,
+      focusOnSelect: true,
+      centerMode: true,
+      centerPadding: '0px',
+    });
+
+    testimonialSlider.slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      infinite: true,
+      arrows: false,
+      dots: false,
+      adaptiveHeight: true,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      speed: 700,
+      pauseOnHover: false,
+      pauseOnFocus: false,
+      asNavFor: '.customer-avatars',
+    });
+
+    testimonialProgressItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const index = Number(item.dataset.index);
+        if (!Number.isNaN(index)) {
+          testimonialSlider.slick('slickGoTo', index);
+        }
+      });
+    });
+  }
+
+    const slider = $('.products-slider .slider-wrapper');
+    
+    slider.on('init afterChange', function(event, slick, currentSlide) {
+      // Manage active class on product-card
+      slider.find('.product-card').removeClass('active');
+      slider.find('.slick-current .product-card').addClass('active');
+    });
+
+    slider.slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      infinite: true,
+      dots: true,
+      arrows: false,
+      centerMode: false,
+      variableWidth: true,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      customPaging: function(slider, i) {
+          return '<button type="button" role="tab"></button>';
+      },
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 3,
+            variableWidth: true
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            variableWidth: false,
+            centerMode: true, // Re-enable for mobile to show partial cards
+            centerPadding: '30px'
+          }
+        },
+        {
+          breakpoint: 576,
+          settings: {
+            slidesToShow: 1,
+            variableWidth: false,
+            centerMode: true,
+            centerPadding: '30px'
+          }
+        }
+      ]
+    });
+
+});
+
+
+/* ============================================================
+   4. Equal Height Utility
+============================================================ */
+
+const setEqualHeightFor = (selector) => {
+  const items = document.querySelectorAll(selector);
+  if (!items.length) return;
+
+  let max = 0;
+  items.forEach((el) => {
+    el.style.height = "auto";
+    if (el.offsetHeight > max) max = el.offsetHeight;
+  });
+  items.forEach((el) => {
+    el.style.height = `${max}px`;
+  });
+};
+
+const equalHeightTargets = [
+  ".products-slider .card-content .text",
+  // ".review-card",
+];
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    equalHeightTargets.forEach(setEqualHeightFor);
+  }, 300);
+});
+
+window.addEventListener("resize", () => {
+  equalHeightTargets.forEach(setEqualHeightFor);
+});
+
+
+// -- Product mobile navigation (Sort & Filter) ------------------------------
+(function () {
+  document.addEventListener('click', function (e) {
+    // Selectors
+    var filterBtn = e.target.closest('#productFilterToggle');
+    var sortBtn = e.target.closest('#productSortToggle');
+    var filterClose = e.target.closest('#productSidebarClose');
+    var sortClose = e.target.closest('#productSortClose');
+    var overlay = e.target.closest('#productSidebarOverlay');
+
+    // Elements
+    var filterDrawer = document.getElementById('productSidebarDrawer');
+    var sortDrawer = document.getElementById('productSortDrawer');
+    var overlayEl = document.getElementById('productSidebarOverlay');
+
+    if (!filterDrawer || !sortDrawer || !overlayEl) return;
+
+    // Handle Filter Open
+    if (filterBtn) {
+      e.preventDefault();
+      closeAll();
+      filterDrawer.classList.add('is-open');
+      overlayEl.classList.add('is-visible');
+      filterBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    // Handle Sort Open
+    else if (sortBtn) {
+      e.preventDefault();
+      closeAll();
+      sortDrawer.classList.add('is-open');
+      overlayEl.classList.add('is-visible');
+      sortBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    // Handle Close
+    else if (filterClose || sortClose || overlay) {
+      closeAll();
+    }
+
+    function closeAll() {
+      filterDrawer.classList.remove('is-open');
+      sortDrawer.classList.remove('is-open');
+      overlayEl.classList.remove('is-visible');
+      document.body.style.overflow = '';
+
+      var fToggle = document.getElementById('productFilterToggle');
+      var sToggle = document.getElementById('productSortToggle');
+      if (fToggle) fToggle.setAttribute('aria-expanded', 'false');
+      if (sToggle) sToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var overlayEl = document.getElementById('productSidebarOverlay');
+      if (overlayEl && overlayEl.classList.contains('is-visible')) {
+        // Trigger click on overlay to trigger existing closeAll logic
+        overlayEl.click();
+      }
+    }
+  });
+})();
+
+
+
+//Product Detail Image sldier
+
+$(document).ready(function () {
+  $(".product-main-slider").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    asNavFor: ".product-thumb-slider",
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: false,
+
+    fade: true,
+    cssEase: "linear",
+    speed: 800,
+    draggable: true,
+    dots: false,
+    lazyLoad: 'progressive',
+    infinite: true   // ✅ ADD THIS
+  });
+
+  $(".product-thumb-slider").slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    asNavFor: ".product-main-slider",
+    dots: true,
+    appendDots: ".product-slider-dots",
+    draggable: true,
+
+    arrows: false,
+    speed: 800,
+
+    infinite: true,  // ✅ ADD THIS
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {}
+      }
+    ]
+  });
+});
+// Products Slider (Major Products)
+// $(".products-slider").slick({
+//   slidesToShow: 4,
+//   slidesToScroll: 1,
+//   dots: false,
+//   arrows: true,
+//   infinite: true,
+//   autoplay: true,
+//   autoplaySpeed: 3000,
+//   responsive: [
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         slidesToShow: 2,
+//       }
+//     },
+//     {
+//       breakpoint: 768,
+//       settings: {
+//         slidesToShow: 1,
+//       }
+//     }
+//   ]
+// });
+
+// Tab Switching Function for Product Detail
+function switchTab(tabId, element) {
+  const tabs = document.querySelectorAll('.tab-pane');
+  const navItems = document.querySelectorAll('.product-tabs__nav li');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  navItems.forEach(item => item.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+  element.classList.add('active');
+}
+
+function setVideoCardState(card, isPlaying) {
+  const poster = card.querySelector('.video-poster');
+  const video = card.querySelector('.product-video');
+  const pauseBtn = card.querySelector('.pause-btn');
+
+  if (!poster || !video || !pauseBtn) {
+    return;
+  }
+
+  poster.style.display = isPlaying ? 'none' : '';
+  video.style.display = isPlaying ? 'block' : 'none';
+  pauseBtn.style.display = isPlaying ? 'flex' : 'none';
+}
+
+document.querySelectorAll('.video-card').forEach(card => {
+  const playBtn = card.querySelector('.play-btn');
+  const pauseBtn = card.querySelector('.pause-btn');
+  const video = card.querySelector('.product-video');
+
+  if (!playBtn || !pauseBtn || !video) {
+    return;
+  }
+
+  playBtn.addEventListener('click', () => {
+    setVideoCardState(card, true);
+    video.play();
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    video.pause();
+    setVideoCardState(card, false);
+  });
+
+  video.addEventListener('ended', () => {
+    setVideoCardState(card, false);
+    video.currentTime = 0;
+  });
+});
+
+/* ------------------------------
+   Mobile Menu Sub-menu Toggle
+------------------------------ */
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtns = document.querySelectorAll('.sub-menu-toggle');
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const parent = this.closest('.has-submenu');
+      const subMenu = parent.querySelector('.mobile-sub-menu');
+
+      this.classList.toggle('active');
+      subMenu.classList.toggle('open');
+
+      // Toggle visibility for sub-menu
+      if (subMenu.classList.contains('open')) {
+        subMenu.style.maxHeight = subMenu.scrollHeight + "px";
+        subMenu.style.opacity = "1";
+        subMenu.style.visibility = "visible";
+        subMenu.style.marginTop = "10px";
+      } else {
+        subMenu.style.maxHeight = "0";
+        subMenu.style.opacity = "0";
+        subMenu.style.visibility = "hidden";
+        subMenu.style.marginTop = "0";
+      }
+    });
+  });
+});
+
+
+// ==========================contry dorp down=============================
+
+function initializePhoneInput(selector) {
+  const shippingFormWrapper = document.querySelector(selector + ' .phone_number');
+  if (shippingFormWrapper !== null) {
+    const phoneInput = window.intlTelInput(shippingFormWrapper, {
+      preferredCountries: ["ae", "sa", "kw", "bh", "qa", "om"],
+      excludeCountries: ["ru", "cu", "sy", "ir", "sd", "ss", "kp", "ye", "KR", "UA"],
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    shippingFormWrapper._iti = phoneInput;
+
+    // Auto-insert default country code on load
+    let initialDialCode = phoneInput.getSelectedCountryData().dialCode;
+    let $input = $(selector + ' .phone_number');
+    $input.attr('data-dial-code', initialDialCode);
+
+    if (!$input.val()) {
+      $input.val('+' + initialDialCode);
+    }
+
+    $input.on('input', function () {
+      let val = $(this).val();
+      let valRaw = val.replace(/(?!^\+)[^\d]/g, '');
+      let digitsOnly = valRaw.replace(/\D/g, '');
+      if (digitsOnly.length > 15) {
+        valRaw = (valRaw.charAt(0) === '+' ? '+' : '') + digitsOnly.substring(0, 15);
+        $(this).val(valRaw);
+      } else if (valRaw.length > 16) {
+        $(this).val(valRaw.substring(0, 16));
+      }
+    });
+    $input.on('blur', function () {
+      contactPhone(selector, phoneInput);
+    });
+    shippingFormWrapper.addEventListener('countrychange', function () {
+      let newDialCodeData = phoneInput.getSelectedCountryData();
+      let newDialCode = '+' + newDialCodeData.dialCode;
+      let oldDialCode = '+' + $input.attr('data-dial-code');
+
+      let currentVal = $input.val() || '';
+
+      if (currentVal.startsWith(oldDialCode)) {
+        // Replace old dial code with new dial code
+        currentVal = currentVal.replace(oldDialCode, newDialCode);
+      } else if (!currentVal.startsWith('+')) {
+        // Prepend new dial code if it lacks a plus
+        currentVal = newDialCode + currentVal.replace(/[^\d]/g, '');
+      } else {
+        // It has a plus, but not the old dial code (user changed it manually wildly).
+        // Just replace the whole thing with the new dial code to be safe.
+        currentVal = newDialCode;
+      }
+
+      $input.val(currentVal);
+      $input.attr('data-dial-code', newDialCodeData.dialCode);
+
+      // trigger blur to format
+      contactPhone(selector, phoneInput);
+    });
+  }
+}
+
+function contactPhone(selector, phoneInput) {
+  let phoneNumber = phoneInput.getNumber(); // Get full international number
+
+  // If getNumber() returns empty (which happens if it thinks the number is completely invalid),
+  // fallback to the raw input value so we don't clear out what the user typed.
+  let rawVal = $(selector + ' .phone_number').val() || '';
+  if (!phoneNumber && rawVal) {
+    phoneNumber = rawVal;
+  }
+
+  // Remove all non-digit characters except the leading +
+  phoneNumber = phoneNumber.replace(/(?!^\+)[^\d]/g, '');
+
+  if (phoneNumber.startsWith('+')) {
+    let countryCode = phoneInput.getSelectedCountryData().dialCode; // Get country code only
+    let localNumber = phoneNumber.replace('+' + countryCode, ''); // Remove country code from full number
+    phoneNumber = `+${countryCode}${localNumber}`; // Add country code strictly without separator
+  } else {
+    // If it doesn't start with +, prepend the dial code explicitly
+    let countryCode = phoneInput.getSelectedCountryData().dialCode;
+    let localNumber = phoneNumber.replace(/[^\d]/g, '');
+    phoneNumber = `+${countryCode}${localNumber}`;
+  }
+
+  // Force limit to 15 digits with country code (e.g. +966XXXXXXXXX = 15 digits)
+  var digitsOnly = phoneNumber.replace(/\D/g, '');
+  if (digitsOnly.length > 15) {
+    phoneNumber = '+' + digitsOnly.substring(0, 15);
+  }
+
+  $(selector + ' .phone_number').val(phoneNumber);
+}
+
+
+initializePhoneInput(".sidebar-enquire-form");
+initializePhoneInput(".contact-page__form");
+initializePhoneInput("#downloadBrochureForm");
+initializePhoneInput("#siteGeneralEnquiryForm");
+initializePhoneInput("#siteEnquiryForm");
+initializePhoneInput("#productEnquiryForm");
