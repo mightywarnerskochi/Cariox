@@ -52,19 +52,3 @@ jobs:
             **/bootstrap/cache/*.php
           dangerous-clean-slate: false
 
-      - name: Deploy public directory to public_html
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME || vars.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD || vars.FTP_PASSWORD }}
-          protocol: ftp
-          server-dir: /public_html/
-          local-dir: ./public/
-          exclude: |
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/storage/logs/**
-          dangerous-clean-slate: false
-
