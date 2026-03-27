@@ -13,10 +13,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy Laravel app to candoo
+      # FTP-Deploy-Action requires non-empty `server`. Set in GitHub:
+      # Settings → Secrets and variables → Actions → Secrets (or Variables):
+      #   FTP_HOST or FTP_SERVER — hostname or IP of your FTP server
+      #   FTP_USERNAME, FTP_PASSWORD — FTP credentials
+      - name: Require FTP server hostname
+        env:
+          FTP_SERVER_VALUE: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST }}
+        run: |
+          if [ -z "$FTP_SERVER_VALUE" ]; then
+            echo "::error::No FTP host configured. Add repository secret FTP_HOST or FTP_SERVER (or variable FTP_HOST) with your FTP server hostname."
+            exit 1
+          fi
+
+      - name: Deploy Laravel app to cariox
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST || vars.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME || vars.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD || vars.FTP_PASSWORD }}
           protocol: ftp
@@ -42,7 +55,7 @@ jobs:
       - name: Deploy public directory to public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST || vars.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST || secrets.FTP_SERVER || vars.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME || vars.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD || vars.FTP_PASSWORD }}
           protocol: ftp
