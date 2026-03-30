@@ -80,10 +80,20 @@
     <div class="footer-cariox-copyright">
         <div class="container-ctn">
             {!! $siteSetting->copyright !!}
+            @php
+                $hasTerms = !empty(trim(strip_tags($siteSetting->terms_conditions)));
+                $hasPrivacy = !empty(trim(strip_tags($siteSetting->privacy_policy)));
+            @endphp
+            @if($hasTerms || $hasPrivacy)
             <ul class="footer-cariox-policy">
+                @if($hasTerms)
                 <li><a href="{{ url('terms-and-conditions') }}">Terms & Conditions</a></li>
+                @endif
+                @if($hasPrivacy)
                 <li><a href="{{ url('privacy-policy') }}">Privacy & Policy</a></li>
+                @endif
             </ul>
+            @endif
         </div>
     </div>
 </footer>

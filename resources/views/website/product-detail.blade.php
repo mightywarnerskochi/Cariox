@@ -69,12 +69,23 @@
             </div>
         </div>
 
+        @php
+            $hasFeatures = $product->keyFeatures && $product->keyFeatures->isNotEmpty();
+            $hasVideos = $product->videos && $product->videos->isNotEmpty();
+        @endphp
+
+        @if($hasFeatures || $hasVideos)
         <div class="product-tabs">
             <ul class="product-tabs__nav">
-                    <li class="tab-item active" data-tab="features" onclick="switchTab('features', this)">Key Features</li>
-                    <li class="tab-item" data-tab="videos" onclick="switchTab('videos', this)">Product Videos</li>
+                @if($hasFeatures)
+                <li class="tab-item active" data-tab="features" onclick="switchTab('features', this)">Key Features</li>
+                @endif
+                @if($hasVideos)
+                <li class="tab-item {{ !$hasFeatures ? 'active' : '' }}" data-tab="videos" onclick="switchTab('videos', this)">Product Videos</li>
+                @endif
             </ul>
             <div class="product-tabs__content">
+                @if($hasFeatures)
                 <div class="tab-pane active" id="features">
                     <ul class="features-list">
                         @foreach($product->keyFeatures as $feature)
@@ -87,7 +98,9 @@
                         @endforeach
                     </ul>
                 </div>
-                <div class="tab-pane" id="videos">
+                @endif
+                @if($hasVideos)
+                <div class="tab-pane {{ !$hasFeatures ? 'active' : '' }}" id="videos">
                     <div class="product-videos">
                         <h2>Product Videos</h2>
                         <div class="video-grid">
@@ -111,8 +124,10 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
+        @endif
     </div>
 </section>
 
