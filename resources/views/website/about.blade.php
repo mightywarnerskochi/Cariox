@@ -151,7 +151,7 @@ $page_desc = '';
                                      <div class="timeline__year">{{ $journey->year }}</div>
                                     <h3>{{ $journey->caption ?? $journey->year }}</h3>
                                     <span class="timeline__count">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                    {!! $journey->description !!}
+                                    {!! $journey->description ?? '<p>Our special services description</p>'  !!}
                                </div>
                                 </div>
                             </div>

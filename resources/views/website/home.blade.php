@@ -265,7 +265,7 @@ $page_desc = '';
         <div class="head">
             <span class="label-pill">{{ $serviceSection->small_title ?? 'Our services' }}</span>
             <h2>{{ $serviceSection->main_title ?? 'Our special services' }}</h2>
-            {!! $serviceSection->description !!}
+            {!! $serviceSection->description ?? '<p>Our special services description</p>' !!}
             <a href="{{ $serviceSection->link ?? '#' }}" class="btn btn-gradient">{{ $serviceSection->button_label ?? 'Learn More' }}</a>
         </div>
         <div class="special-services-wrapper">
@@ -414,7 +414,7 @@ $page_desc = '';
             <h2>{{ optional($testimonialSection)->main_title ?? 'Our customer words' }}</h2>
             @if(optional($testimonialSection)->description && trim(strip_tags($testimonialSection->description)))
                 <div class="customer-words-intro">
-                    {!! $testimonialSection->description !!}
+                    {!! $testimonialSection->description ?? '<p>Our customer words description</p>' !!}
                 </div>
             @endif
         </div>
@@ -438,7 +438,7 @@ $page_desc = '';
                                 $testimonialContent = (string) ($testimonial->content ?? '');
                                 $testimonialContent = preg_replace('/^\s*["\'\x{201C}\x{201D}]+\s*/u', '', $testimonialContent);
                             @endphp
-                            {!! $testimonialContent !!}
+                            {!! $testimonialContent ?? '<p>Our customer words description</p>'!!}
                         </div>
                     </div>
                     @empty

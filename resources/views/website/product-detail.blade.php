@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="product-info__description">
-                    {!! $product->description !!}
+                    {!! $product->description ?? ' <p>description</p>'!!}
                 </div>
             </div>
         </div>

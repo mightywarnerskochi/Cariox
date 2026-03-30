@@ -65,7 +65,7 @@ $page_desc = '';
         <div class="blog-detail-layout">
             <div class="main-content">
                 <div class="blog-text-content features-list">
-                    {!! $blog->detailed_description !!}
+                    {!! $blog->detailed_description ?? '<p>Our special services description</p>' !!}
 
                 @if($blog->image_1 || $blog->image_2)
                 <div class="process-images">

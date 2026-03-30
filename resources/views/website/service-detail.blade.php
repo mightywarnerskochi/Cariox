@@ -137,7 +137,7 @@ $page_desc = '';
 
 
                 <div class="service-text-content ">
-                    {!! $service->main_description !!}
+                    {!! $service->main_description ?? ' <p>description</p>'!!}
                 </div>
 
                 <div class="service-gallery ">

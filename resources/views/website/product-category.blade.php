@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="product-info__short-desc category-desc-rich">
-                    {!! $category->description !!}
+                    {!! $category->description ?? ' <p>description</p>' !!}
                 </div>
             </div>
         </div>
