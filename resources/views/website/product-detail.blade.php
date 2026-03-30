@@ -21,7 +21,7 @@
     </div>
 </section>
 
-<section class="product-detail commonPadding-120">
+<section class="product-detail">
     <div class="container-ctn">
         <div class="product-detail__top">
             <div class="product-gallery">
@@ -43,15 +43,15 @@
 
             <div class="product-info">
                 <h2 class="product-info__title">{{ $product->product_title }}</h2>
-                <div class="product-info__brand">
-                        @if($product->brand && $product->brand->image)
-                        <img src="{{ asset('storage/' . $product->brand->image) }}" alt="{{ $product->brand->name }}">
-                        @else
-                        <span>{{ $product->brand ? $product->brand->name : '' }}</span>
-                        @endif
-                </div>
-
+                
                 <div class="product-info__actions">
+                    <div class="product-info__brand">
+                            @if($product->brand && $product->brand->image)
+                            <img src="{{ asset('storage/' . $product->brand->image) }}" alt="{{ $product->brand->name }}">
+                            @else
+                            <span>{{ $product->brand ? $product->brand->name : '' }}</span>
+                            @endif
+                    </div>
                     <button class="btn btn-gradient" data-bs-toggle="modal" data-bs-target="#siteEnquiryForm" data-product-name="{{ $product->product_title }}" data-product-id="{{ $product->id }}">Enquire Now</button>
                     @if($product->brochure)
                     <button class="btn-brochure" data-bs-toggle="modal" data-bs-target="#downloadBrochureForm" data-product-name="{{ $product->product_title }}" data-product-brochure="{{ $product->brochure }}">Download Brochure</button>
@@ -116,9 +116,9 @@
     </div>
 </section>
 
-<section class="major-products commonPadding-120">
+<section class="major-products commonPadding-120 pt-0">
     <div class="container-ctn">
-        <div class="section-head text-center mb-5">
+        <div class="head  mx-auto">
             <h2 class="title">Major Products</h2>
         </div>
         <div class="major-products-slider">

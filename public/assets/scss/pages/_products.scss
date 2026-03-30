@@ -1397,6 +1397,27 @@
   .slick-slide {
     margin-left: clamp(5px, 0.93vw, 18px);
     margin-right: clamp(5px, 0.93vw, 18px);
+    width: 300px;
+
+    @include min(768){
+      width: 250px;
+    }
+    @include min(1200){
+          width: 300px;
+    }
+    @include min(1350){
+          width: 330px;
+    }
+    @include min(1440){
+          width: 330px;
+    }
+    @include min(1600){
+          width: 340px;
+    }
+    @include min(1900){
+          width: 353px;
+    }
+
   }
 
   .slick-dots {
@@ -1409,7 +1430,7 @@
     max-width: 87%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: clamp(30px, 3.43vw, 66px);
+    // margin-top: clamp(30px, 3.43vw, 66px);
 
     li {
       height: fit-content;
