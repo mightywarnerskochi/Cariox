@@ -98,6 +98,11 @@
 
 <script src="{{ asset('assets/js/script.js') }}" defer></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("currentyear").textContent = new Date().getFullYear();
+    });
+</script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     $(document).on('show.bs.modal', '#siteEnquiryForm', function (event) {
         var button = $(event.relatedTarget);
