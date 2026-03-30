@@ -22,7 +22,7 @@ $page_desc = '';
                 <div class="banner-hero">
                     <span>{{ $banner->small_title ?? 'Welcome' }}</span>
                     <h1>{{ $banner->main_title ?? 'Cariox' }}</h1>
-                    {!! $banner->description !!}
+                    {!! $banner->description ?? 'Cariox description' !!}
                     @if(isset($banner) && $banner->button_text)
                     <a href="{{ $banner->button_link ?? '#' }}" class="btn btn-border-gradient">{{ $banner->button_text }}</a>
                     @endif
