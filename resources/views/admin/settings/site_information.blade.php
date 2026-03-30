@@ -94,11 +94,11 @@
                     <textarea name="footer_logo_description" class="form-control tinymce" rows="3">{{ old('footer_logo_description', $settings->footer_logo_description) }}</textarea>
                 </div>
 
-                <div class="form-group" style="margin-top: 1.5rem;">
+                <!-- <div class="form-group" style="margin-top: 1.5rem;">
                     <label>Copyright</label>
                     <textarea name="copyright" class="form-control tinymce" rows="4" placeholder="&copy; {{ date('Y') }}. Company Name. All Rights Reserved">{{ old('copyright', $settings->copyright) }}</textarea>
                     @error('copyright') <span style="color:red; font-size: 0.8rem; display: block; margin-top: 0.25rem;">{{ $message }}</span> @enderror
-                </div>
+                </div> -->
             </div>
         </div>
 

@@ -70,58 +70,47 @@
         </div>
 
         @php
-            $hasFeatures = $product->keyFeatures && $product->keyFeatures->isNotEmpty();
-            $hasVideos = $product->videos && $product->videos->isNotEmpty();
+            $hasFeatures = !empty($product->key_features);
+            $hasVideos = ($product->videos && $product->videos->isNotEmpty());
         @endphp
 
         @if($hasFeatures || $hasVideos)
         <div class="product-tabs">
             <ul class="product-tabs__nav">
                 @if($hasFeatures)
-                <li class="tab-item active" data-tab="features" onclick="switchTab('features', this)">Key Features</li>
+                <li class="tab-item active" onclick="switchTab('features', this)">Key Features</li>
                 @endif
                 @if($hasVideos)
-                <li class="tab-item {{ !$hasFeatures ? 'active' : '' }}" data-tab="videos" onclick="switchTab('videos', this)">Product Videos</li>
+                <li class="tab-item {{ !$hasFeatures ? 'active' : '' }}" onclick="switchTab('videos', this)">Product Videos</li>
                 @endif
             </ul>
             <div class="product-tabs__content">
                 @if($hasFeatures)
                 <div class="tab-pane active" id="features">
-                    <ul class="features-list">
-                        @foreach($product->keyFeatures as $feature)
-                        <li>
-                            <div class="text">
-                                <strong>{{ $feature->title }}</strong>
-                                <p>{{ $feature->description }}</p>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
+                    <div class="features-content">
+                        {!! $product->key_features !!}
+                    </div>
                 </div>
                 @endif
                 @if($hasVideos)
                 <div class="tab-pane {{ !$hasFeatures ? 'active' : '' }}" id="videos">
-                    <div class="product-videos">
-                        <h2>Product Videos</h2>
-                        <div class="video-grid">
-                            @foreach($product->videos as $video)
-                            <div class="video-card">
-                                <div class="video-poster">
-                                    <img src="{{ $video->poster ? asset('storage/' . $video->poster) : asset('assets/images/products/video-poster.jpg') }}" alt="{{ $product->product_title }}">
-                                    <button class="play-btn" type="button" aria-label="Play video">
-                                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M25.5 18L14.25 24.4952V11.5048L25.5 18Z" fill="#1E1E1E"/></svg>
-                                    </button>
-                                </div>
-                                <button class="pause-btn" type="button" aria-label="Pause video" style="display:none;">
-                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10 8H12.5V20H10V8ZM15.5 8H18V20H15.5V8Z" fill="#1E1E1E"/></svg>
+                    <div class="video-grid">
+                        @foreach($product->videos as $video)
+                        <div class="video-card">
+                            <div class="video-poster">
+                                <img src="{{ $video->poster ? asset('storage/' . $video->poster) : asset('assets/images/products/video-poster.jpg') }}" alt="{{ $product->product_title }}">
+                                <button class="play-btn" type="button" aria-label="Play video">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                        <path d="M11.51 7.5617C11.3582 7.47168 11.1852 7.42345 11.0087 7.42191C10.8322 7.42037 10.6585 7.46557 10.5051 7.55292C10.3517 7.64028 10.2242 7.76667 10.1355 7.91926C10.0468 8.07185 10 8.2452 10 8.4217V31.5784C10 31.7549 10.0468 31.9282 10.1355 32.0808C10.2242 32.2334 10.3517 32.3598 10.5051 32.4471C10.6585 32.5345 10.8322 32.5797 11.0087 32.5782C11.1852 32.5766 11.3582 32.5284 11.51 32.4384L31.0483 20.86C31.1976 20.7715 31.3212 20.6456 31.407 20.4949C31.4929 20.3441 31.538 20.1735 31.538 20C31.538 19.8265 31.4929 19.656 31.407 19.5052C31.3212 19.3544 31.1976 19.2286 31.0483 19.14L11.51 7.5617Z" fill="white" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                 </button>
-                                <video class="product-video" style="display:none;" controls>
-                                    <source src="{{ asset('storage/' . $video->video) }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
                             </div>
-                            @endforeach
+                            <video class="product-video" style="display: none;" controls>
+                                <source src="{{ asset('storage/' . $video->video) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
+                        @endforeach
                     </div>
                 </div>
                 @endif
@@ -129,6 +118,35 @@
         </div>
         @endif
     </div>
+</section>  
+
+<section class="product-videos">
+    @foreach($product->otherVideos as $other)
+    <div class="container-ctn">
+        <div class="head mx-auto">
+            <h2>Other Product Videos</h2>
+
+        </div>
+        <div class="video-grid">
+            <div class="video-card other-video">
+                @if($other->video_file)
+                    <video class="product-video" controls width="100%">
+                        <source src="{{ asset('storage/' . $other->video_file) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                @elseif($other->video_url)
+                    @php
+                        $embedUrl = $other->video_url;
+                        if (strpos($embedUrl, 'watch?v=') !== false) {
+                            $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
+                        }
+                    @endphp
+                    <iframe width="100%" height="315" src="{{ $embedUrl }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                @endif
+            </div>
+        </div>
+    </div>
+    @endforeach
 </section>
 
 <section class="major-products commonPadding-120 pt-0">

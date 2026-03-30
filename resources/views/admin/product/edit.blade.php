@@ -92,6 +92,11 @@
                     <textarea name="description" id="product_description" class="form-control tinymce" rows="5">{{ old('description', $product->description) }}</textarea>
                 </div>
 
+                <div class="form-group">
+                    <label>Key Features</label>
+                    <textarea name="key_features" id="key_features" class="form-control tinymce" rows="5">{{ old('key_features', $product->key_features) }}</textarea>
+                </div>
+
                 <div class="form-group" style="width: 50%;">
                     <label>Brochure File (.pdf, .doc)</label>
                     @if($product->brochure)
@@ -127,26 +132,33 @@
         <div class="section-container">
             <div class="section-header">
                 <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
-                    <span>Key Features</span>
-                    <button type="button" class="btn-add" onclick="addFeature()">+ Add Feature</button>
+                    <span>Other Videos (URL & File)</span>
+                    <button type="button" class="btn-add" onclick="addOtherVideo()">+ Add Video</button>
                 </div>
             </div>
-            <div class="section-body" id="featureWrapper">
-                @foreach($product->keyFeatures as $feature)
+            <div class="section-body" id="otherVideoWrapper">
+                @foreach($product->otherVideos as $video)
                     <div class="append-row existing-item">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <h4>Existing Feature</h4>
+                            <h4>Existing Other Video</h4>
                             <label style="font-size:0.8rem; color:red; cursor:pointer;" class="delete-label">
-                                <input type="checkbox" name="delete_features[]" value="{{ $feature->id }}" class="delete-checkbox"> Check to Delete
+                                <input type="checkbox" name="delete_other_videos[]" value="{{ $video->id }}" class="delete-checkbox"> Check to Delete
                             </label>
                         </div>
-                        <div class="form-group">
-                            <label>Feature Name</label>
-                            <input type="text" name="existing_features[{{ $feature->id }}][name]" class="form-control" value="{{ $feature->name }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Short Description</label>
-                            <textarea name="existing_features[{{ $feature->id }}][description]" class="form-control tinymce" rows="2">{{ $feature->description }}</textarea>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Video URL</label>
+                                <input type="url" name="existing_other_videos[{{ $video->id }}][video_url]" class="form-control" value="{{ $video->video_url }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Current Video File</label>
+                                @if($video->video_file)
+                                    <div style="margin-bottom:0.5rem; font-size:0.8rem; background:#f8fafc; padding: 0.5rem; border:1px solid #e2e8f0;">
+                                      <a href="{{ Storage::url($video->video_file) }}" target="_blank">View Current File Attachment</a>
+                                    </div>
+                                @endif
+                                <input type="file" name="existing_other_video_files[{{ $video->id }}]" class="form-control" accept="video/mp4,video/webm">
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -293,25 +305,25 @@
         }
     });
 
-    function addFeature() {
-        const wrapper = document.getElementById('featureWrapper');
+    function addOtherVideo() {
+        const wrapper = document.getElementById('otherVideoWrapper');
+        const count = wrapper.querySelectorAll('.append-row').length;
         const row = document.createElement('div');
         row.className = 'append-row';
         row.innerHTML = `
-            <h4>New Feature <button type="button" class="btn-update" style="color:red; border-color:red; padding:0.2rem 0.5rem;" onclick="this.parentElement.parentElement.remove()">Remove</button></h4>
-            <div class="form-group">
-                <label>Feature Name</label>
-                <input type="text" name="feature_names[]" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Short Description</label>
-                <textarea name="feature_descriptions[]" class="form-control tinymce" rows="2"></textarea>
+            <h4>New Other Video <button type="button" class="btn-update" style="color:red; border-color:red; padding:0.2rem 0.5rem;" onclick="this.parentElement.parentElement.remove()">Remove</button></h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                    <label>Video URL (YouTube/Vimeo)</label>
+                    <input type="url" name="other_video_urls[]" class="form-control" placeholder="https://youtube.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Or Upload Video File</label>
+                    <input type="file" name="other_video_files[]" class="form-control" accept="video/mp4,video/webm">
+                </div>
             </div>
         `;
         wrapper.appendChild(row);
-        if (typeof window.initAdminTinyMCE === 'function') {
-            window.initAdminTinyMCE(wrapper);
-        }
     }
 
     function addVideo() {
