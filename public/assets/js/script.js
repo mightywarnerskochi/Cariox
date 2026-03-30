@@ -642,6 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     dots: true,
+    arrows: false,
     customPaging: function(slider, i) {
         return '<button type="button" role="tab"></button>';
     },

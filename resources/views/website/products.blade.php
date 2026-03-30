@@ -126,7 +126,7 @@ $page_desc = 'Explore industrial coding, inspection, and packaging systems from 
 
 
 
-                <div class="product-sidebar__panel">
+                <div class="product-sidebar__panel mt-2">
                     <h3>Brands</h3>
                     <div class="product-sidebar__panel-body">
                         <div class="product-sidebar__brands">
