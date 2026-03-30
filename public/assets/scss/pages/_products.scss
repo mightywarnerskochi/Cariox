@@ -1397,7 +1397,7 @@
   .slick-slide {
     margin-left: clamp(5px, 0.93vw, 18px);
     margin-right: clamp(5px, 0.93vw, 18px);
-    width: 300px;
+    width: 280px;
 
     @include min(768){
       width: 250px;
@@ -1430,7 +1430,7 @@
     max-width: 87%;
     margin-left: auto;
     margin-right: auto;
-    // margin-top: clamp(30px, 3.43vw, 66px);
+    margin-top: clamp(30px, 3.43vw, 66px);
 
     li {
       height: fit-content;

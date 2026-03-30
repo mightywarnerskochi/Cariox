@@ -8093,7 +8093,7 @@ footer li {
 .major-products .slick-slide {
   margin-left: clamp(5px, 0.93vw, 18px);
   margin-right: clamp(5px, 0.93vw, 18px);
-  width: 300px;
+  width: 280px;
 }
 @media (min-width: 768px) {
   .major-products .slick-slide {
@@ -8135,6 +8135,7 @@ footer li {
   max-width: 87%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: clamp(30px, 3.43vw, 66px);
 }
 .major-products .slick-dots li {
   height: -moz-fit-content;

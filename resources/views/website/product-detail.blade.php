@@ -170,10 +170,7 @@
 
 /* Major Products */
 .major-products .section-head .title { font-size: 32px; font-weight: 700; margin-bottom: 20px; }
-.product-catalog-card { 
-    background: #fff; border: 1px solid #E4E8ED; border-radius: 12px; padding: 20px; 
-    transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; margin: 0 10px;
-}
+
 .product-catalog-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .product-catalog-card__image { 
     height: 220px; position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; 
@@ -200,7 +197,6 @@
 .btn-card-whatsapp { border: 1px solid #25D366; color: #25D366; }
 
 /* Slick Dots Styling */
-.major-products-slider .slick-dots { position: relative; bottom: -40px; list-style: none; display: flex !important; justify-content: center; gap: 8px; padding: 0; }
 .major-products-slider .slick-dots li { margin: 0; width: 20px; height: 8px; }
 .major-products-slider .slick-dots li button { width: 100%; height: 100%; padding: 0; border-radius: 10px; background: #E4E8ED; border: none; text-indent: -9999px; }
 .major-products-slider .slick-dots li.slick-active { width: 40px; }
