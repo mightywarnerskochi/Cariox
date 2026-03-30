@@ -72,6 +72,7 @@
         @php
             $hasFeatures = !empty($product->key_features);
             $hasVideos = ($product->videos && $product->videos->isNotEmpty());
+            $hasOtherVideos = ($product->otherVideos && $product->otherVideos->isNotEmpty());
         @endphp
 
         @if($hasFeatures || $hasVideos)
@@ -121,13 +122,14 @@
 </section>  
 
 <section class="product-videos">
-    @foreach($product->otherVideos as $other)
+   @if($hasOtherVideos)
     <div class="container-ctn">
         <div class="head mx-auto">
             <h2>Other Product Videos</h2>
 
         </div>
         <div class="video-grid">
+             @foreach($product->otherVideos as $other)
             <div class="video-card other-video">
                 @if($other->video_file)
                     <video class="product-video" controls width="100%">
@@ -144,9 +146,10 @@
                     <iframe width="100%" height="315" src="{{ $embedUrl }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 @endif
             </div>
+             @endforeach
         </div>
     </div>
-    @endforeach
+    @endif
 </section>
 
 <section class="major-products commonPadding-120 pt-0">
