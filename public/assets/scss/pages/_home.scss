@@ -1886,8 +1886,7 @@
             }
         }
 
-        &.slick-current,
-        &.slick-active {
+        &.slick-current.slick-active {
             img {
                 @include min(768) {
                     height: 220px;

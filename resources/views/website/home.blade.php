@@ -324,7 +324,7 @@ $page_desc = '';
                                 @endif
                             </div>
                             <div class="card-image text-center">
-                                <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/1.png') }}" alt="{{ $product->product_title }}" style="max-width:100%; height:auto;">
+                                <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/1.png') }}" alt="{{ $product->product_title }}">
                             </div>
                             <div class="card-content d-flex justify-content-between align-items-end">
                                 <div class="text">
