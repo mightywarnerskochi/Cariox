@@ -13,7 +13,7 @@ class Product extends Model
     protected $fillable = [
         'category_id', 'subcategory_id', 'brand_id', 'product_title',
         'sub_title', 'slug', 'description', 'brochure',
-        'status', 'position'
+        'status', 'position', 'key_features'
     ];
 
     public function scopePositioned($query)
@@ -46,9 +46,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function keyFeatures()
+    public function otherVideos()
     {
-        return $this->hasMany(ProductKeyFeature::class);
+        return $this->hasMany(ProductOtherVideo::class);
     }
 
     public function videos()

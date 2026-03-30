@@ -79,7 +79,11 @@
     </div>
     <div class="footer-cariox-copyright">
         <div class="container-ctn">
-            {!! $siteSetting->copyright !!}
+            <p>
+                Copyright © {{ date('Y') }} Cariox. All Rights Reserved Design by :
+                <a href="https://mightywarner.ae/" target="_blank">Mighty Warners Technology</a>
+            </p>
+            <!-- {!! $siteSetting->copyright !!} -->
             @php
                 $hasTerms = !empty(trim(strip_tags($siteSetting->terms_conditions)));
                 $hasPrivacy = !empty(trim(strip_tags($siteSetting->privacy_policy)));

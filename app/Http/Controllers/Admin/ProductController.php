@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Brand;
 use App\Models\ProductImage;
-use App\Models\ProductKeyFeature;
+use App\Models\ProductOtherVideo;
 use App\Models\ProductVideo;
 use App\Models\SectionContent;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['category', 'subcategory', 'brand', 'meta', 'images'])->orderBy('position')->get();
+        $products = Product::with(['category', 'subcategory', 'brand', 'meta', 'images', 'otherVideos'])->orderBy('position')->get();
         return view('admin.product.index', compact('products'));
     }
 
@@ -41,6 +41,7 @@ class ProductController extends Controller
             'sub_title' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:products,slug',
             'description' => 'nullable|string',
+            'key_features' => 'nullable|string',
             'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'position' => 'nullable|integer|min:1',
             'canonical_url' => 'nullable|url',
@@ -70,6 +71,7 @@ class ProductController extends Controller
             'sub_title' => $request->sub_title,
             'slug' => $request->slug ?? Str::slug($request->product_title),
             'description' => $request->description,
+            'key_features' => $request->key_features,
             'brochure' => $brochurePath,
             'position' => $request->position ?? (Product::max('position') + 1),
             'status' => 1
@@ -106,26 +108,33 @@ class ProductController extends Controller
             }
         }
 
-        // Key Features arrays
-        if ($request->has('feature_names')) {
-            foreach ($request->feature_names as $index => $fname) {
-                if (!empty($fname)) {
-                    ProductKeyFeature::create([
+        // Other Videos (URLs & Files)
+        if ($request->has('other_video_urls') || $request->hasFile('other_video_files')) {
+            $ov_urls = $request->other_video_urls ?? [];
+            $ov_files = $request->file('other_video_files') ?? [];
+            $ov_count = max(count($ov_urls), count($ov_files));
+
+            for ($index = 0; $index < $ov_count; $index++) {
+                $vurl = $ov_urls[$index] ?? null;
+                $vfile_path = null;
+                if ($request->hasFile("other_video_files.$index")) {
+                    $vfile_path = $request->file("other_video_files.$index")->store('products/videos', 'public');
+                }
+
+                if (!empty($vurl) || $vfile_path) {
+                    ProductOtherVideo::create([
                         'product_id' => $product->id,
-                        'name' => $fname,
-                        'description' => $request->feature_descriptions[$index] ?? null,
-                        'position' => $index + 1,
-                        'status' => 1
+                        'video_url' => $vurl,
+                        'video_file' => $vfile_path,
                     ]);
                 }
             }
         }
 
-        // Videos arrays
+        // Product (file) Videos 
         if ($request->has('video_links')) {
             foreach ($request->video_links as $index => $vlink) {
                 $vfile_path = null;
-                // if file is uploaded
                 if ($request->hasFile("video_files.$index")) {
                     $vfile_path = $request->file("video_files.$index")->store('products/videos', 'public');
                 }
@@ -147,7 +156,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::with(['meta', 'images', 'keyFeatures', 'videos'])->findOrFail($id);
+        $product = Product::with(['meta', 'images', 'otherVideos', 'videos'])->findOrFail($id);
         $categories = Category::where('status', 1)->get();
         $subcategories = Subcategory::where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
@@ -174,6 +183,7 @@ class ProductController extends Controller
             'sub_title' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:products,slug,' . $product->id,
             'description' => 'nullable|string',
+            'key_features' => 'nullable|string',
             'brochure' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'position' => 'nullable|integer|min:1',
             // meta
@@ -204,6 +214,7 @@ class ProductController extends Controller
         $product->sub_title = $request->sub_title;
         $product->slug = $request->slug ?? Str::slug($request->product_title);
         $product->description = $request->description;
+        $product->key_features = $request->key_features;
 
         if ($request->has('position')) {
             $product->position = $request->position;
@@ -244,8 +255,15 @@ class ProductController extends Controller
                 }
             }
         }
-        if ($request->has('delete_features')) {
-            ProductKeyFeature::whereIn('id', $request->delete_features)->delete();
+        if ($request->has('delete_other_videos')) {
+            foreach ($request->delete_other_videos as $vid_id) {
+                $vid = ProductOtherVideo::find($vid_id);
+                if ($vid) {
+                    if ($vid->video_file && Storage::disk('public')->exists($vid->video_file))
+                        Storage::disk('public')->delete($vid->video_file);
+                    $vid->delete();
+                }
+            }
         }
         if ($request->has('delete_videos')) {
             foreach ($request->delete_videos as $vid_id) {
@@ -258,20 +276,27 @@ class ProductController extends Controller
             }
         }
 
-        // Update Existing Features
-        if ($request->has('existing_features')) {
-            foreach ($request->existing_features as $fid => $fData) {
-                $feature = ProductKeyFeature::find($fid);
-                if ($feature) {
-                    $feature->update([
-                        'name' => $fData['name'] ?? '',
-                        'description' => $fData['description'] ?? null
+        // Update Existing Other Videos
+        if ($request->has('existing_other_videos')) {
+            foreach ($request->existing_other_videos as $vid => $vData) {
+                $video = ProductOtherVideo::find($vid);
+                if ($video) {
+                    $vfile_path = $video->video_file;
+                    if ($request->hasFile("existing_other_video_files.$vid")) {
+                        if ($vfile_path && Storage::disk('public')->exists($vfile_path))
+                            Storage::disk('public')->delete($vfile_path);
+                        $vfile_path = $request->file("existing_other_video_files.$vid")->store('products/videos', 'public');
+                    }
+
+                    $video->update([
+                        'video_url' => $vData['video_url'] ?? null,
+                        'video_file' => $vfile_path,
                     ]);
                 }
             }
         }
 
-        // Update Existing Videos
+        // Update Existing (file) Videos
         if ($request->has('existing_videos')) {
             foreach ($request->existing_videos as $vid => $vData) {
                 $video = ProductVideo::find($vid);
@@ -291,6 +316,29 @@ class ProductController extends Controller
             }
         }
 
+        // Add New Other Videos
+        if ($request->has('other_video_urls') || $request->hasFile('other_video_files')) {
+            $ov_urls = $request->other_video_urls ?? [];
+            $ov_files = $request->file('other_video_files') ?? [];
+            $ov_count = max(count($ov_urls), count($ov_files));
+
+            for ($index = 0; $index < $ov_count; $index++) {
+                $vurl = $ov_urls[$index] ?? null;
+                $vfile_path = null;
+                if ($request->hasFile("other_video_files.$index")) {
+                    $vfile_path = $request->file("other_video_files.$index")->store('products/videos', 'public');
+                }
+
+                if (!empty($vurl) || $vfile_path) {
+                    ProductOtherVideo::create([
+                        'product_id' => $product->id,
+                        'video_url' => $vurl,
+                        'video_file' => $vfile_path,
+                    ]);
+                }
+            }
+        }
+
         // Add New Images
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $img) {
@@ -304,26 +352,14 @@ class ProductController extends Controller
             }
         }
 
-        // Key Features arrays (New)
-        if ($request->has('feature_names')) {
-            foreach ($request->feature_names as $index => $fname) {
-                if (!empty($fname)) {
-                    ProductKeyFeature::create([
-                        'product_id' => $product->id,
-                        'name' => $fname,
-                        'description' => $request->feature_descriptions[$index] ?? null,
-                        'position' => 1, // Will need sorting later or just default
-                        'status' => 1
-                    ]);
-                }
-            }
-        }
-
-        // Videos arrays (New)
+        // Add New (file) Videos
         if ($request->has('video_links') || $request->hasFile('video_files')) {
-            $vidCount = max(count($request->video_links ?? []), count($request->file('video_files') ?? []));
+            $vlinks = $request->video_links ?? [];
+            $vfiles = $request->file('video_files') ?? [];
+            $vidCount = max(count($vlinks), count($vfiles));
+            
             for ($index = 0; $index < $vidCount; $index++) {
-                $vlink = $request->video_links[$index] ?? null;
+                $vlink = $vlinks[$index] ?? null;
                 $vfile_path = null;
                 if ($request->hasFile("video_files.$index")) {
                     $vfile_path = $request->file("video_files.$index")->store('products/videos', 'public');
@@ -364,10 +400,13 @@ class ProductController extends Controller
                 Storage::disk('public')->delete($vid->video);
             $vid->delete();
         }
+        foreach ($product->otherVideos as $vid) {
+            if ($vid->video_file && Storage::disk('public')->exists($vid->video_file))
+                Storage::disk('public')->delete($vid->video_file);
+            $vid->delete();
+        } 
         if ($product->meta)
             $product->meta()->delete();
-
-        $product->keyFeatures()->delete(); // soft deletes cascading manual
 
         $product->delete();
         $this->normalizeProductOrder();
@@ -405,9 +444,13 @@ class ProductController extends Controller
                         Storage::disk('public')->delete($vid->video);
                     $vid->delete();
                 }
+                foreach ($product->otherVideos as $vid) {
+                    if ($vid->video_file && Storage::disk('public')->exists($vid->video_file))
+                        Storage::disk('public')->delete($vid->video_file);
+                    $vid->delete();
+                }
                 if ($product->meta)
                     $product->meta()->delete();
-                $product->keyFeatures()->delete();
                 $product->delete();
             }
             $this->normalizeProductOrder();

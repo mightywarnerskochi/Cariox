@@ -180,7 +180,7 @@ class WebsiteController extends Controller
     {
         if (!$slug) return redirect()->route('products');
         
-        $product = Product::with(['images', 'brand', 'keyFeatures', 'videos'])->where('slug', $slug)->firstOrFail();
+        $product = Product::with(['images', 'brand', 'otherVideos', 'videos'])->where('slug', $slug)->firstOrFail();
         $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->positioned()->take(4)->get();
         $majorProducts = Product::where('status', 1)->positioned()->take(6)->get();
         return view('website.product-detail', compact('product', 'relatedProducts', 'majorProducts'));
