@@ -4654,7 +4654,42 @@ footer li {
 }
 .news-events .slick-dots {
   justify-content: center;
-  margin-top: 72px;
+  margin-top: 10px;
+}
+@media (min-width: 768px) {
+  .news-events .slick-dots {
+    margin-top: 40px;
+  }
+}
+@media (min-width: 992px) {
+  .news-events .slick-dots {
+    margin-top: 48px;
+  }
+}
+@media (min-width: 1200px) {
+  .news-events .slick-dots {
+    margin-top: 53px;
+  }
+}
+@media (min-width: 1350px) {
+  .news-events .slick-dots {
+    margin-top: 58px;
+  }
+}
+@media (min-width: 1440px) {
+  .news-events .slick-dots {
+    margin-top: 63px;
+  }
+}
+@media (min-width: 1600px) {
+  .news-events .slick-dots {
+    margin-top: 68px;
+  }
+}
+@media (min-width: 1900px) {
+  .news-events .slick-dots {
+    margin-top: 72px;
+  }
 }
 
 .modal-content {
