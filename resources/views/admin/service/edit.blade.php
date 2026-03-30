@@ -77,11 +77,11 @@
                 <!-- Main Image -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Main Image (Replace existing)</label>
+                        <label>Main Image (Replace existing) (Recommended: 1040x480 px)</label>
                         @if($service->main_image)
                             <img src="{{ Storage::url($service->main_image) }}" class="image-preview">
                         @endif
-                        <input type="file" name="main_image" class="form-control" accept="image/*" style="margin-top:0.5rem;">
+                        <input type="file" name="main_image" class="form-control" accept="image/*" style="margin-top:0.5rem;" data-max-width="1040" data-max-height="480">
                     </div>
                     <div class="form-group">
                         <label>Main Image Alt Text</label>
@@ -92,11 +92,11 @@
                 <!-- Base Image 1 -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Base Image 1 (Replace existing)</label>
+                        <label>Base Image 1 (Replace existing) (Recommended: 550x366 px)</label>
                         @if($service->base_image1)
                             <img src="{{ Storage::url($service->base_image1) }}" class="image-preview">
                         @endif
-                        <input type="file" name="base_image1" class="form-control" accept="image/*" style="margin-top:0.5rem;">
+                        <input type="file" name="base_image1" class="form-control" accept="image/*" style="margin-top:0.5rem;" data-max-width="550" data-max-height="366">
                     </div>
                     <div class="form-group">
                         <label>Base Image 1 Alt Text</label>
@@ -107,11 +107,11 @@
                 <!-- Base Image 2 -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Base Image 2 (Replace existing)</label>
+                        <label>Base Image 2 (Replace existing) (Recommended: 550x366 px)</label>
                         @if($service->base_image2)
                             <img src="{{ Storage::url($service->base_image2) }}" class="image-preview">
                         @endif
-                        <input type="file" name="base_image2" class="form-control" accept="image/*" style="margin-top:0.5rem;">
+                        <input type="file" name="base_image2" class="form-control" accept="image/*" style="margin-top:0.5rem;" data-max-width="550" data-max-height="366">
                     </div>
                     <div class="form-group">
                         <label>Base Image 2 Alt Text</label>

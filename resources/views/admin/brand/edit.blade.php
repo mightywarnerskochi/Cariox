@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Swap Brand Image (Leave blank to keep current format) </label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
+                    <label>Swap Brand Image (Leave blank to keep current format) (Recommended: 175x120 px)</label>
+                    <input type="file" name="image" class="form-control" accept="image/*" data-max-width="175" data-max-height="120">
                 </div>
 
                 <div class="form-group">

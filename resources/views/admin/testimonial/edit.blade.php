@@ -74,8 +74,8 @@
                                 <img src="{{ Storage::url($testimonial->image) }}" alt="Preview" style="height: 60px; border-radius: 50%; border: 1px solid var(--border-color); padding: 0.1rem;">
                             </div>
                         @endif
-                        <label>Client Image / Avatar (Leave blank to keep current) </label>
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <label>Client Image / Avatar (Leave blank to keep current) (Recommended: 180x180 px)</label>
+                        <input type="file" name="image" class="form-control" accept="image/*" data-max-width="180" data-max-height="180">
                         @error('image') <span class="text-danger" style="color:red; font-size:0.8rem; display:block; margin-top:0.25rem;">{{ $message }}</span> @enderror
                     </div>
 

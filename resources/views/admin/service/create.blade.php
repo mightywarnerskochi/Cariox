@@ -73,8 +73,8 @@
                 <!-- Main Image -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Main Image</label>
-                        <input type="file" name="main_image" class="form-control" accept="image/*">
+                        <label>Main Image (Recommended: 1040x480 px)</label>
+                        <input type="file" name="main_image" class="form-control" accept="image/*" data-max-width="1040" data-max-height="480">
                     </div>
                     <div class="form-group">
                         <label>Main Image Alt Text</label>
@@ -85,8 +85,8 @@
                 <!-- Base Image 1 -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Base Image 1</label>
-                        <input type="file" name="base_image1" class="form-control" accept="image/*">
+                        <label>Base Image 1 (Recommended: 550x366 px)</label>
+                        <input type="file" name="base_image1" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                     </div>
                     <div class="form-group">
                         <label>Base Image 1 Alt Text</label>
@@ -97,8 +97,8 @@
                 <!-- Base Image 2 -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Base Image 2</label>
-                        <input type="file" name="base_image2" class="form-control" accept="image/*">
+                        <label>Base Image 2 (Recommended: 550x366 px)</label>
+                        <input type="file" name="base_image2" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                     </div>
                     <div class="form-group">
                         <label>Base Image 2 Alt Text</label>

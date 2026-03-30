@@ -67,8 +67,8 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Client Image / Avatar</label>
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <label>Client Image / Avatar (Recommended: 180x180 px)</label>
+                        <input type="file" name="image" class="form-control" accept="image/*" data-max-width="180" data-max-height="180">
                         @error('image') <span class="text-danger" style="color:red; font-size:0.8rem; display:block; margin-top:0.25rem;">{{ $message }}</span> @enderror
                     </div>
 

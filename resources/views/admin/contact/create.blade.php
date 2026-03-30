@@ -20,8 +20,8 @@
                         @error('country') <span class="text-danger" style="color:red; font-size:0.8rem; display:block; margin-top:0.25rem;">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                        <label>Country Logo</label>
-                        <input type="file" name="country_logo" class="form-control" accept="image/*">
+                        <label>Country Logo (Recommended: 50x50 px)</label>
+                        <input type="file" name="country_logo" class="form-control" accept="image/*" data-max-width="50" data-max-height="50">
                         @error('country_logo') <span class="text-danger" style="color:red; font-size:0.8rem; display:block; margin-top:0.25rem;">{{ $message }}</span> @enderror
                     </div>
                 </div>
