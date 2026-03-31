@@ -69,12 +69,18 @@ class CategoryController extends Controller
             $logoPath = $request->file('logo')->store('categories', 'public');
         }
 
+        $brochurePath = null;
+        if ($request->hasFile('brochure')) {
+            $brochurePath = $request->file('brochure')->store('categories/brochures', 'public');
+        }
+
         $category = Category::create([
             'name' => $request->name,
             'slug' => $request->slug ?? Str::slug($request->name),
             'description' => $request->description,
             'logo' => $logoPath,
             'logo_alt_text' => $request->logo_alt_text,
+            'brochure' => $brochurePath,
             'position' => $position,
             'status' => 1
         ]);
@@ -140,6 +146,13 @@ class CategoryController extends Controller
                 Storage::disk('public')->delete($category->logo);
             }
             $category->logo = $request->file('logo')->store('categories', 'public');
+        }
+
+        if ($request->hasFile('brochure')) {
+            if ($category->brochure && Storage::disk('public')->exists($category->brochure)) {
+                Storage::disk('public')->delete($category->brochure);
+            }
+            $category->brochure = $request->file('brochure')->store('categories/brochures', 'public');
         }
 
         $category->name = $request->name;

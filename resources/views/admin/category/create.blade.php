@@ -62,6 +62,11 @@
                 </div>
 
                 <div class="form-group" style="width: 50%;">
+                    <label>Category Brochure (.pdf, .doc, .docx)</label>
+                    <input type="file" name="brochure" class="form-control" accept=".pdf,.doc,.docx">
+                </div>
+
+                <div class="form-group" style="width: 50%;">
                     <label>Order / Position</label>
                     <input type="number" min="1" name="position" class="form-control" placeholder="Leave empty to push to last" value="{{ old('position') }}">
                 </div>
