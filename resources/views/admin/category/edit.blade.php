@@ -69,6 +69,16 @@
                 </div>
 
                 <div class="form-group" style="width: 50%;">
+                    <label>Category Brochure (.pdf, .doc, .docx)</label>
+                    @if($category->brochure)
+                        <div style="margin-bottom: 0.5rem; font-size: 0.8rem; background:#f8fafc; padding: 0.5rem; border:1px solid #e2e8f0; display:inline-block;">
+                           <a href="{{ Storage::url($category->brochure) }}" target="_blank">View Current Brochure</a>
+                        </div>
+                    @endif
+                    <input type="file" name="brochure" class="form-control" accept=".pdf,.doc,.docx">
+                </div>
+
+                <div class="form-group" style="width: 50%;">
                     <label>Order / Position</label>
                     <input type="number" min="1" name="position" class="form-control" value="{{ old('position', $category->position) }}">
                 </div>

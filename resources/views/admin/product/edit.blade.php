@@ -123,8 +123,8 @@
                     @endforeach
                 </div>
                 <div class="form-group">
-                    <label>Add More Product Images (You can select multiple files)</label>
-                    <input type="file" name="images[]" class="form-control" multiple accept="image/*">
+                    <label>Add More Product Images (You can select multiple files) (Recommended: 248x284 px)</label>
+                    <input type="file" name="images[]" class="form-control" multiple accept="image/*" data-max-width="248" data-max-height="284">
                 </div>
             </div>
         </div>

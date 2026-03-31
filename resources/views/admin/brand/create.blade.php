@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Brand Image (Logo) <span style="color:red">*</span></label>
-                    <input type="file" name="image" class="form-control" accept="image/*" required>
+                    <label>Brand Image (Logo) <span style="color:red">*</span> (Recommended: 175x120 px)</label>
+                    <input type="file" name="image" class="form-control" accept="image/*" required data-max-width="175" data-max-height="120">
                 </div>
 
                 <div class="form-group">

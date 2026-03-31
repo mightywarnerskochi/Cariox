@@ -37,8 +37,8 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <label>Main Image (Recommended: 1080x720 px)</label>
+                        <input type="file" name="image" class="form-control" accept="image/*" data-max-width="1080" data-max-height="720">
                     </div>
                     <div class="form-group">
                         <label>Image Alt Text</label>
@@ -48,12 +48,12 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Image 1</label>
-                        <input type="file" name="image_1" class="form-control" accept="image/*">
+                        <label>Image 1 (Recommended: 550x366 px)</label>
+                        <input type="file" name="image_1" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                     </div>
                     <div class="form-group">
-                        <label>Image 2</label>
-                        <input type="file" name="image_2" class="form-control" accept="image/*">
+                        <label>Image 2 (Recommended: 550x366 px)</label>
+                        <input type="file" name="image_2" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                     </div>
                 </div>
 

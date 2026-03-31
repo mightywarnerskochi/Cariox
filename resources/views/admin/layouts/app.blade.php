@@ -296,6 +296,7 @@
         });
     </script>
     <script src="{{ asset('js/admin-tinymce.js') }}"></script>
+    <script src="{{ asset('js/image-dimensions-check.js') }}"></script>
     @include('admin.partials.section_heading_validation')
     @stack('scripts')
 </body>

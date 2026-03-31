@@ -107,8 +107,8 @@
             <div class="section-header">Multiple Images Attached</div>
             <div class="section-body">
                 <div class="form-group">
-                    <label>Product Images (You can select multiple files)</label>
-                    <input type="file" name="images[]" class="form-control" multiple accept="image/*">
+                    <label>Product Images (You can select multiple files) (Recommended: 248x284 px)</label>
+                    <input type="file" name="images[]" class="form-control" multiple accept="image/*" data-max-width="248" data-max-height="284">
                 </div>
             </div>
         </div>

@@ -38,8 +38,8 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Main Image</label>
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <label>Main Image (Recommended: 1080x720 px)</label>
+                        <input type="file" name="image" class="form-control" accept="image/*" data-max-width="1080" data-max-height="720">
                         @if($blog->image)
                             <div style="margin-top: 0.5rem;">
                                 <img src="{{ Storage::url($blog->image) }}" height="80" style="border-radius: 4px; border: 1px solid #e2e8f0;">
@@ -55,8 +55,8 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
-                        <label>Image 1</label>
-                        <input type="file" name="image_1" class="form-control" accept="image/*">
+                        <label>Image 1 (Recommended: 550x366 px)</label>
+                        <input type="file" name="image_1" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                         @if($blog->image_1)
                             <div style="margin-top: 0.5rem;">
                                 <img src="{{ Storage::url($blog->image_1) }}" height="80" style="border-radius: 4px; border: 1px solid #e2e8f0;">
@@ -65,8 +65,8 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label>Image 2</label>
-                        <input type="file" name="image_2" class="form-control" accept="image/*">
+                        <label>Image 2 (Recommended: 550x366 px)</label>
+                        <input type="file" name="image_2" class="form-control" accept="image/*" data-max-width="550" data-max-height="366">
                         @if($blog->image_2)
                             <div style="margin-top: 0.5rem;">
                                 <img src="{{ Storage::url($blog->image_2) }}" height="80" style="border-radius: 4px; border: 1px solid #e2e8f0;">

@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Swap Client Image (Leave blank to keep current) </label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
+                    <label>Swap Client Image (Leave blank to keep current) (Recommended: 175x120 px)</label>
+                    <input type="file" name="image" class="form-control" accept="image/*" data-max-width="175" data-max-height="120">
                 </div>
 
                 <div class="form-group">

@@ -12,7 +12,7 @@ class Category extends Model
 
     protected $fillable = [
         'name', 'slug', 'description',
-        'logo', 'logo_alt_text', 'status', 'position', 'display_to_home'
+        'logo', 'logo_alt_text', 'status', 'position', 'display_to_home', 'brochure'
     ];
 
     public function meta()
