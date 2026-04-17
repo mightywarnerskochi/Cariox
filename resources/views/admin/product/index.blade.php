@@ -23,7 +23,6 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <h2 style="font-size: 1.5rem; font-weight: 600; color: #1e293b; margin: 0;">Products</h2>
     </div>
-
     <!-- Products Table -->
     <div class="section-container">
         <form action="{{ route('admin.product.bulkDelete') }}" method="POST" id="productBulkForm">
