@@ -151,6 +151,16 @@ class WebsiteController extends Controller
         }
 
         $products = $query->paginate(12)->withQueryString();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('website.partials.product-item', compact('products'))->render(),
+                'hasMore' => $products->hasMorePages(),
+                'nextPageUrl' => $products->nextPageUrl(),
+                'total' => $products->total(),
+            ]);
+        }
+
         $categories = Category::with(['subcategories' => function($q) {
             $q->where('status', 1)->orderBy('position')->with(['products' => function($pq) {
                 $pq->where('status', 1)->positioned();

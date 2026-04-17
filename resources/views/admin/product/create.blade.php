@@ -80,10 +80,7 @@
                         <label>Slug (Leave blank to generate automatically)</label>
                         <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}">
                     </div>
-                    <div class="form-group">
-                        <label>Order / Position</label>
-                        <input type="number" min="1" name="position" class="form-control" value="{{ old('position') }}">
-                    </div>
+
                     <div class="form-group">
                         <label>Display in Home</label>
                         <select name="display_in_home" class="form-control">
