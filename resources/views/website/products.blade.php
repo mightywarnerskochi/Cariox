@@ -43,146 +43,215 @@ $page_desc = 'Explore industrial coding, inspection, and packaging systems from 
 <section class="product-listing commonPadding-120">
     <div class="container-ctn">
         <div class="product-listing__layout justify-content-between">
-            <aside class="product-sidebar" id="productSidebarDrawer" aria-label="Product filters"><form action="{{ route('products') }}" method="GET">
-                <button class="product-sidebar__close" id="productSidebarClose" aria-label="Close filters">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
+            <aside class="product-sidebar" id="productSidebarDrawer" aria-label="Product filters">
+                <form id="filterForm" action="{{ route('products') }}" method="GET">
+                    <button class="product-sidebar__close" id="productSidebarClose" aria-label="Close filters">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
 
 
-                <div class="product-sidebar__panel">
-                    <h3>Categories</h3>
-                    <div class="product-sidebar__panel-body">
-                        <div class="product-sidebar__group">
-                            <div class="accordion product-sidebar__main-accordion" id="productSidebarMainAccordion">
-                                @foreach($categories as $category)
-                                @php
-                                    $isCategoryActive = (isset(request()->category) && in_array($category->slug, (array)request()->category)) || 
-                                                       $category->subcategories->whereIn('slug', (array)request()->subcategory)->count() > 0 ||
-                                                       $category->subcategories->flatMap->products->whereIn('slug', (array)request()->product)->count() > 0;
-                                @endphp
-                                <div class="accordion-item product-sidebar__main-item">
-                                    <h4 class="accordion-header" id="productSidebarHeading{{ $category->id }}">
-                                        <button class="accordion-button product-sidebar__main-link {{ $isCategoryActive ? '' : 'collapsed' }}" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#productSidebarCat{{ $category->id }}"
-                                            aria-expanded="{{ $isCategoryActive ? 'true' : 'false' }}" aria-controls="productSidebarCat{{ $category->id }}">
-                                            <span>{{ $category->name }}</span>
-                                        </button>
-                                    </h4>
-                                    <div id="productSidebarCat{{ $category->id }}" class="accordion-collapse collapse {{ $isCategoryActive ? 'show' : '' }}"
-                                        aria-labelledby="productSidebarHeading{{ $category->id }}"
-                                        data-bs-parent="#productSidebarMainAccordion">
-                                        <div class="accordion-body product-sidebar__main-body">
-                                            @if($category->subcategories->count() > 0)
-                                            <div class="accordion product-sidebar__sub-accordion" id="productSidebarSubAccordion{{ $category->id }}">
-                                                @foreach($category->subcategories as $sub)
-                                                @php
-                                                    $isSubActive = in_array($sub->slug, (array)request()->subcategory) || 
-                                                                  $sub->products->whereIn('slug', (array)request()->product)->count() > 0;
-                                                @endphp
-                                                <div class="accordion-item product-sidebar__sub-item">
-                                                    <h5 class="accordion-header" id="productSidebarSubHeading{{ $sub->id }}">
-                                                        <button class="accordion-button product-sidebar__sub-link {{ $isSubActive ? '' : 'collapsed' }}" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#productSidebarSub{{ $sub->id }}"
-                                                            aria-expanded="{{ $isSubActive ? 'true' : 'false' }}" aria-controls="productSidebarSub{{ $sub->id }}">
-                                                            <span>{{ $sub->name }}</span>
-                                                        </button>
-                                                    </h5>
-                                                    <div id="productSidebarSub{{ $sub->id }}" class="accordion-collapse collapse {{ $isSubActive ? 'show' : '' }}"
-                                                        aria-labelledby="productSidebarSubHeading{{ $sub->id }}"
-                                                        data-bs-parent="#productSidebarSubAccordion{{ $category->id }}">
-                                                        <div class="accordion-body product-sidebar__sub-body">
-                                                            @foreach($sub->products as $p)
-                                                            <label class="product-sidebar__option">
-                                                                <input type="checkbox" name="product[]" value="{{ $p->slug }}" onchange="this.form.submit()" {{ in_array($p->slug, (array)request()->product) ? 'checked' : '' }}>
-                                                                <span class="product-sidebar__check"></span>
-                                                                <span class="product-sidebar__label">{{ $p->product_title }}</span>
-                                                            </label>
-                                                            @endforeach
+                    <div class="product-sidebar__panel">
+                        <h3>Categories</h3>
+                        <div class="product-sidebar__panel-body">
+                            <div class="product-sidebar__group">
+                                <div class="accordion product-sidebar__main-accordion" id="productSidebarMainAccordion">
+                                    @foreach($categories as $category)
+                                    @php
+                                        $isCategoryActive = (isset(request()->category) && in_array($category->slug, (array)request()->category)) || 
+                                                           $category->subcategories->whereIn('slug', (array)request()->subcategory)->count() > 0 ||
+                                                           $category->subcategories->flatMap->products->whereIn('slug', (array)request()->product)->count() > 0;
+                                    @endphp
+                                    <div class="accordion-item product-sidebar__main-item">
+                                        <h4 class="accordion-header" id="productSidebarHeading{{ $category->id }}">
+                                            <button class="accordion-button product-sidebar__main-link {{ $isCategoryActive ? '' : 'collapsed' }}" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#productSidebarCat{{ $category->id }}"
+                                                aria-expanded="{{ $isCategoryActive ? 'true' : 'false' }}" aria-controls="productSidebarCat{{ $category->id }}">
+                                                <span>{{ $category->name }}</span>
+                                            </button>
+                                        </h4>
+                                        <div id="productSidebarCat{{ $category->id }}" class="accordion-collapse collapse {{ $isCategoryActive ? 'show' : '' }}"
+                                            aria-labelledby="productSidebarHeading{{ $category->id }}"
+                                            data-bs-parent="#productSidebarMainAccordion">
+                                            <div class="accordion-body product-sidebar__main-body">
+                                                @if($category->subcategories->count() > 0)
+                                                <div class="accordion product-sidebar__sub-accordion" id="productSidebarSubAccordion{{ $category->id }}">
+                                                    @foreach($category->subcategories as $sub)
+                                                    @php
+                                                        $isSubActive = in_array($sub->slug, (array)request()->subcategory) || 
+                                                                      $sub->products->whereIn('slug', (array)request()->product)->count() > 0;
+                                                    @endphp
+                                                    <div class="accordion-item product-sidebar__sub-item">
+                                                        <h5 class="accordion-header" id="productSidebarSubHeading{{ $sub->id }}">
+                                                            <button class="accordion-button product-sidebar__sub-link {{ $isSubActive ? '' : 'collapsed' }}" type="button"
+                                                                data-bs-toggle="collapse" data-bs-target="#productSidebarSub{{ $sub->id }}"
+                                                                aria-expanded="{{ $isSubActive ? 'true' : 'false' }}" aria-controls="productSidebarSub{{ $sub->id }}">
+                                                                <span>{{ $sub->name }}</span>
+                                                            </button>
+                                                        </h5>
+                                                        <div id="productSidebarSub{{ $sub->id }}" class="accordion-collapse collapse {{ $isSubActive ? 'show' : '' }}"
+                                                            aria-labelledby="productSidebarSubHeading{{ $sub->id }}"
+                                                            data-bs-parent="#productSidebarSubAccordion{{ $category->id }}">
+                                                            <div class="accordion-body product-sidebar__sub-body">
+                                                                @foreach($sub->products as $p)
+                                                                <label class="product-sidebar__option">
+                                                                    <input type="checkbox" name="product[]" value="{{ $p->slug }}" {{ in_array($p->slug, (array)request()->product) ? 'checked' : '' }}>
+                                                                    <span class="product-sidebar__check"></span>
+                                                                    <span class="product-sidebar__label">{{ $p->product_title }}</span>
+                                                                </label>
+                                                                @endforeach
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    @endforeach
                                                 </div>
-                                                @endforeach
+                                                @else
+                                                    <div class="product-sidebar__nested">
+                                                        <label class="product-sidebar__option">
+                                                            <input type="checkbox" name="category[]" value="{{ $category->slug }}" {{ in_array($category->slug, (array)request()->category) ? 'checked' : '' }}>
+                                                            <span class="product-sidebar__check"></span>
+                                                            <span class="product-sidebar__label">All {{ $category->name }}</span>
+                                                        </label>
+                                                    </div>
+                                                @endif
                                             </div>
-                                            @else
-                                                <div class="product-sidebar__nested">
-                                                    <label class="product-sidebar__option">
-                                                        <input type="checkbox" name="category[]" value="{{ $category->slug }}" onchange="this.form.submit()" {{ in_array($category->slug, (array)request()->category) ? 'checked' : '' }}>
-                                                        <span class="product-sidebar__check"></span>
-                                                        <span class="product-sidebar__label">All {{ $category->name }}</span>
-                                                    </label>
-                                                </div>
-                                            @endif
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="product-sidebar__panel mt-2">
+                        <h3>Brands</h3>
+                        <div class="product-sidebar__panel-body">
+                            <div class="product-sidebar__brands">
+                                @foreach($brands as $brand)
+                                <label class="product-sidebar__brand">
+                                    <input type="checkbox" name="brand[]" value="{{ $brand->slug }}" {{ in_array($brand->slug, (array)request()->brand) ? 'checked' : '' }}>
+                                    <span class="product-sidebar__brand-mark" aria-hidden="true"></span>
+                                    @if($brand->image)
+                                    <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" width="86" height="36">
+                                    @else
+                                    <span>{{ $brand->name }}</span>
+                                    @endif
+                                </label>
                                 @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-
-                <div class="product-sidebar__panel mt-2">
-                    <h3>Brands</h3>
-                    <div class="product-sidebar__panel-body">
-                        <div class="product-sidebar__brands">
-                            @foreach($brands as $brand)
-                            <label class="product-sidebar__brand">
-                                <input type="checkbox" name="brand[]" value="{{ $brand->slug }}" onchange="this.form.submit()" {{ in_array($brand->slug, (array)request()->brand) ? 'checked' : '' }}>
-                                <span class="product-sidebar__brand-mark" aria-hidden="true"></span>
-                                @if($brand->image)
-                                <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" width="86" height="36">
-                                @else
-                                <span>{{ $brand->name }}</span>
-                                @endif
-                            </label>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </form></aside>
+                </form>
+            </aside>
 
             <div class="product-catalog">
-                <div class="product-catalog__grid">
-                    @forelse($products as $product)
-                    <article class="product-catalog-card">
-                        <div class="product-catalog-card__image">
-                             <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/shop/1.png') }}" alt="{{ $product->product_title }}">
-                        </div>
-                        <div class="product-catalog-card__content">
-                            <h3>{{ $product->product_title }}</h3>
-                            <p>{{ $product->sub_title }}</p>
-                            <div class="product-catalog-card__actions">
-                                <a data-bs-toggle="modal" data-bs-target="#siteEnquiryForm" role="button"
-                                    aria-label="Open enquiry form" data-product-name="{{ $product->product_title }}" data-product-id="{{ $product->id }}"
-                                    class="product-catalog-card__cta product-catalog-card__cta--primary">Enquire Now</a>
-                                <a href="https://wa.me/+{{ preg_replace('/[^0-9]/', '', $siteSetting->official_whatsapp ?? '971545864310') }}?text=I am interested in {{ $product->product_title }}."
-                                    target="_blank" rel="noopener"
-                                    class="product-catalog-card__cta product-catalog-card__cta--secondary">WhatsApp Us</a>
-                                <a href="{{ route('product-detail', $product->slug) }}" class="product-catalog-card__arrow"
-                                    aria-label="View {{ $product->product_title }} details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
-                                        <path d="M11.3136 22.6274L22.6273 11.3137M22.6273 11.3137V19.799M22.6273 11.3137H14.142" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    @empty
-                    <div class="col-12 text-center py-5">
-                        <p>No products found matching your criteria.</p>
-                    </div>
-                    @endforelse
+                <div class="product-catalog__grid" id="productGrid">
+                    @include('website.partials.product-item', ['products' => $products])
                 </div>
-                <div class="pagination-wrapper mt-5">
+
+                {{-- Loader --}}
+                <div id="productLoader" class="text-center py-4" style="display: none;">
+                    <div class="spinner-border text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                {{-- Load More Sentinel --}}
+                <div id="loadMoreSentinel" style="height: 10px;"></div>
+
+                {{-- Standard pagination (hidden, used for fallback data) --}}
+                <div class="pagination-wrapper mt-5 d-none" id="standardPagination">
                     {{ $products->links() }}
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentPage = 1;
+    let isLoading = false;
+    let hasMore = {{ $products->hasMorePages() ? 'true' : 'false' }};
+    const productGrid = document.getElementById('productGrid');
+    const filterForm = document.getElementById('filterForm');
+    const loader = document.getElementById('productLoader');
+    const sentinel = document.getElementById('loadMoreSentinel');
+
+    // Function to fetch products
+    async function fetchProducts(reset = false) {
+        if (isLoading) return;
+        if (!reset && !hasMore) return;
+
+        isLoading = true;
+        if (reset) {
+            currentPage = 1;
+            productGrid.style.opacity = '0.5';
+        }
+        loader.style.display = 'block';
+
+        const formData = new FormData(filterForm);
+        const params = new URLSearchParams(formData);
+        params.append('page', currentPage + (reset ? 0 : 1));
+
+        try {
+            const response = await fetch(`{{ route('products') }}?${params.toString()}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+            const data = await response.json();
+
+            if (reset) {
+                productGrid.innerHTML = data.html;
+                productGrid.style.opacity = '1';
+                currentPage = 1;
+            } else {
+                // Append new items
+                if (data.html) {
+                    // Check if "No products found" is currently displayed and remove it if we have new items
+                    const noProducts = productGrid.querySelector('.no-products');
+                    if (noProducts) noProducts.remove();
+                    
+                    productGrid.insertAdjacentHTML('beforeend', data.html);
+                }
+                currentPage++;
+            }
+
+            hasMore = data.hasMore;
+            
+            // Update URL without reloading
+            const newUrl = window.location.pathname + '?' + params.toString();
+            window.history.pushState({ path: newUrl }, '', newUrl);
+
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        } finally {
+            isLoading = false;
+            loader.style.display = 'none';
+        }
+    }
+
+    // Filter change handler
+    filterForm.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.addEventListener('change', () => {
+            fetchProducts(true);
+        });
+    });
+
+    // Infinite scroll using Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+            fetchProducts();
+        }
+    }, {
+        rootMargin: '200px'
+    });
+    observer.observe(sentinel);
+});
+</script>
 @endsection

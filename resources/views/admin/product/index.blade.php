@@ -49,7 +49,6 @@
                             <th>Category</th>
                             <th>Subcategory</th>
                             <th>Brand</th>
-                            <th style="width: 100px;">Order</th>
                             <th style="width: 100px;">Status</th>
                             <th style="width: 120px;">Display in Home</th>
                             <th style="width: 100px;">Actions</th>
@@ -71,13 +70,7 @@
                                 <td><span style="background: #e0e7ff; color: #3730a3; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">{{ $item->category->name ?? 'N/A' }}</span></td>
                                 <td><span style="background: #dbeafe; color: #1e40af; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">{{ $item->subcategory->name ?? 'N/A' }}</span></td>
                                 <td>{{ $item->brand->name ?? 'N/A' }}</td>
-                                <td>
-                                    <select class="form-control" style="padding: 0.25rem;" onchange="updatePosition('{{ route('admin.product.update', $item->id) }}', this.value)">
-                                        @for($i = 1; $i <= max($products->count(), $item->position, 1); $i++)
-                                            <option value="{{ $i }}" {{ $item->position == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                </td>
+
                                 <td>
                                     <label class="toggle-switch">
                                         <input type="checkbox" onchange="toggleStatus('{{ route('admin.product.toggleStatus') }}', {{ $item->id }})" {{ $item->status ? 'checked' : '' }}>
@@ -97,7 +90,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="11" style="text-align: center; padding: 2rem; color: #64748b;">No products found.</td>
+                                <td colspan="10" style="text-align: center; padding: 2rem; color: #64748b;">No products found.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -113,12 +106,7 @@
         <input type="hidden" name="id" id="actionId">
     </form>
 
-    <!-- Hidden Form for Position Change -->
-    <form id="positionForm" method="POST" style="display: none;">
-        @csrf
-        <input type="hidden" name="_method" value="PUT">
-        <input type="hidden" name="position" id="positionInput">
-    </form>
+
 
     <script>
         function toggleAll(source, className) {
@@ -188,12 +176,7 @@
             }
         }
 
-        function updatePosition(url, val) {
-            let form = document.getElementById('positionForm');
-            form.action = url;
-            document.getElementById('positionInput').value = val;
-            form.submit();
-        }
+
     </script>
 </div>
 @endsection
