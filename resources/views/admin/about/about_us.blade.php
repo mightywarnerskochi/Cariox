@@ -98,31 +98,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Images (Max 3)</label>
-                    <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem;">Current count: {{ $about->images->count() }}/3</p>
-                    @if($about->images->count() < 3)
-                        <input type="file" name="images[]" class="form-control" multiple accept="image/*">
-                    @else
-                        <div style="background: #f8fafc; padding: 0.75rem; border: 1px dashed #cbd5e1; border-radius: 0.25rem; color: #64748b; font-size: 0.85rem;">
-                            Image limit reached. Delete an existing image to upload new ones.
-                        </div>
-                    @endif
+                    <label>Upload Image</label>
+                    <input type="file" name="image" id="imageInput" class="form-control" accept="image/jpeg,image/png,image/webp">
+                    <span class="error-text @error('image') d-block server-error @enderror" id="error-image">{{ $errors->first('image') }}</span>
                 </div>
 
-                @if($about->images->count() > 0)
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-                        @foreach($about->images as $img)
-                            <div style="position: relative; width: 150px;">
-                                <img src="{{ Storage::url($img->image) }}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-                                <button type="button" 
-                                        onclick="confirmDeleteImage('{{ route('admin.about.deleteImage', $img->id) }}')" 
-                                        style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        @endforeach
+                <div id="imagePreviewContainer" style="margin-top: 1rem; {{ $about->images->count() > 0 ? '' : 'display: none;' }}">
+                    <div style="position: relative; width: 150px;">
+                        <img id="imagePreview" src="{{ $about->images->count() > 0 ? Storage::url($about->images->first()->image) : '#' }}" 
+                             style="width: 100%; height: 100px; object-fit: cover; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
+                        @if($about->images->count() > 0)
+                        <button type="button" 
+                                onclick="confirmDeleteImage('{{ route('admin.about.deleteImage', $about->images->first()->id) }}')" 
+                                style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        @endif
                     </div>
-                @endif
+                </div>
 
                 <div style="margin-top: 2rem;">
                     <button type="submit" class="btn-update">Save About Us Details</button>
@@ -148,5 +141,24 @@
             form.submit();
         }
     }
+
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('imagePreview');
+                preview.src = e.target.result;
+                document.getElementById('imagePreviewContainer').style.display = 'block';
+                
+                // Remove the delete button if it exists because the new image hasn't been saved yet
+                const deleteBtn = preview.parentElement.querySelector('button');
+                if (deleteBtn) {
+                    deleteBtn.style.display = 'none';
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 @endpush

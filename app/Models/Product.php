@@ -13,7 +13,7 @@ class Product extends Model
     protected $fillable = [
         'category_id', 'subcategory_id', 'brand_id', 'product_title',
         'sub_title', 'slug', 'description', 'brochure',
-        'status', 'position', 'key_features'
+        'status', 'position', 'key_features', 'display_in_home'
     ];
 
     public function scopePositioned($query)

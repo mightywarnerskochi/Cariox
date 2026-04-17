@@ -51,6 +51,7 @@
                             <th>Brand</th>
                             <th style="width: 100px;">Order</th>
                             <th style="width: 100px;">Status</th>
+                            <th style="width: 120px;">Display in Home</th>
                             <th style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
@@ -83,6 +84,12 @@
                                         <span class="slider"></span>
                                     </label>
                                 </td>
+                                <td>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" onchange="toggleHome('{{ route('admin.product.toggleHome') }}', {{ $item->id }}, this)" {{ $item->display_in_home ? 'checked' : '' }}>
+                                        <span class="slider"></span>
+                                    </label>
+                                </td>
                                 <td style="display:flex;">
                                     <a href="{{ route('admin.product.edit', $item->id) }}" class="action-btn" style="text-decoration:none;"><i class="fas fa-pencil-alt"></i></a>
                                     <button type="button" onclick="deleteItem('{{ route('admin.product.destroy', $item->id) }}')" class="action-btn" style="color: #ef4444;"><i class="fas fa-trash"></i></button>
@@ -90,7 +97,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" style="text-align: center; padding: 2rem; color: #64748b;">No products found.</td>
+                                <td colspan="11" style="text-align: center; padding: 2rem; color: #64748b;">No products found.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -145,6 +152,31 @@
             document.getElementById('actionMethod').value = 'POST';
             document.getElementById('actionId').value = id;
             form.submit();
+        }
+
+        function toggleHome(url, id, element) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    console.log(data.message);
+                } else {
+                    alert('Error updating display status');
+                    element.checked = !element.checked;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred');
+                element.checked = !element.checked;
+            });
         }
 
         function deleteItem(url) {

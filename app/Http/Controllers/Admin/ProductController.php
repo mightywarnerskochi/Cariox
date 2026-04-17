@@ -74,7 +74,8 @@ class ProductController extends Controller
             'key_features' => $request->key_features,
             'brochure' => $brochurePath,
             'position' => $request->position ?? (Product::max('position') + 1),
-            'status' => 1
+            'status' => 1,
+            'display_in_home' => $request->display_in_home ?? 0
         ]);
 
         $this->normalizeProductOrder();
@@ -219,6 +220,8 @@ class ProductController extends Controller
         if ($request->has('position')) {
             $product->position = $request->position;
         }
+
+        $product->display_in_home = $request->display_in_home ?? 0;
 
         $product->save();
 
@@ -423,6 +426,14 @@ class ProductController extends Controller
         $product->save();
         $this->normalizeProductOrder();
         return back()->with('success', 'Product status toggled successfully.');
+    }
+
+    public function toggleHomeDisplay(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->display_in_home = !$product->display_in_home;
+        $product->save();
+        return response()->json(['success' => true, 'message' => 'Product home display toggled successfully.']);
     }
 
     public function bulkDelete(Request $request)

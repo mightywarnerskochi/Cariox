@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
                         <label>Slug</label>
                         <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $product->slug) }}">
@@ -84,6 +84,13 @@
                     <div class="form-group">
                         <label>Order / Position</label>
                         <input type="number" min="1" name="position" class="form-control" value="{{ old('position', $product->position) }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Display in Home</label>
+                        <select name="display_in_home" class="form-control">
+                            <option value="0" {{ old('display_in_home', $product->display_in_home) == 0 ? 'selected' : '' }}>No</option>
+                            <option value="1" {{ old('display_in_home', $product->display_in_home) == 1 ? 'selected' : '' }}>Yes</option>
+                        </select>
                     </div>
                 </div>
 

@@ -158,6 +158,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                     Route::post('bulk-toggle-status', [\App\Http\Controllers\Admin\ProductController::class , 'bulkToggleStatus'])->name('bulkToggleStatus');
                     Route::delete('{id}/destroy', [\App\Http\Controllers\Admin\ProductController::class , 'destroy'])->name('destroy');
                     Route::post('toggle-status', [\App\Http\Controllers\Admin\ProductController::class , 'toggleStatus'])->name('toggleStatus');
+                    Route::post('toggle-home', [\App\Http\Controllers\Admin\ProductController::class , 'toggleHomeDisplay'])->name('toggleHome');
                 }
                 );
 

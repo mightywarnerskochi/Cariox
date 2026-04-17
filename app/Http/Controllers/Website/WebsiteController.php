@@ -36,7 +36,7 @@ class WebsiteController extends Controller
         $bannerMedia = HomeBannerMedia::where('status', 1)->orderBy('position')->get();
         $clientsCount = TrustedClient::count();
         $services = Service::where('status', 1)->orderBy('position')->get();
-        $products = Product::with(['brand'])->where('status', 1)->positioned()->take(8)->get();
+        $products = Product::with(['brand'])->where('status', 1)->where('display_in_home', 1)->positioned()->take(8)->get();
         $brands = Brand::where('status', 1)->positioned()->get();
         $clients = Client::where('status', 1)->positioned()->get();
         $blogs = Blog::where('status', 1)->positioned()->take(4)->get();

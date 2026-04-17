@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nextArrow: $('.banner-product-wrapper .next'),
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 4000,
         asNavFor: '.banner-media-slider',
         cssEase: 'linear',
       });
@@ -364,55 +364,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       };
 
-      const syncBannerMediaVideo = function () {
-        const executeSync = function () {
-          try {
-            if (!bannerMediaSlider || !bannerMediaSlider.length) return;
+      const syncBannerMediaVideo = function (event, slick, currentSlide) {
+        try {
+          if (!bannerMediaSlider || !bannerMediaSlider.length) return;
 
-            const allVideos = bannerMediaSlider.find('video');
-            allVideos.each(function () {
-              this.pause();
-              this.onended = null;
-            });
+          const allVideos = bannerMediaSlider.find('video');
+          allVideos.each(function () {
+            this.pause();
+            this.onended = null;
+          });
 
-            if (!isPlaying) return;
+          if (!isPlaying) return;
 
-            const activeVideo = bannerMediaSlider.find('.slick-current video').get(0);
-            if (activeVideo) {
-              if (bannerMediaSlider.data('slick')) {
-                try {
-                  bannerMediaSlider.slick('slickPause');
-                } catch (e) {
-                  console.warn('Slick pause failed:', e);
-                }
-              }
+          // Get active video - handling both normal and cloned slides
+          const currentIdx = currentSlide !== undefined ? currentSlide : bannerMediaSlider.slick('slickCurrentSlide');
+          const activeSlide = bannerMediaSlider.find(`.slick-slide[data-slick-index="${currentIdx}"]`);
+          const activeVideo = activeSlide.find('video').get(0);
 
-              activeVideo.currentTime = 0;
-              activeVideo.onended = function () {
-                if (isPlaying && bannerMediaSlider.data('slick')) {
-                  try {
-                    bannerMediaSlider.slick('slickNext');
-                  } catch (e) { }
-                }
-              };
-              ensureVideoPlay(activeVideo);
-            } else {
-              if (bannerMediaSlider.data('slick')) {
-                try {
-                  bannerMediaSlider.slick('slickPlay');
-                } catch (e) { }
-              }
+          if (activeVideo) {
+            // Pause master slider autoplay while video is playing
+            if (bannerSlider.length && bannerSlider.data('slick')) {
+              bannerSlider.slick('slickPause');
             }
-          } catch (error) {
-            console.error('Error in syncBannerMediaVideo:', error);
-          }
-        };
 
-        // Small delay to ensure Slick has finished its internal event cycle
-        setTimeout(executeSync, 100);
+            activeVideo.currentTime = 0;
+            activeVideo.onended = function () {
+              if (isPlaying && bannerSlider.length && bannerSlider.data('slick')) {
+                bannerSlider.slick('slickNext');
+              }
+            };
+            ensureVideoPlay(activeVideo);
+          } else {
+            // No video? Resume master slider autoplay
+            if (bannerSlider.length && bannerSlider.data('slick')) {
+              bannerSlider.slick('slickPlay');
+            }
+          }
+        } catch (error) {
+          console.error('Error in syncBannerMediaVideo:', error);
+        }
       };
 
-      bannerMediaSlider.on('init afterChange', syncBannerMediaVideo);
+      // Define init event BEFORE initializing slick
+      bannerMediaSlider.on('init afterChange', function(event, slick, currentSlide) {
+        // Small delay to ensure Slick has finished internal DOM updates
+        setTimeout(() => syncBannerMediaVideo(event, slick, currentSlide), 50);
+      });
 
       bannerMediaSlider.slick({
         slidesToShow: 1,
@@ -421,8 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
         appendDots: $('.banner-media-dots'),
         arrows: false,
         infinite: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
+        autoplay: false, // Let bannerSlider or video onended control transitions
         speed: 700,
         fade: true,
         asNavFor: '.banner-product-slider',
