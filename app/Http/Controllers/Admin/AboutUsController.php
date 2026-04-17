@@ -50,28 +50,30 @@ class AboutUsController extends Controller
             'vision' => 'nullable|string',
             'mission' => 'nullable|string',
             'status' => 'required|integer',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
         ]);
 
         $about->update($request->only(['detailed_description', 'experience_caption', 'years_of_experience', 'vision', 'mission', 'status']));
 
-        // Handle Images
-        if ($request->hasFile('images')) {
-            $currentImagesCount = $about->images()->count();
-            $newImages = $request->file('images');
-
-            foreach ($newImages as $index => $image) {
-                if ($currentImagesCount < 3) {
-                    $path = $image->store('about', 'public');
-                    AboutUsImage::create([
-                        'about_us_id' => $about->id,
-                        'image' => $path,
-                        'order' => $currentImagesCount + 1,
-                        'status' => 1
-                    ]);
-                    $currentImagesCount++;
+        // Handle Image
+        if ($request->hasFile('image')) {
+            // Delete existing images correctly
+            $oldImages = AboutUsImage::where('about_us_id', $about->id)->get();
+            foreach ($oldImages as $oldImage) {
+                if ($oldImage->image && Storage::disk('public')->exists($oldImage->image)) {
+                    Storage::disk('public')->delete($oldImage->image);
                 }
+                $oldImage->delete();
             }
+
+            $image = $request->file('image');
+            $path = $image->store('about', 'public');
+            AboutUsImage::create([
+                'about_us_id' => $about->id,
+                'image' => $path,
+                'order' => 1,
+                'status' => 1
+            ]);
         }
 
         return back()->with('success', 'About Us updated successfully.');
