@@ -305,7 +305,7 @@ $page_desc = '';
 </section>
 @endif
 <!-- Featured Products -->
-@if($productSection->status == 1)
+@if($products->count() > 0)
 <section class="featured-products commonPadding-120 position-relative">
     <picture>
         <img src="{{ asset('assets/images/products/bg-main.png') }}" alt="" class="bg-element">
@@ -355,7 +355,7 @@ $page_desc = '';
     </div>
 </section>
 @endif
-@if($brandSection->status == 1)
+@if($brands->count() > 0)
 <section class="brands commonPadding-120">
     <div class="container-ctn">
         <div class="head text-center">
@@ -373,7 +373,7 @@ $page_desc = '';
     </div>
 </section>
 @endif
-@if($blogSection->status == 1)
+@if($blogs->count() > 0)
 <section class="news-events featured-products commonPadding-120 position-relative">
     <picture>
         <img src="{{ asset('assets/images/products/bg-main.png') }}" alt="" class="bg-element">
@@ -419,7 +419,7 @@ $page_desc = '';
     </div>
 </section>
 @endif
-@if($testimonialSection->status == 1)
+@if($testimonials->count() > 0)
 <section class="customer-words commonPadding-120">
     <div class="container-ctn">
         <div class="head text-center">
