@@ -33,7 +33,9 @@ $page_desc = 'Get in touch with Cariox Technologies for industrial coding, inspe
 
 <section class="contact-page commonPadding-120">
     <div class="container-ctn">
+        @if($contacts->count() > 0)
         <h2 class="text-center">Contact Info</h2>
+        @endif
         <div class="contact-page__layout d-flex flex-wrap">
             <aside class="contact-page__form-panel">
                 <div class="contact-page__form-card">
@@ -83,6 +85,7 @@ $page_desc = 'Get in touch with Cariox Technologies for industrial coding, inspe
                 </div>
             </aside>
 
+            @if($contacts->count() > 0)
             <article class="contact-page__info-panel">
                 @foreach($contacts as $contact)
                 <div class="contact-info-card">
@@ -118,12 +121,17 @@ $page_desc = 'Get in touch with Cariox Technologies for industrial coding, inspe
                             <span>{{ $contact->country }}</span>
                         </div>
                         <div class="contact-info-card__links">
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSetting->official_whatsapp ?? '971545864310') }}?text=Can%20I%20get%20more%20details%20about%20your%20service?" target="_blank" rel="noopener" class="contact-info-card__whatsapp">
+                            @php
+                                $contactWhatsapp = $contact->phones->firstWhere('is_whatsapp', 1);
+                            @endphp
+                            @if($contactWhatsapp)
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $contactWhatsapp->phone_number) }}?text=Can%20I%20get%20more%20details%20about%20your%20service?" target="_blank" rel="noopener" class="contact-info-card__whatsapp">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 35 35" fill="none">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M29.7568 5.08667C26.4814 1.80833 22.1268 0.00145833 17.4878 0C7.92846 0 0.148255 7.77875 0.14388 17.3425C0.142422 20.3992 0.941589 23.3829 2.45971 26.0137L-0.00195312 35L9.19138 32.5879C11.7245 33.9704 14.577 34.6981 17.4791 34.6996H17.4864C27.0443 34.6996 34.826 26.9194 34.8303 17.3556C34.8333 12.7225 33.0308 8.36354 29.7568 5.08667ZM17.4878 31.7698H17.482C14.8949 31.7698 12.3589 31.0742 10.1451 29.7602L9.61867 29.4481L4.16305 30.8788L5.61992 25.5587L5.27721 25.0133C3.83346 22.7179 3.07221 20.0652 3.07367 17.3425C3.07659 9.39458 9.5443 2.92833 17.4951 2.92833C21.3451 2.92833 24.9647 4.43042 27.686 7.15458C30.4072 9.88021 31.9049 13.5013 31.9035 17.3527C31.8991 25.3035 25.4328 31.7698 17.4878 31.7698ZM25.3949 20.9738C24.9618 20.7565 22.8312 19.7079 22.433 19.5635C22.0364 19.4192 21.7476 19.3463 21.4574 19.7794C21.1672 20.2125 20.3389 21.1896 20.0851 21.4798C19.8328 21.7685 19.5791 21.805 19.146 21.5877C18.7128 21.3704 17.3158 20.914 15.6605 19.4367C14.3728 18.2875 13.5022 16.8685 13.2499 16.434C12.9976 15.9994 13.2237 15.766 13.4395 15.5502C13.6349 15.3563 13.8726 15.0442 14.0899 14.7904C14.3087 14.5396 14.3801 14.3588 14.526 14.0685C14.6703 13.7798 14.5989 13.526 14.4895 13.3088C14.3801 13.0929 13.5139 10.9594 13.1537 10.0917C12.8022 9.24583 12.4449 9.36104 12.178 9.34792C11.9258 9.33479 11.637 9.33333 11.3468 9.33333C11.058 9.33333 10.5885 9.44125 10.1918 9.87583C9.79513 10.3104 8.67513 11.359 8.67513 13.491C8.67513 15.6246 10.2283 17.6852 10.4441 17.974C10.6599 18.2627 13.4993 22.6406 17.8466 24.5175C18.8805 24.9638 19.6885 25.2306 20.317 25.4304C21.3553 25.76 22.3003 25.7133 23.047 25.6025C23.8797 25.4785 25.6108 24.554 25.9724 23.5419C26.3341 22.5298 26.3341 21.6606 26.2247 21.4812C26.1168 21.299 25.828 21.191 25.3949 20.9738Z" fill="#111827"/>
                                 </svg>
                                 <span>WhatsApp Now</span>
                             </a>
+                            @endif
                             @if($contact->map_link)
                             <a href="{{ $contact->map_link }}" target="_blank" class="contact-info-card__map">View Map</a>
                             @endif
@@ -132,6 +140,7 @@ $page_desc = 'Get in touch with Cariox Technologies for industrial coding, inspe
                 </div>
                 @endforeach
             </article>
+            @endif
         </div>
     </div>
 </section>

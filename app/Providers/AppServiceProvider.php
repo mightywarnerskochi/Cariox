@@ -42,7 +42,8 @@ class AppServiceProvider extends ServiceProvider
                 $globalHeaderLink = \App\Models\HeaderLink::where('status', 1)->orderBy('order')->first();
                 \Illuminate\Support\Facades\View::share('globalHeaderLink', $globalHeaderLink);
 
-                $whatsappNumber = '971545864310'; // Default
+                // Fall back to the site settings number; stays empty when no WhatsApp number is configured
+                $whatsappNumber = preg_replace('/[^0-9]/', '', $siteSetting->official_whatsapp ?? '');
                 foreach($globalContacts as $c) {
                     foreach($c->phones as $p) {
                         if ($p->is_whatsapp) {
@@ -65,16 +66,24 @@ class AppServiceProvider extends ServiceProvider
                     $data = $view->getData();
                     $dynamicMeta = null;
 
-                    if (isset($data['product']) && $data['product'] instanceof \App\Models\Product) {
+                    // Only detail routes use record-level meta. Listing pages also expose loop
+                    // variables such as $product or $service to the layout, which must be ignored.
+                    if ($routeName === 'product-detail' && isset($data['product']) && $data['product'] instanceof \App\Models\Product) {
                         $dynamicMeta = $data['product']->meta;
-                    } elseif (isset($data['service']) && $data['service'] instanceof \App\Models\Service) {
+                    } elseif ($routeName === 'service-detail' && isset($data['service']) && $data['service'] instanceof \App\Models\Service) {
                         $dynamicMeta = $data['service']->meta;
-                    } elseif (isset($data['blog']) && $data['blog'] instanceof \App\Models\Blog) {
-                        $dynamicMeta = $data['blog']->meta;
-                    } elseif (isset($data['category']) && $data['category'] instanceof \App\Models\Category) {
+                    } elseif ($routeName === 'blog-detail' && isset($data['blog']) && $data['blog'] instanceof \App\Models\Blog) {
+                        // Blogs keep their SEO fields on the blogs table itself
+                        $blog = $data['blog'];
+                        $dynamicMeta = (object) [
+                            'meta_title' => $blog->meta_title ?: $blog->title,
+                            'meta_description' => $blog->meta_description ?: \Illuminate\Support\Str::limit(trim(strip_tags($blog->short_description ?? '')), 160),
+                            'meta_keyword' => $blog->meta_keyword,
+                            'other_meta_tags' => $blog->other_meta_tags,
+                            'og_image_url' => $blog->image ? asset('storage/' . $blog->image) : null,
+                        ];
+                    } elseif ($routeName === 'product-category' && isset($data['category']) && $data['category'] instanceof \App\Models\Category) {
                         $dynamicMeta = $data['category']->meta;
-                    } elseif (isset($data['subcategory']) && $data['subcategory'] instanceof \App\Models\Subcategory) {
-                        $dynamicMeta = $data['subcategory']->meta;
                     }
 
                     $view->with('pageMeta', $dynamicMeta ?? $metadata);

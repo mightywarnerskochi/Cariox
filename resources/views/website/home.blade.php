@@ -28,7 +28,9 @@ $page_desc = '';
                         <a href="{{ $banner->button_link ?? '#' }}" class="btn btn-border-gradient">{{ $banner->button_text }}</a>
                         @endif
                     </div>
+                    @if(!empty($banner->trusted_clients_count) || !empty($banner->google_rating))
                     <div class="clients-and-reviews d-flex flex-wrap align-items-center">
+                        @if(!empty($banner->trusted_clients_count))
                         <div class="clients d-flex align-items-md-center">
                             <div class="images d-flex align-items-center">
                                 @if(isset($banner) && $banner->trustedClients->count() > 0)
@@ -43,10 +45,12 @@ $page_desc = '';
                                 @endif
                             </div>
                             <div class="txt">
-                                <span>{{ $banner->trusted_clients_count ?? '8231' }}</span>
+                                <span>{{ $banner->trusted_clients_count }}</span>
                                 <p>{{ $banner->trusted_clients_label ?? 'Trusted Clients' }}</p>
                             </div>
                         </div>
+                        @endif
+                        @if(!empty($banner->google_rating))
                         <div class="reviews">
                             <div class="google d-flex flex-wrap align-items-center">
                                 <span>{{ $banner->rating_label ?? 'Google Rating' }} {{ $banner->google_rating ?? '5.0' }}
@@ -63,17 +67,20 @@ $page_desc = '';
                                     </svg>
                                 </span>
                             </div>
-                            <p>{{ $banner->review_label ?? 'Based on 500 Reviews' }}</p>
+                            @if(!empty($banner->review_label))
+                            <p>{{ $banner->review_label }}</p>
+                            @endif
                         </div>
+                        @endif
 
                     </div>
+                    @endif
                     <div class="banner-product-wrapper">
                         <div class="banner-product-slider">
-                            @if(isset($products) && $products->count() > 0)
                                 @foreach($products as $product)
                                 <div class="banner-product-item">
                                     <picture>
-                                        <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/home/banner/product1.png') }}" width="156" height="156" alt="{{ $product->product_title }}">
+                                        <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/placeholder.svg') }}" width="156" height="156" alt="{{ $product->product_title }}">
                                     </picture>
                                     <div>
                                         <span>{{ Str::limit($product->product_title, 15) }}</span>
@@ -81,17 +88,6 @@ $page_desc = '';
                                     </div>
                                 </div>
                                 @endforeach
-                            @else
-                                <div class="banner-product-item">
-                                    <picture>
-                                        <img src="{{ asset('assets/images/home/banner/product1.png') }}" width="156" height="156" alt="">
-                                    </picture>
-                                    <div>
-                                        <span>EBS 6500</span>
-                                        <p>Single-Head INKJET Printer.</p>
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                         <div class="slick-nav d-flex flex-wrap justify-content-end">
                             <div class="prev" role="button" aria-label="Previous Slide">
@@ -176,37 +172,18 @@ $page_desc = '';
     </section>
 @endif
 {{-- clients and about --}}
-<section class="clients-and-who-we-are ">/
+<section class="clients-and-who-we-are ">
     @if(isset($clients) && $clients->count() > 0)
     <div class=" clients-section slider-area">
         <div class="blur-overlay left"></div>
         <div class="blur-overlay right"></div>
         <div class="container-fluid p-0">
             <div class="client-slider">
-                @forelse($clients as $client)
+                @foreach($clients as $client)
                 <div class="client-item" title="{{ $client->name }}">
                     <img src="{{ asset('storage/' . $client->image) }}" alt="{{ $client->alt_text ?? $client->name }}">
                 </div>
-                @empty
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/client1.png') }}" alt="Client 1">
-                </div>
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/clien2.png') }}" alt="Client 2">
-                </div>
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/client3.png') }}" alt="Client 3">
-                </div>
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/clien4.png') }}" alt="Client 4">
-                </div>
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/client5.png') }}" alt="Client 5">
-                </div>
-                <div class="client-item">
-                    <img src="{{ asset('assets/images/client/client6.png') }}" alt="Client 6">
-                </div>
-                @endforelse
+                @endforeach
             </div>
         </div>
 
@@ -243,10 +220,12 @@ $page_desc = '';
                                 </div>
                             @endif
                         </div>
+                        @if(!empty($about->years_of_experience))
                         <div class="exp-badge">
-                            <span class="num" data-counter-target="{{ $about->years_of_experience ?? '15' }}">{{ $about->years_of_experience ?? '15' }}</span>
+                            <span class="num" data-counter-target="{{ $about->years_of_experience }}">{{ $about->years_of_experience }}</span>
                             <span class="txt">{{ $about->experience_caption ?? "Years\nof experience" }}</span>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="who-we-are-right">
@@ -255,7 +234,7 @@ $page_desc = '';
                             <span class="label-pill">{{ $aboutSection->small_title ?? 'About Us' }}</span>
                             <h2>{{ $aboutSection->main_title ?? 'Who we are' }}</h2>
                         </div>
-                        {!! $aboutSection->description ?? '<p>Default description</p>' !!}
+                        {!! $aboutSection->description ?? '' !!}
                         <a href="{{ $aboutSection->link ?? route('about') }}" class="btn btn-gradient">{{ $aboutSection->button_label ?? 'Learn More' }}</a>
                     </div>
                 </div>
@@ -273,7 +252,7 @@ $page_desc = '';
         <div class="head">
             <span class="label-pill">{{ $serviceSection->small_title ?? 'Our services' }}</span>
             <h2>{{ $serviceSection->main_title ?? 'Our special services' }}</h2>
-            {!! $serviceSection->description ?? '<p>Our special services description</p>' !!}
+            {!! $serviceSection->description ?? '' !!}
             <a href="{{ $serviceSection->link ?? '#' }}" class="btn btn-gradient">{{ $serviceSection->button_label ?? 'Learn More' }}</a>
         </div>
         <div class="special-services-wrapper">
@@ -314,9 +293,7 @@ $page_desc = '';
         <div class="head text-center mx-auto" style="max-width: 800px; margin-bottom: 60px;">
             <span class="label-pill mx-auto">{{ $productSection->small_title ?? 'Our products' }}</span>
             <h2>{{ $productSection->main_title ?? 'Our featured products' }}</h2>
-            {!! $productSection->description ?? "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                and scrambled it to make a type specimen book.</p>" !!}
+            {!! $productSection->description ?? '' !!}
         </div>
     </div>
     <div class="products-slider-wrapper">
@@ -333,7 +310,7 @@ $page_desc = '';
                                 @endif
                             </div>
                             <div class="card-image text-center">
-                                <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/1.png') }}" alt="{{ $product->product_title }}">
+                                <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/placeholder.svg') }}" alt="{{ $product->product_title }}">
                             </div>
                             <div class="card-content d-flex justify-content-between align-items-end">
                                 <div class="text">
@@ -360,8 +337,8 @@ $page_desc = '';
     <div class="container-ctn">
         <div class="head text-center">
             <span class="label-pill">{{ $brandSection->small_title ?? 'Our Brands' }}</span>
-            <h2>{{ $brandSection->main_title ?? 'Brand we serve' }}</h2>
-            {!! $brandSection->description ?? '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' !!}
+            <h2>{{ $brandSection->main_title ?? 'Brands we supply' }}</h2>
+            {!! $brandSection->description ?? '' !!}
             <div class="brand-slider">
                 @if(isset($brands) && $brands->count() > 0)
                     @foreach($brands as $brand)
@@ -385,7 +362,7 @@ $page_desc = '';
                 <h2>{{ $blogSection->main_title ?? 'Latest cariox update' }}</h2>
             </div>
             <div class="head-right">
-                {!! $blogSection->description ?? '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' !!}
+                {!! $blogSection->description ?? '' !!}
             </div>
         </div>
         <div class="news-events-slider">
@@ -427,7 +404,7 @@ $page_desc = '';
             <h2>{{ optional($testimonialSection)->main_title ?? 'Our customer words' }}</h2>
             @if(optional($testimonialSection)->description && trim(strip_tags($testimonialSection->description)))
                 <div class="customer-words-intro">
-                    {!! $testimonialSection->description ?? '<p>Our customer words description</p>' !!}
+                    {!! $testimonialSection->description !!}
                 </div>
             @endif
         </div>
@@ -435,7 +412,7 @@ $page_desc = '';
         <div class="customer-words-card justify-content-center">
             <div class="testimonial-slider">
                 <div class="testimonial-slider-track">
-                    @forelse($testimonials as $testimonial)
+                    @foreach($testimonials as $testimonial)
                     <div class="testimonial-slide">
                         <div class="customer-words-copy">
                             <div class="customer-meta-row">
@@ -451,53 +428,16 @@ $page_desc = '';
                                 $testimonialContent = (string) ($testimonial->content ?? '');
                                 $testimonialContent = preg_replace('/^\s*["\'\x{201C}\x{201D}]+\s*/u', '', $testimonialContent);
                             @endphp
-                            {!! $testimonialContent ?? '<p>Our customer words description</p>'!!}
+                            {!! $testimonialContent !!}
                         </div>
                     </div>
-                    @empty
-                    <div class="testimonial-slide">
-                        <div class="customer-words-copy">
-                            <div class="customer-meta-row">
-                                <div class="customer-meta">
-                                    <h3>Daniel D'cock</h3>
-                                    <span>General Customer</span>
-                                </div>
-                                <span class="customer-quote-decor" aria-hidden="true">&rdquo;</span>
-                            </div>
-                            <p>I presumably wouldn't have taken the services from Astropack Gulf if not for the promptness, information, and experience in the products we use from them. They assessed our current arrangements, started an end-all strategy to gradually improve our feeders in moderately effortless steps. Kudos.</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <div class="customer-words-copy">
-                            <div class="customer-meta-row">
-                                <div class="customer-meta">
-                                    <h3>Naomi Carter</h3>
-                                    <span>Operations Manager</span>
-                                </div>
-                                <span class="customer-quote-decor" aria-hidden="true">&rdquo;</span>
-                            </div>
-                            <p>The team handled onboarding with clarity and pace. They reviewed the line setup, explained what needed to change, and helped us improve throughput without disrupting daily production.</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <div class="customer-words-copy">
-                            <div class="customer-meta-row">
-                                <div class="customer-meta">
-                                    <h3>Rafael Stone</h3>
-                                    <span>Production Lead</span>
-                                </div>
-                                <span class="customer-quote-decor" aria-hidden="true">&rdquo;</span>
-                            </div>
-                            <p>What stood out was the practical advice. Instead of overselling, they mapped out a phased plan, solved the main bottlenecks first, and gave our operators a smoother workflow almost immediately.</p>
-                        </div>
-                    </div>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
 
             <div class="customer-words-visual">
                 <div class="customer-avatars">
-                    @forelse($testimonials as $testimonial)
+                    @foreach($testimonials as $testimonial)
                     <div class="customer-avatar-slide">
                         <div class="customer-avatar">
                             @if($testimonial->image)
@@ -507,29 +447,13 @@ $page_desc = '';
                             @endif
                         </div>
                     </div>
-                    @empty
-                    <div class="customer-avatar-slide">
-                        <div class="customer-avatar">
-                            <img src="{{ asset('assets/images/testimonial/1.png') }}" width="150" height="150" alt="Customer profile 1">
-                        </div>
-                    </div>
-                    <div class="customer-avatar-slide">
-                        <div class="customer-avatar">
-                            <img src="{{ asset('assets/images/testimonial/2.png') }}" width="150" height="150" alt="Customer profile 2">
-                        </div>
-                    </div>
-                    <div class="customer-avatar-slide">
-                        <div class="customer-avatar">
-                            <img src="{{ asset('assets/images/testimonial/3.png') }}" width="150" height="150" alt="Customer profile 3">
-                        </div>
-                    </div>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
         </div>
 
         @php
-            $testimonialCount = isset($testimonials) && $testimonials->count() > 0 ? $testimonials->count() : 3;
+            $testimonialCount = $testimonials->count();
         @endphp
         <div class="customer-words-progress" aria-label="Testimonials navigation">
             @for($i = 0; $i < $testimonialCount; $i++)

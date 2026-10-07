@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label>Official Phone Number</label>
-                        <input type="text" name="official_phone" class="form-control" value="{{ old('official_phone', $settings->official_phone) }}" placeholder="+971 6 749 4981">
+                        <input type="text" name="official_phone" class="form-control" value="{{ old('official_phone', $settings->official_phone) }}" placeholder="e.g. +971 4 000 0000">
                     </div>
                     <div class="form-group">
                         <label>Official WhatsApp Number</label>

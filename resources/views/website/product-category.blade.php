@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="product-info__short-desc category-desc-rich">
-                    {!! $category->description ?? ' <p>description</p>' !!}
+                    {!! $category->description ?? '' !!}
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                     @foreach($products as $p)
                     <article class="product-catalog-card">
                         <div class="product-catalog-card__image">
-                            <img src="{{ $p->images->first() ? asset('storage/' . $p->images->first()->image) : asset('assets/images/shop/1.png') }}" alt="{{ $p->product_title }}">
+                            <img src="{{ $p->images->first() ? asset('storage/' . $p->images->first()->image) : asset('assets/images/products/placeholder.svg') }}" alt="{{ $p->product_title }}">
                             <a href="{{ route('product-detail', $p->slug) }}" class="card-arrow-link">
                                 <svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </a>

@@ -55,20 +55,25 @@ $page_desc = '';
                     <div class="contact-now-card sidebar-contact-card">
                         <h3 class="sidebar-title contact-title">Contact Now</h3>
                         @php
-                            $callPhone = $siteSetting->official_phone ?? '+971 6 749 4981';
+                            $callPhone = $siteSetting->official_phone;
                             $whatsappSource = $siteSetting->official_whatsapp ?? $callPhone;
                             $whatsappDigits = preg_replace('/[^0-9]/', '', $whatsappSource);
                         @endphp
                         <div class="contact-methods">
+                            @if($callPhone)
                             <div class="method-item phone">
                                 <span class="val">{{ $callPhone }}</span>
                                 <a  href="tel:{{ preg_replace('/[^0-9+]/', '', $callPhone) }}" class="method-btn">Call Us Now</a>
                             </div>
+                            @endif
+                            @if($siteSetting->official_email)
                             <div class="method-item email">
                                 <span class="val">{{ $siteSetting->official_email }}</span>
                                 <a href="mailto:{{ $siteSetting->official_email }}" class="method-btn">Email Us</a>
                             </div>
+                            @endif
                         </div>
+                        @if($whatsappDigits)
                         <div class="whatsapp-wrapper">
                             <a href="https://wa.me/{{ $whatsappDigits }}?text=Can%20I%20get%20more%20details%20about%20your%20service?" target="_blank" class="btn btn-gradient">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -80,6 +85,7 @@ $page_desc = '';
                                 WhatsApp Now
                             </a>
                         </div>
+                        @endif
                     </div>
 
                     <h3 class="sidebar-title enquire-title">Enquire Now</h3>
@@ -137,7 +143,7 @@ $page_desc = '';
 
 
                 <div class="service-text-content ">
-                    {!! $service->main_description ?? ' <p>description</p>'!!}
+                    {!! $service->main_description ?? '' !!}
                 </div>
 
                 <div class="service-gallery ">

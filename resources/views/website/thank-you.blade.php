@@ -19,7 +19,7 @@ $page_desc = '';
                 <img loading="lazy" src="{{ asset('assets/images/thank-you.png') }}" alt="Thank You" class="img-fluid">
             </div>
             <h2>Thank You</h2>
-            <p>Your submission has been receive. We will be in touch and contact you soon.</p>
+            <p>Thank you for reaching out. Your enquiry has been received and a member of our team will contact you shortly.</p>
             <div class="action-buttons d-flex justify-content-center mt-4">
                 <a href="{{ url('/') }}" class="btn btn-gradient">Back to Home</a>
             </div>

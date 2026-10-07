@@ -53,10 +53,12 @@ $page_desc = '';
                                     alt="{{ $mainAboutImage->alt_text ?? 'Who We Are' }}"
                                 >
                             </div>
+                            @if(!empty($about->years_of_experience))
                             <div class="exp-badge">
-                                <span class="num" data-counter-target="{{ $about->years_of_experience ?? 15 }}">{{ $about->years_of_experience ?? 15 }}</span>
+                                <span class="num" data-counter-target="{{ $about->years_of_experience }}">{{ $about->years_of_experience }}</span>
                                 <span class="txt">{{ $about->experience_caption ?? "Years of experience" }}</span>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="who-we-are-right">
@@ -64,7 +66,7 @@ $page_desc = '';
                             <div class="head">
                                 <h2>{{ $aboutSection->main_title ?? 'Who we are' }}</h2>
                             </div>
-                            {!! $about->detailed_description ?? $aboutSection->description ?? '<p>About Us description goes here</p>' !!}
+                            {!! $about->detailed_description ?? $aboutSection->description ?? '' !!}
                         </div>
                     </div>
                 </div>
@@ -72,24 +74,30 @@ $page_desc = '';
         </div>
                     
 
+        @if(trim(strip_tags($about->vision ?? '')) || trim(strip_tags($about->mission ?? '')))
         <div class="vision-mission ">
             <div class="container-ctn">
                 <div class="d-flex flex-wrap justify-content-between vision-mission-wrapper">
+                    @if(trim(strip_tags($about->vision ?? '')))
                     <div class="vision">
                         <div class="head">
                             <h3>Our Vision</h3>
                         </div>
-                        {!! $about->vision ?? '<p>Our vision description</p>' !!}
+                        {!! $about->vision !!}
                     </div>
+                    @endif
+                    @if(trim(strip_tags($about->mission ?? '')))
                     <div class="mission ">
                         <div class="head">
                             <h3>Our Mission</h3>
                         </div>
-                        {!! $about->mission ?? '<p>Our mission description</p>' !!}
+                        {!! $about->mission !!}
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
+        @endif
 
     </section>
 
@@ -98,7 +106,7 @@ $page_desc = '';
             <div class="content">
                 <h2>{{ $chooseUs->title ?? 'Reason for choosing us' }}</h2>
                 <p>
-                    {!! $chooseUs->description ?? '<p>Description goes here</p>' !!}
+                    {!! $chooseUs->description ?? '' !!}
                 </p>
                 <div class="reason-for-choosing__frame">
                     <picture class="reason-for-choosing__side-art reason-for-choosing__side-art--left">
@@ -134,6 +142,7 @@ $page_desc = '';
             </div>
         </div>
     </section>
+    @if(isset($journeys) && $journeys->count() > 0)
     <section class="timeline commonPadding-120 pt-0">
         <div class="container-ctn">
             <div class="timeline__content">
@@ -151,7 +160,7 @@ $page_desc = '';
                                      <div class="timeline__year">{{ $journey->year }}</div>
                                     <h3>{{ $journey->caption ?? $journey->year }}</h3>
                                     <span class="timeline__count">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                    {!! $journey->description ?? '<p>Our special services description</p>'  !!}
+                                    {!! $journey->description ?? '' !!}
                                </div>
                                 </div>
                             </div>
@@ -167,13 +176,15 @@ $page_desc = '';
             </div>
         </div>
     </section>
+    @endif
 
+    @if(isset($brands) && $brands->count() > 0)
     <section class="brands commonPadding-120">
         <div class="container-ctn">
             <div class="head text-center">
                 <span class="label-pill">{{ $brandSection->small_title ?? 'Our Brands' }}</span>
-                <h2>{{ $brandSection->main_title ?? 'Brand we serve' }}</h2>
-                {!! $brandSection->description ?? '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>' !!}
+                <h2>{{ $brandSection->main_title ?? 'Brands we supply' }}</h2>
+                {!! $brandSection->description ?? '' !!}
                 <div class="brand-slider">
                     @if(isset($brands) && $brands->count() > 0)
                         @foreach($brands as $brand)
@@ -184,6 +195,7 @@ $page_desc = '';
             </div>
         </div>
     </section>
+    @endif
 
 
     

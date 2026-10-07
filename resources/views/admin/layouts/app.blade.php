@@ -273,8 +273,20 @@
         window.TINYMCE_BASE_URL = @json(file_exists($tinyMceLocalPath) ? asset('vendor/tinymce') : 'https://cdn.jsdelivr.net/npm/tinymce@7');
         
         $(document).ready(function() {
-            if ($('.datatable').length > 0) {
-                $('.datatable').DataTable({
+            $('.datatable').each(function() {
+                var $table = $(this);
+                // DataTables cannot initialise a tbody row that uses colspan (the views' "No ... yet" row).
+                // Move that message into DataTables' own empty-table text instead.
+                var emptyText = 'No records found.';
+                $table.find('tbody > tr').each(function() {
+                    var $cells = $(this).children('td');
+                    if ($cells.length === 1 && $cells.attr('colspan')) {
+                        emptyText = $.trim($cells.text()) || emptyText;
+                        $(this).remove();
+                    }
+                });
+
+                $table.DataTable({
                     responsive: true,
                     pageLength: 10,
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -286,13 +298,14 @@
                         search: "Search:",
                         searchPlaceholder: "",
                         lengthMenu: "Show _MENU_ entries",
+                        emptyTable: emptyText,
                         paginate: {
                             previous: "Previous",
                             next: "Next"
                         }
                     }
                 });
-            }
+            });
         });
     </script>
     <script src="{{ asset('js/admin-tinymce.js') }}"></script>

@@ -23,9 +23,12 @@ class PageMetadataController extends Controller
     private const PAGES = [
         ['name' => 'Home', 'slug' => 'home'],
         ['name' => 'About Us', 'slug' => 'about'],
+        ['name' => 'Products', 'slug' => 'products'],
         ['name' => 'Services', 'slug' => 'services'],
         ['name' => 'Blogs', 'slug' => 'blogs'],
         ['name' => 'Contact Us', 'slug' => 'contact'],
+        ['name' => 'Terms & Conditions', 'slug' => 'terms-and-conditions'],
+        ['name' => 'Privacy Policy', 'slug' => 'privacy-policy'],
     ];
 
     /**

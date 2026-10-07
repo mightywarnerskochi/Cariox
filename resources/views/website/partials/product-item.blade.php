@@ -1,7 +1,7 @@
 @forelse($products as $product)
 <article class="product-catalog-card">
     <div class="product-catalog-card__image">
-         <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/shop/1.png') }}" alt="{{ $product->product_title }}">
+         <img src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image) : asset('assets/images/products/placeholder.svg') }}" alt="{{ $product->product_title }}">
     </div>
     <div class="product-catalog-card__content">
         <h3>{{ $product->product_title }}</h3>

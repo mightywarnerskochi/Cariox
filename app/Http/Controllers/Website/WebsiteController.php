@@ -36,7 +36,7 @@ class WebsiteController extends Controller
         $bannerMedia = HomeBannerMedia::where('status', 1)->orderBy('position')->get();
         $clientsCount = TrustedClient::count();
         $services = Service::where('status', 1)->orderBy('position')->get();
-        $products = Product::with(['brand'])->where('status', 1)->where('display_in_home', 1)->positioned()->take(8)->get();
+        $products = Product::with(['brand'])->visible()->where('display_in_home', 1)->positioned()->take(8)->get();
         $brands = Brand::where('status', 1)->positioned()->get();
         $clients = Client::where('status', 1)->positioned()->get();
         $blogs = Blog::where('status', 1)->positioned()->take(4)->get();
@@ -103,7 +103,7 @@ class WebsiteController extends Controller
 
     public function products(Request $request)
     {
-        $query = Product::where('status', 1);
+        $query = Product::visible();
 
         if ($request->has('category')) {
             $catArr = (array) $request->category;
@@ -121,12 +121,10 @@ class WebsiteController extends Controller
             }
         }
 
-        if ($request->has('brand')) {
-            $brandArr = (array) $request->brand;
-            $brands_filter = Brand::whereIn('slug', $brandArr)->pluck('id');
-            if ($brands_filter->count() > 0) {
-                $query->whereIn('brand_id', $brands_filter);
-            }
+        $brandArr = array_filter((array) $request->brand);
+        if ($brandArr) {
+            // An unknown brand slug should return no products, not fall back to all of them.
+            $query->whereIn('brand_id', Brand::whereIn('slug', $brandArr)->pluck('id'));
         }
 
         if ($request->has('product')) {
@@ -175,8 +173,8 @@ class WebsiteController extends Controller
     {
         if (!$slug) return redirect()->route('products');
         
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $products = Product::where('category_id', $category->id)->where('status', 1)->positioned()->paginate(12)->withQueryString();
+        $category = Category::where('slug', $slug)->where('status', 1)->firstOrFail();
+        $products = Product::where('category_id', $category->id)->visible()->positioned()->paginate(12)->withQueryString();
         $categories = Category::with(['subcategories' => function($q) {
             $q->where('status', 1)->orderBy('position')->with(['products' => function($pq) {
                 $pq->where('status', 1)->positioned();
@@ -190,9 +188,9 @@ class WebsiteController extends Controller
     {
         if (!$slug) return redirect()->route('products');
         
-        $product = Product::with(['images', 'brand', 'otherVideos', 'videos'])->where('slug', $slug)->firstOrFail();
-        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->positioned()->take(4)->get();
-        $majorProducts = Product::where('status', 1)->positioned()->take(6)->get();
+        $product = Product::with(['images', 'brand', 'otherVideos', 'videos'])->visible()->where('slug', $slug)->firstOrFail();
+        $relatedProducts = Product::visible()->where('category_id', $product->category_id)->where('id', '!=', $product->id)->positioned()->take(4)->get();
+        $majorProducts = Product::visible()->positioned()->take(6)->get();
         return view('website.product-detail', compact('product', 'relatedProducts', 'majorProducts'));
     }
 

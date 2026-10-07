@@ -148,6 +148,7 @@
 <!-- FIXED BOTTOM MENU (MOBILE) -->
 <div class="bottomFixedMenu bottomFixedMenu--brand d-lg-none">
     <ul>
+        @if($whatsappNumber)
         <li> <a href="https://wa.me/+{{ $whatsappNumber }}?text=Can%20I%20get%20more%20details%20about%20your%20service?" aria-label="Chat with us on WhatsApp" target="_blank" rel="noopener">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 256 256">
                     <g fill="#fff">
@@ -158,14 +159,17 @@
                 </svg>
                 <span>Whatsapp</span>
             </a></li>
+        @endif
+        @if($siteSetting->official_phone)
         <li>
-            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSetting->official_phone ?? '97167494981') }}">
+            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSetting->official_phone) }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 512 512" fill="none">
                     <path d="M512 133.12C512 296.107 295.893 512 133.12 512C97.4934 512 64.2134 498.56 39.6801 474.027L18.3467 449.493C-6.39992 424.747 -6.39992 382.933 19.4134 357.12C20.0534 356.48 71.4667 317.013 71.4667 317.013C97.0668 292.693 137.387 292.693 162.773 317.013L193.92 341.973C262.187 312.96 310.613 264.32 341.76 193.707L317.013 162.56C292.48 137.173 292.48 96.6401 317.013 71.2534C317.013 71.2534 356.48 19.8401 357.12 19.2001C382.933 -6.61325 424.747 -6.61325 450.56 19.2001L472.96 38.6134C498.56 64.0001 512 97.2801 512 132.907V133.12Z" fill="white" />
                 </svg>
                 <span>Phone</span>
             </a>
         </li>
+        @endif
         <li>
             <button type="button" data-bs-toggle="modal" data-bs-target="#siteGeneralEnquiryForm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 512 513" fill="none">
@@ -179,6 +183,7 @@
 
 <!-- LEFT FIXED BOX (DESKTOP) -->
 <div class="leftFixedBox">
+    @if($whatsappNumber)
     <div class="QuickSideRightBar QuickSideRightBarWhatsapp">
         <a href="https://wa.me/+{{ $whatsappNumber }}?text=Can%20I%20get%20more%20details%20about%20your%20service?" target="_blank" rel="noopener">
             <div class="iconBox">
@@ -188,8 +193,10 @@
             </div>
         </a>
     </div>
+    @endif
+    @if($siteSetting->official_phone)
     <div class="QuickSideRightBar QuickSideRightBarPhone">
-        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSetting->official_phone ?? '97167494981') }}">
+        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSetting->official_phone) }}">
             <div class="iconBox">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512" fill="none">
                     <path d="M512 133.12C512 296.107 295.893 512 133.12 512C97.4934 512 64.2134 498.56 39.6801 474.027L18.3467 449.493C-6.39992 424.747 -6.39992 382.933 19.4134 357.12C20.0534 356.48 71.4667 317.013 71.4667 317.013C97.0668 292.693 137.387 292.693 162.773 317.013L193.92 341.973C262.187 312.96 310.613 264.32 341.76 193.707L317.013 162.56C292.48 137.173 292.48 96.6401 317.013 71.2534C317.013 71.2534 356.48 19.8401 357.12 19.2001C382.933 -6.61325 424.747 -6.61325 450.56 19.2001L472.96 38.6134C498.56 64.0001 512 97.2801 512 132.907V133.12Z" fill="white" />
@@ -197,6 +204,7 @@
             </div>
         </a>
     </div>
+    @endif
     <div class="QuickSideRightBar QuickSideRightBarEnquiry">
         <a data-bs-toggle="modal" data-bs-target="#siteGeneralEnquiryForm" role="button" aria-label="Open enquiry form">
             <div class="iconBox">

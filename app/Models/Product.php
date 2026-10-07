@@ -16,6 +16,15 @@ class Product extends Model
         'status', 'position', 'key_features', 'display_in_home'
     ];
 
+    /**
+     * Products shown on the website: active, and belonging to an active category.
+     */
+    public function scopeVisible($query)
+    {
+        return $query->where('products.status', 1)
+            ->whereHas('category', fn ($q) => $q->where('status', 1));
+    }
+
     public function scopePositioned($query)
     {
         return $query->orderByRaw('position IS NULL, position ASC');

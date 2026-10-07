@@ -207,6 +207,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($request->id);
         $category->status = !$category->status;
         $category->save();
+        $this->cascadeStatus($category);
         return back()->with('success', 'Category status toggled successfully.');
     }
 
@@ -238,9 +239,19 @@ class CategoryController extends Controller
             foreach ($items as $category) {
                 $category->status = !$category->status;
                 $category->save();
+                $this->cascadeStatus($category);
             }
             return back()->with('success', 'Selected categories status toggled successfully.');
         }
         return back()->withErrors(['message' => 'No items selected.']);
+    }
+
+    /**
+     * Apply a category's status to all of its subcategories and products.
+     */
+    private function cascadeStatus(Category $category)
+    {
+        $category->subcategories()->update(['status' => $category->status]);
+        $category->products()->update(['status' => $category->status]);
     }
 }
