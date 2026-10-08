@@ -247,6 +247,9 @@ class CarioxSiteContentSeeder extends Seeder
             ['name' => 'Thermo Scientific', 'slug' => 'thermo-scientific', 'source' => 'clients/ZzeO3CSwJLJCu93kgtJvLiNEWCeU8m2ViH3NCPnd.png'],
             ['name' => 'Henkelman', 'slug' => 'henkelman', 'source' => 'clients/aQdwLmFOLZ7IyxdOpj3buvWU8cQP7yfOzUJaOmYM.png'],
             ['name' => 'iPac', 'slug' => 'ipac', 'source' => 'clients/Zp9MlEakzGwauXPAGciUn5lxNqByoDR3lfrZLtsC.png'],
+            ['name' => 'PWI', 'slug' => 'pwi', 'source' => 'brands/PahtMd9iYmDoPQkOha6wjRPWUpEBSVbK3Rs01qxp.jpg'],
+            // Wordmark placeholder; replace brands/ec-jet-logo.png with the official logo file when supplied.
+            ['name' => 'EC-JET', 'slug' => 'ec-jet', 'source' => 'brands/ec-jet-logo.png'],
         ];
 
         $disk = Storage::disk('public');

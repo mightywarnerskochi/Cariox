@@ -184,6 +184,8 @@ class BlogController extends Controller
         if ($request->ids) {
             Blog::whereIn('id', $request->ids)->delete();
             $this->normalizeBlogOrder();
+            // Mass delete skips model events, so refresh sitemap.xml / llms.txt explicitly
+            \App\Services\SeoFileSync::queue();
             return back()->with('success', 'Selected blogs moved to trash.');
         }
         return back()->withErrors(['message' => 'No items selected.']);

@@ -238,6 +238,52 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 }
                 );
 
+                // Sitemap Routes
+                Route::group(['prefix' => 'sitemap', 'as' => 'sitemap.'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\SitemapController::class , 'index'])->name('index');
+                    Route::post('generate', [\App\Http\Controllers\Admin\SitemapController::class , 'generate'])->name('generate');
+                    Route::get('edit', [\App\Http\Controllers\Admin\SitemapController::class , 'edit'])->name('edit');
+                    Route::put('update', [\App\Http\Controllers\Admin\SitemapController::class , 'update'])->name('update');
+                }
+                );
+
+                // Robots.txt Routes
+                Route::group(['prefix' => 'seo/robots-txt', 'as' => 'robots.'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\RobotsTxtController::class , 'index'])->name('index');
+                    Route::get('edit', [\App\Http\Controllers\Admin\RobotsTxtController::class , 'edit'])->name('edit');
+                    Route::put('update', [\App\Http\Controllers\Admin\RobotsTxtController::class , 'update'])->name('update');
+                    Route::post('add-sitemap', [\App\Http\Controllers\Admin\RobotsTxtController::class , 'addSitemap'])->name('addSitemap');
+                }
+                );
+
+                // LLMs.txt Routes
+                Route::group(['prefix' => 'seo/llms-txt', 'as' => 'llms.'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\LlmsTxtController::class , 'index'])->name('index');
+                    Route::post('generate', [\App\Http\Controllers\Admin\LlmsTxtController::class , 'generate'])->name('generate');
+                    Route::get('edit', [\App\Http\Controllers\Admin\LlmsTxtController::class , 'edit'])->name('edit');
+                    Route::put('update', [\App\Http\Controllers\Admin\LlmsTxtController::class , 'update'])->name('update');
+                }
+                );
+
+                // URL Redirect Routes
+                Route::group(['prefix' => 'redirects', 'as' => 'redirects.'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'index'])->name('index');
+                    Route::post('store', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'store'])->name('store');
+                    Route::get('{id}/edit', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'edit'])->name('edit');
+                    Route::put('{id}/update', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'update'])->name('update');
+                    Route::delete('{id}/destroy', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'destroy'])->name('destroy');
+                    Route::post('{id}/toggle-status', [\App\Http\Controllers\Admin\UrlRedirectController::class , 'toggleStatus'])->name('toggleStatus');
+                }
+                );
+
+                // 404 Log Routes
+                Route::group(['prefix' => '404-log', 'as' => 'not_found.'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\NotFoundLogController::class , 'index'])->name('index');
+                    Route::delete('clear', [\App\Http\Controllers\Admin\NotFoundLogController::class , 'clear'])->name('clear');
+                    Route::delete('{id}/destroy', [\App\Http\Controllers\Admin\NotFoundLogController::class , 'destroy'])->name('destroy');
+                }
+                );
+
                 // About Us Routes
                 Route::group(['prefix' => 'about', 'as' => 'about.'], function () {
                     Route::get('/', [\App\Http\Controllers\Admin\AboutUsController::class , 'index'])->name('index');

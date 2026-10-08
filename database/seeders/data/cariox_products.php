@@ -746,7 +746,7 @@ return [
         'sub_title' => 'Top & Bottom Carton Sealer',
         'category' => 'packing',
         'subcategory' => 'end-of-line',
-        'brand' => 'Packway',
+        'brand' => 'PWI', // brand set to PWI in the admin panel
         'description' => '<p>The <strong>Packway carton taping machine</strong> seals the top and bottom flaps of cartons with tape in a single pass, replacing slow and inconsistent hand taping at the end of the line. Height and width are adjusted with simple handles, so it can be set up quickly for slim or tall boxes.</p>',
         'features' => [
             ['Output', 'Seals up to 30 cartons per minute.'],
@@ -758,5 +758,49 @@ return [
         'meta_title' => 'Packway Carton Taping Machine (Top & Bottom) | Cariox',
         'meta_description' => 'Packway top-and-bottom carton taping machine seals up to 30 cartons per minute with quick height and width adjustment for slim and tall boxes.',
         'keywords' => 'carton taping machine, carton sealer, case sealer, end of line packaging',
+    ],
+    [
+        'slug' => 'ec-jet-1100',
+        'title' => 'EC-JET 1100',
+        'sub_title' => 'Continuous Inkjet Printer',
+        'category' => 'packing',
+        'subcategory' => 'packing-coders',
+        'brand' => 'EC-JET',
+        'description' => '<p>The <strong>EC-JET 1100</strong> is a continuous inkjet (CIJ) printer for adding dates, batch numbers, counters and other codes to packs as they run along the packing line. It prints up to five lines at up to 240 m/min, and is operated from an 8-inch industrial touchscreen that also shows ink and solvent levels as on-screen graphics.</p>'
+            . '<p>When the printer is stopped it selects an automatic cleaning programme based on how long it will be idle, flushing the valves, ink supply path and nozzle so the next start-up is smooth. The ink path is kept separate from the electronics inside an IP55 stainless steel cabinet.</p>',
+        'features' => [
+            ['Print speed', 'Up to 240 m/min on one line (ideal dot pitch 0.4 mm) and up to 2,000 characters per second.'],
+            ['Print lines', 'Up to 5 lines, with a maximum of 32 dots / 20 mm print height.'],
+            ['Printhead', 'MIDI 60 μm or 50 μm sealed printhead with a durable ruby nozzle, on a 2 m or 3 m conduit.'],
+            ['Viscosity control', 'Real-time ink viscosity (VOD) control keeps print quality clear and stable.'],
+            ['Intelligent cleaning', 'Chooses an automatic cleaning programme to suit the planned downtime.'],
+            ['8" touchscreen', 'Industrial touchscreen with live display of ink and solvent consumption.'],
+            ['Cabinet', 'IP55 industrial-grade stainless steel, 325 x 290 x 528 mm, about 18 kg; works from 5 to 45 °C on AC 115 V / 230 V, 50/60 Hz.'],
+        ],
+        'meta_title' => 'EC-JET 1100 Continuous Inkjet Printer | Cariox',
+        'meta_description' => 'EC-JET 1100 CIJ printer: up to 5 lines at 240 m/min, 8-inch touchscreen, automatic cleaning, VOD viscosity control and IP55 stainless steel cabinet.',
+        'keywords' => 'EC-JET 1100, continuous inkjet printer, CIJ printer, batch coding machine, date coding printer',
+    ],
+    [
+        'slug' => 'ec-jet-1000',
+        'title' => 'EC-JET 1000',
+        'sub_title' => 'Continuous Inkjet Printer',
+        'category' => 'packing',
+        'subcategory' => 'packing-coders',
+        'brand' => 'EC-JET',
+        'description' => '<p>The <strong>EC-JET 1000</strong> is a compact continuous inkjet (CIJ) printer for coding dates, batch numbers, serial numbers and short messages onto packaging at line speed. It prints one to four lines at up to 128 m/min and is set up through a colour touchscreen, with messages, graphics and software updates loaded by USB.</p>'
+            . '<p>Its three-door stainless steel cabinet keeps the ink system separate from the electronics, so routine maintenance is quick and safe, and built-in fault diagnosis helps keep the line running.</p>',
+        'features' => [
+            ['Print speed', 'Up to 128 m/min on one line (dot pitch 0.4 mm) and up to 1,000 characters per second.'],
+            ['Print lines', '1 to 4 lines, 1.0 to 15 mm message height, up to 25 dots per row.'],
+            ['Printhead', '60 μm sealed printhead with a durable ruby nozzle and real-time ink viscosity (VOD) control.'],
+            ['Coding functions', 'Automatic dates, shifts and expiry calculation, batch codes, counters, hexadecimal serial numbers and reverse printing.'],
+            ['Protected consumables', 'RFID check against incorrect ink and solvent, plus multi-level password protection.'],
+            ['USB and touchscreen', 'Colour touchscreen; messages, graphics, parameter backup and software upgrades via USB.'],
+            ['Cabinet', 'Three-door stainless steel cabinet, 325 x 290 x 528 mm, about 18 kg.'],
+        ],
+        'meta_title' => 'EC-JET 1000 Continuous Inkjet Printer | Cariox',
+        'meta_description' => 'EC-JET 1000 CIJ printer: 1 to 4 lines at 128 m/min, 60 μm ruby-nozzle printhead, RFID-protected ink, USB message input and stainless steel cabinet.',
+        'keywords' => 'EC-JET 1000, continuous inkjet printer, CIJ printer, batch coding machine, expiry date printer',
     ],
 ];

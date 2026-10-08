@@ -1,0 +1,49 @@
+# Cariox Technologies
+
+> Cariox supplies inkjet and thermal transfer printers, metal detectors, X-ray and checkweighing systems, and vacuum, tray sealing and flow wrapping machines.
+
+Email: infouae@cariox.com | Phone: +971 6 7455981
+
+<!-- llms:generated:start -->
+## Main Pages
+
+- [Home](http://127.0.0.1:8000)
+- [About Us](http://127.0.0.1:8000/about)
+- [Products](http://127.0.0.1:8000/products)
+- [Services](http://127.0.0.1:8000/services)
+- [Blogs](http://127.0.0.1:8000/blogs)
+- [Contact Us](http://127.0.0.1:8000/contact)
+
+## Product Categories
+
+- [Packing Systems](http://127.0.0.1:8000/product-category/packing-systems): Cariox packing systems cover the main ways products are packed and protected: vacuum packaging, tray sealing and skin packing, flow wrapping, vertical form-fill...
+
+## Products
+
+- [Multi-Head Weigher](http://127.0.0.1:8000/product-detail/multi-head-weigher): Weigh-Fill-Seal VFFS Packing System
+- [Powder Packing / Auger Filling Machine](http://127.0.0.1:8000/product-detail/powder-packing-auger-filling-machine): VFFS Machine with Auger Filler
+- [iPac Pre-made Pouch Packaging Machine](http://127.0.0.1:8000/product-detail/ipac-pre-made-pouch-packaging-machine): Doypack & Spouted Pouch Filling Machine
+- [Carton Taping Machine](http://127.0.0.1:8000/product-detail/carton-taping-machine): Top & Bottom Carton Sealer
+- [EC-JET 1100](http://127.0.0.1:8000/product-detail/ec-jet-1100): Continuous Inkjet Printer
+- [EC-JET 1000](http://127.0.0.1:8000/product-detail/ec-jet-1000): Continuous Inkjet Printer
+
+## Services
+
+- [Supply](http://127.0.0.1:8000/service-detail/supply): Coding, inspection and packaging equipment selected to suit your product, packaging and line speed.
+- [Installation](http://127.0.0.1:8000/service-detail/installation): On-site installation, commissioning and operator training for a smooth start-up.
+- [Annual Maintenance](http://127.0.0.1:8000/service-detail/annual-maintenance): Scheduled servicing under an annual contract to cut unplanned downtime.
+
+## Blogs
+
+- [How Metal Detectors Protect Food Production Lines](http://127.0.0.1:8000/blog-detail/how-metal-detectors-protect-food-production-lines): Metal fragments can enter food from worn equipment, raw materials or maintenance work. Here is how an in-line metal detector finds them and removes affected pac...
+- [Continuous Inkjet or Thermal Transfer: Choosing the Right Coder](http://127.0.0.1:8000/blog-detail/continuous-inkjet-or-thermal-transfer-choosing-the-right-coder): Both technologies print dates, batch codes and barcodes on packaging, but they suit very different materials. A quick guide to deciding which belongs on your li...
+- [Checkweighers Explained: Accurate Pack Weights at Line Speed](http://127.0.0.1:8000/blog-detail/checkweighers-explained-accurate-pack-weights-at-line-speed): A checkweigher weighs every pack as it moves along the conveyor and removes any that fall outside the limits you set. Here is why it matters and what to look fo...
+- [Vacuum Packing, Tray Sealing or Flow Wrapping: Which Suits Your Product?](http://127.0.0.1:8000/blog-detail/vacuum-packing-tray-sealing-or-flow-wrapping): Three common ways to pack food and other goods, each with its own strengths. A short guide to matching the packaging method to your product and output.
+
+## Optional
+
+- [Sitemap](http://127.0.0.1:8000/sitemap.xml)
+- [Terms & Conditions](http://127.0.0.1:8000/terms-and-conditions)
+- [Privacy Policy](http://127.0.0.1:8000/privacy-policy)
+
+<!-- llms:generated:end -->

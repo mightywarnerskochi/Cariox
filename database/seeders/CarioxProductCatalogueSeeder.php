@@ -60,7 +60,7 @@ class CarioxProductCatalogueSeeder extends Seeder
             'slug' => 'packing-systems',
             'logo_source' => 'categories/a4mkbdfCBM31B7gR4jtJfVwl83tBUjH5s0DrmQUc.png',
             'logo' => 'categories/packing-systems.png',
-            'description' => '<p>Cariox packing systems cover the main ways products are packed and protected: vacuum packaging, tray sealing and skin packing, flow wrapping, vertical form-fill-seal bagging, pre-made pouch filling and carton sealing.</p><p>The range spans Henkelman tabletop and double-chamber vacuum packers, BMB tray sealers and belt vacuum machines, the Delfin flow wrapper, iPac weighing, powder and pouch packing systems, and Packway carton tapers, so you can equip anything from a restaurant kitchen to a high-output production line.</p>',
+            'description' => '<p>Cariox packing systems cover the main ways products are packed and protected: vacuum packaging, tray sealing and skin packing, flow wrapping, vertical form-fill-seal bagging, pre-made pouch filling, carton sealing and on-line coding.</p><p>The range spans Henkelman tabletop and double-chamber vacuum packers, BMB tray sealers and belt vacuum machines, the Delfin flow wrapper, iPac weighing, powder and pouch packing systems, Packway carton tapers and EC-JET continuous inkjet coders, so you can equip anything from a restaurant kitchen to a high-output production line.</p>',
             'meta_title' => 'Packing Systems: Vacuum, Tray Sealing, Flow Wrap & VFFS | Cariox',
             'meta_description' => 'Vacuum packaging machines, tray sealers, flow wrappers, VFFS baggers, pouch fillers and carton sealers from Henkelman, BMB, Delfin, iPac and Packway.',
             'keywords' => 'packing systems, vacuum packaging machine, tray sealing machine, flow wrapping machine, VFFS machine',
@@ -83,6 +83,7 @@ class CarioxProductCatalogueSeeder extends Seeder
         'flow' => ['id' => null, 'category' => 'packing', 'name' => 'Flow Wrapping Machines', 'slug' => 'flow-wrapping-machines', 'description' => 'Horizontal flow wrappers for single items and multipacks.'],
         'vffs' => ['id' => null, 'category' => 'packing', 'name' => 'Vertical Form Fill Seal & Pouch Machines', 'slug' => 'vertical-form-fill-seal-machines', 'description' => 'Weighing, powder filling, VFFS bagging and pre-made pouch packing systems.'],
         'end-of-line' => ['id' => null, 'category' => 'packing', 'name' => 'End of Line Packing', 'slug' => 'end-of-line-packing', 'description' => 'Carton sealing equipment for the end of the packing line.'],
+        'packing-coders' => ['id' => null, 'category' => 'packing', 'name' => 'Packing Line Coders', 'slug' => 'packing-line-coders', 'description' => 'Continuous inkjet printers that add dates, batch numbers and codes to packs on the packing line.'],
     ];
 
     public function run(): void

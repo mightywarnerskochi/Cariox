@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
     <link rel="stylesheet" href="{{ asset('css/admin-custom.css') }}">
+    @stack('styles')
 </head>
 <body>
 
@@ -179,10 +180,49 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('admin.metadata.index') }}" class="nav-link {{ request()->routeIs('admin.metadata.*') ? 'active' : '' }}">
+                <a href="#" class="nav-link" onclick="document.getElementById('seoSubMenu').classList.toggle('show')">
                     <i class="fas fa-search"></i>
-                    Metadata / SEO
+                    SEO Management
+                    <i class="fas fa-chevron-down" style="margin-left:auto; font-size: 0.8rem;"></i>
                 </a>
+                <ul class="sub-menu {{ request()->routeIs('admin.metadata.*', 'admin.sitemap.*', 'admin.robots.*', 'admin.llms.*', 'admin.redirects.*', 'admin.not_found.*') ? 'show' : '' }}" id="seoSubMenu">
+                    <li>
+                        <a href="{{ route('admin.metadata.index') }}" class="nav-link {{ request()->routeIs('admin.metadata.*') ? 'active' : '' }}">
+                            <i class="fas fa-tags"></i>
+                            Metadata
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.sitemap.index') }}" class="nav-link {{ request()->routeIs('admin.sitemap.*') ? 'active' : '' }}">
+                            <i class="fas fa-sitemap"></i>
+                            Sitemap Generator
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.robots.index') }}" class="nav-link {{ request()->routeIs('admin.robots.*') ? 'active' : '' }}">
+                            <i class="fas fa-robot"></i>
+                            Robots.txt Editor
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.llms.index') }}" class="nav-link {{ request()->routeIs('admin.llms.*') ? 'active' : '' }}">
+                            <i class="fas fa-brain"></i>
+                            LLMs.txt Generator
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.redirects.index') }}" class="nav-link {{ request()->routeIs('admin.redirects.*') ? 'active' : '' }}">
+                            <i class="fas fa-exchange-alt"></i>
+                            URL redirects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.not_found.index') }}" class="nav-link {{ request()->routeIs('admin.not_found.*') ? 'active' : '' }}">
+                            <i class="far fa-file-alt"></i>
+                            404 log
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item">

@@ -10,9 +10,11 @@
             <a data-bs-toggle="modal" data-bs-target="#siteEnquiryForm" role="button"
                 aria-label="Open enquiry form" data-product-name="{{ $product->product_title }}" data-product-id="{{ $product->id }}"
                 class="product-catalog-card__cta product-catalog-card__cta--primary">Enquire Now</a>
-            <a href="https://wa.me/{{ $whatsappNumber ?? '971545864310' }}?text=I am interested in {{ $product->product_title }}."
+            @if($whatsappNumber)
+            <a href="https://wa.me/{{ $whatsappNumber }}?text=I am interested in {{ $product->product_title }}."
                 target="_blank" rel="noopener"
                 class="product-catalog-card__cta product-catalog-card__cta--secondary">WhatsApp Us</a>
+            @endif
             <a href="{{ route('product-detail', $product->slug) }}" class="product-catalog-card__arrow"
                 aria-label="View {{ $product->product_title }} details">
                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">

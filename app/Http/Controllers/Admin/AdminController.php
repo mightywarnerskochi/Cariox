@@ -32,7 +32,10 @@ class AdminController extends Controller
             'newsletters' => Newsletter::count(),
         ];
 
-        return view('admin.dashboard', compact('counts'));
+        $recentProducts = Product::with(['category', 'brand', 'images'])->latest()->take(5)->get();
+        $recentEnquiries = FormData::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('counts', 'recentProducts', 'recentEnquiries'));
     }
 
     public function profile()

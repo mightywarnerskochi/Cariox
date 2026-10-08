@@ -149,8 +149,7 @@ $page_desc = '';
                         <h3>Contact Now</h3>
                         @php
                             $callPhone = $siteSetting->official_phone;
-                            $whatsappSource = $siteSetting->official_whatsapp ?? $callPhone;
-                            $whatsappDigits = preg_replace('/[^0-9]/', '', $whatsappSource);
+                            $whatsappDigits = $whatsappNumber;
                         @endphp
                         <div class="contact-methods">
                             @if($callPhone)

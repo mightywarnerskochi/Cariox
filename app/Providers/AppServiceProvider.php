@@ -19,6 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Keep sitemap.xml and llms.txt in sync with the content that appears in them
+        foreach ([\App\Models\Product::class, \App\Models\Category::class, \App\Models\Service::class, \App\Models\Blog::class] as $model) {
+            $model::saved(fn () => \App\Services\SeoFileSync::queue());
+            $model::deleted(fn () => \App\Services\SeoFileSync::queue());
+        }
+
         if (!app()->runningInConsole()) {
             try {
                 $siteSetting = \App\Models\SiteSetting::first() ?? \App\Models\SiteSetting::create(['name' => 'Cariox']);
