@@ -11,7 +11,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-    //
+        // One instance per request so uploads staged for replacement can be cleaned up if never saved
+        $this->app->singleton(\App\Services\MediaStorage::class);
     }
 
     /**

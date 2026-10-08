@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\TrustedClient;
 use App\Models\HomeBannerContent;
@@ -47,7 +48,7 @@ class TrustedClientController extends Controller
         return back()->with('success', 'Client added successfully.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $client = TrustedClient::findOrFail($id);
 
@@ -59,11 +60,10 @@ class TrustedClientController extends Controller
 
         if ($request->hasFile('client_image')) {
             $request->validate(['client_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240']);
-            if ($client->client_image && Storage::disk('public')->exists($client->client_image)) {
-                Storage::disk('public')->delete($client->client_image);
-            }
-            $client->client_image = $request->file('client_image')->store('trusted_clients', 'public');
         }
+        // Stored first; the file it replaces is removed once the record is saved
+        $clientImageUpload = $media->stage($client, $request, ['client_image'], 'trusted_clients');
+        $client->forceFill($clientImageUpload->paths());
 
         if ($request->has('client_name')) {
             $client->client_name = $request->client_name;
@@ -93,6 +93,7 @@ class TrustedClientController extends Controller
         }
 
         $client->save();
+        $clientImageUpload->commit();
 
         return back()->with('success', 'Client updated successfully.');
     }

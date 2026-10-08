@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 
 use App\Models\AboutUs;
 use App\Models\AboutUsImage;
 use App\Models\SectionContent;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AboutUsController extends Controller
@@ -39,7 +41,7 @@ class AboutUsController extends Controller
         return back()->with('success', 'Section heading updated successfully.');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, MediaStorage $media)
     {
         $about = AboutUs::first();
 
@@ -57,23 +59,20 @@ class AboutUsController extends Controller
 
         // Handle Image
         if ($request->hasFile('image')) {
-            // Delete existing images correctly
-            $oldImages = AboutUsImage::where('about_us_id', $about->id)->get();
-            foreach ($oldImages as $oldImage) {
-                if ($oldImage->image && Storage::disk('public')->exists($oldImage->image)) {
-                    Storage::disk('public')->delete($oldImage->image);
-                }
-                $oldImage->delete();
-            }
+            // Store the new image before touching the existing ones, so a failed upload keeps them
+            $path = $media->store($request->file('image'), 'about');
 
-            $image = $request->file('image');
-            $path = $image->store('about', 'public');
-            AboutUsImage::create([
-                'about_us_id' => $about->id,
-                'image' => $path,
-                'order' => 1,
-                'status' => 1
-            ]);
+            $oldImages = AboutUsImage::where('about_us_id', $about->id)->get();
+            DB::transaction(function () use ($oldImages, $about, $path) {
+                AboutUsImage::whereKey($oldImages->modelKeys())->delete();
+                AboutUsImage::create([
+                    'about_us_id' => $about->id,
+                    'image' => $path,
+                    'order' => 1,
+                    'status' => 1
+                ]);
+            });
+            $media->deleteUnused($oldImages->pluck('image')->all());
         }
 
         return back()->with('success', 'About Us updated successfully.');

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\SectionContent;
 use App\Models\Meta;
+use App\Services\MediaStorage;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
@@ -140,7 +141,7 @@ class ServiceController extends Controller
         return view('admin.service.edit', compact('service'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $service = Service::findOrFail($id);
 
@@ -203,16 +204,9 @@ class ServiceController extends Controller
         $service->base_image1_alt_text = $request->base_image1_alt_text;
         $service->base_image2_alt_text = $request->base_image2_alt_text;
 
-        // Image Handling
-        $imageFields = ['background_image', 'main_image', 'base_image1', 'base_image2'];
-        foreach ($imageFields as $field) {
-            if ($request->hasFile($field)) {
-                if ($service->$field && Storage::disk('public')->exists($service->$field)) {
-                    Storage::disk('public')->delete($service->$field);
-                }
-                $service->$field = $request->file($field)->store('services', 'public');
-            }
-        }
+        // Image Handling: new uploads are stored first; the files they replace are removed after saving
+        $images = $media->stage($service, $request, ['background_image', 'main_image', 'base_image1', 'base_image2'], 'services');
+        $service->forceFill($images->paths());
 
         // Position Logic
         if ($request->has('position') && $request->position != $service->position) {
@@ -233,6 +227,7 @@ class ServiceController extends Controller
         }
 
         $service->save();
+        $images->commit();
 
         $meta = $service->meta ?: new Meta();
         $meta->meta_title = $request->meta_title;
@@ -241,14 +236,11 @@ class ServiceController extends Controller
         $meta->other_meta_tags = $request->other_meta_tags;
         $meta->og_title = $request->og_title;
         $meta->og_description = $request->og_description;
-        if ($request->hasFile('og_image')) {
-            if ($meta->og_image && Storage::disk('public')->exists($meta->og_image)) {
-                Storage::disk('public')->delete($meta->og_image);
-            }
-            $meta->og_image = $request->file('og_image')->store('metas/og_images', 'public');
-        }
+        $ogImage = $media->stage($meta, $request, ['og_image'], 'metas/og_images');
+        $meta->forceFill($ogImage->paths());
         $meta->page_name = 'service';
         $service->meta()->save($meta);
+        $ogImage->commit();
 
         return redirect()->route('admin.service.index')->with('success', 'Service updated successfully.');
     }

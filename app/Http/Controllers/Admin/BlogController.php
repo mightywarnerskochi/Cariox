@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Blog;
 use App\Models\SectionContent;
+use App\Services\MediaStorage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -89,7 +90,7 @@ class BlogController extends Controller
         return view('admin.blog.edit', compact('blog'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $blog = Blog::findOrFail($id);
 
@@ -127,26 +128,9 @@ class BlogController extends Controller
             }
         }
 
-        if ($request->hasFile('image')) {
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
-            }
-            $data['image'] = $request->file('image')->store('blogs', 'public');
-        }
-
-        if ($request->hasFile('image_1')) {
-            if ($blog->image_1 && Storage::disk('public')->exists($blog->image_1)) {
-                Storage::disk('public')->delete($blog->image_1);
-            }
-            $data['image_1'] = $request->file('image_1')->store('blogs', 'public');
-        }
-
-        if ($request->hasFile('image_2')) {
-            if ($blog->image_2 && Storage::disk('public')->exists($blog->image_2)) {
-                Storage::disk('public')->delete($blog->image_2);
-            }
-            $data['image_2'] = $request->file('image_2')->store('blogs', 'public');
-        }
+        // New uploads are stored first; the files they replace are removed after saving
+        $images = $media->stage($blog, $request, ['image', 'image_1', 'image_2'], 'blogs');
+        $data = array_merge($data, $images->paths());
 
         // Handle order change in full update
         if ($request->has('position')) {
@@ -155,6 +139,7 @@ class BlogController extends Controller
         $blog->fill($data);
         $blog->page_name = 'blog';
         $blog->save();
+        $images->commit();
         $this->normalizeBlogOrder();
         return redirect()->route('admin.blog.index')->with('success', 'Blog updated successfully.');
     }

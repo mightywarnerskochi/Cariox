@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SectionContent;
@@ -104,7 +105,7 @@ class CategoryController extends Controller
         return view('admin.category.edit', compact('category'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $category = Category::findOrFail($id);
 
@@ -141,19 +142,13 @@ class CategoryController extends Controller
             'other_meta_tags' => 'nullable|string',
         ]);
 
-        if ($request->hasFile('logo')) {
-            if ($category->logo && Storage::disk('public')->exists($category->logo)) {
-                Storage::disk('public')->delete($category->logo);
-            }
-            $category->logo = $request->file('logo')->store('categories', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $logoUpload = $media->stage($category, $request, ['logo'], 'categories');
+        $category->forceFill($logoUpload->paths());
 
-        if ($request->hasFile('brochure')) {
-            if ($category->brochure && Storage::disk('public')->exists($category->brochure)) {
-                Storage::disk('public')->delete($category->brochure);
-            }
-            $category->brochure = $request->file('brochure')->store('categories/brochures', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $brochureUpload = $media->stage($category, $request, ['brochure'], 'categories/brochures');
+        $category->forceFill($brochureUpload->paths());
 
         $category->name = $request->name;
         $category->slug = $request->slug ?? Str::slug($request->name);
@@ -173,6 +168,8 @@ class CategoryController extends Controller
         }
 
         $category->save();
+        $logoUpload->commit();
+        $brochureUpload->commit();
 
         // Update Meta
         $meta = $category->meta()->firstOrNew(['metable_type' => Category::class]);

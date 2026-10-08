@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use App\Models\PageMetadata;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class PageMetadataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $page_name): RedirectResponse
+    public function update(Request $request, string $page_name, MediaStorage $media): RedirectResponse
     {
         if (!$this->isAllowedPage($page_name)) {
             abort(404, 'Page not found.');
@@ -83,13 +84,18 @@ class PageMetadataController extends Controller
             'og_title', 'og_description', 'other_meta',
         ]);
 
+        // Store the new OG image first; the old one is removed only after the record is saved
+        $oldOgImage = $metadata->og_image;
         if ($request->hasFile('og_image')) {
-            $this->deleteOldOgImage($metadata->og_image);
             $data['og_image'] = $this->storeOgImage($request->file('og_image'));
         }
 
         $metadata->fill($data);
         $metadata->save();
+
+        if (isset($data['og_image']) && $oldOgImage !== $data['og_image']) {
+            $this->deleteOldOgImage($oldOgImage, $media);
+        }
 
         return redirect()->route('admin.metadata.index')->with('success', 'Metadata updated successfully');
     }
@@ -106,17 +112,15 @@ class PageMetadataController extends Controller
     /**
      * Delete the previous OG image from disk (supports both Storage and legacy public path).
      */
-    private function deleteOldOgImage(?string $path): void
+    private function deleteOldOgImage(?string $path, MediaStorage $media): void
     {
-        if (!$path) {
+        if (!$path || $media->isReferenced($path)) {
             return;
         }
 
         // New path: stored under Storage disk 'public' as 'metadata/...'
         if (Str::startsWith($path, 'metadata/')) {
-            if (Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
-            }
+            $media->deleteUnused([$path]);
             return;
         }
 
@@ -138,7 +142,9 @@ class PageMetadataController extends Controller
         }
         $name = Str::random(24) . '.' . $ext;
 
-        $file->storeAs('metadata', $name, 'public');
+        if (!$file->storeAs('metadata', $name, 'public')) {
+            throw new \App\Services\MediaUploadFailed('The OG image could not be uploaded.');
+        }
 
         return 'metadata/' . $name;
     }

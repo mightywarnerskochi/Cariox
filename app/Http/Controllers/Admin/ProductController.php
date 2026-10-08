@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -164,7 +165,7 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product', 'categories', 'subcategories', 'brands'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $product = Product::findOrFail($id);
 
@@ -201,12 +202,9 @@ class ProductController extends Controller
             'brand_id.required' => 'The brand field is mandatory.'
         ]);
 
-        if ($request->hasFile('brochure')) {
-            if ($product->brochure && Storage::disk('public')->exists($product->brochure)) {
-                Storage::disk('public')->delete($product->brochure);
-            }
-            $product->brochure = $request->file('brochure')->store('products/brochures', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $brochureUpload = $media->stage($product, $request, ['brochure'], 'products/brochures');
+        $product->forceFill($brochureUpload->paths());
 
         $product->category_id = $request->category_id;
         $product->subcategory_id = $request->subcategory_id;
@@ -224,6 +222,7 @@ class ProductController extends Controller
         $product->display_in_home = $request->display_in_home ?? 0;
 
         $product->save();
+        $brochureUpload->commit();
 
         // Update Meta
         $meta = $product->meta()->firstOrNew(['metable_type' => Product::class]);
@@ -237,15 +236,12 @@ class ProductController extends Controller
             'canonical_url' => $request->canonical_url,
         ]);
 
-        if ($request->hasFile('og_image')) {
-            if ($meta->og_image && Storage::disk('public')->exists($meta->og_image)) {
-                Storage::disk('public')->delete($meta->og_image);
-            }
-            $meta->og_image = $request->file('og_image')->store('metas/og_images', 'public');
-        }
+        $ogImageUpload = $media->stage($meta, $request, ['og_image'], 'metas/og_images');
+        $meta->forceFill($ogImageUpload->paths());
 
         $meta->page_name = 'product';
         $meta->save();
+        $ogImageUpload->commit();
 
         // Manage Existing Delete array (checkboxes array of IDs to delete)
         if ($request->has('delete_images')) {
@@ -284,17 +280,13 @@ class ProductController extends Controller
             foreach ($request->existing_other_videos as $vid => $vData) {
                 $video = ProductOtherVideo::find($vid);
                 if ($video) {
-                    $vfile_path = $video->video_file;
-                    if ($request->hasFile("existing_other_video_files.$vid")) {
-                        if ($vfile_path && Storage::disk('public')->exists($vfile_path))
-                            Storage::disk('public')->delete($vfile_path);
-                        $vfile_path = $request->file("existing_other_video_files.$vid")->store('products/videos', 'public');
-                    }
+                    $fileUpload = $media->stage($video, $request, ["existing_other_video_files.$vid" => 'video_file'], 'products/videos');
 
                     $video->update([
                         'video_url' => $vData['video_url'] ?? null,
-                        'video_file' => $vfile_path,
+                        'video_file' => $fileUpload->paths()['video_file'] ?? $video->video_file,
                     ]);
+                    $fileUpload->commit();
                 }
             }
         }
@@ -304,17 +296,13 @@ class ProductController extends Controller
             foreach ($request->existing_videos as $vid => $vData) {
                 $video = ProductVideo::find($vid);
                 if ($video) {
-                    $vfile_path = $video->video;
-                    if ($request->hasFile("existing_video_files.$vid")) {
-                        if ($vfile_path && Storage::disk('public')->exists($vfile_path))
-                            Storage::disk('public')->delete($vfile_path);
-                        $vfile_path = $request->file("existing_video_files.$vid")->store('products/videos', 'public');
-                    }
+                    $fileUpload = $media->stage($video, $request, ["existing_video_files.$vid" => 'video'], 'products/videos');
 
                     $video->update([
                         'link' => $vData['link'] ?? null,
-                        'video' => $vfile_path
+                        'video' => $fileUpload->paths()['video'] ?? $video->video,
                     ]);
+                    $fileUpload->commit();
                 }
             }
         }

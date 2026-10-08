@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 
 use App\Models\ChooseUs;
@@ -21,7 +22,7 @@ class ChooseUsController extends Controller
         return view('admin.about.choose_us', compact('choose'));
     }
 
-    public function updateMain(Request $request)
+    public function updateMain(Request $request, MediaStorage $media)
     {
         $choose = ChooseUs::first();
 
@@ -35,14 +36,12 @@ class ChooseUsController extends Controller
 
         $data = $request->only(['title', 'description', 'image_alt_text', 'status']);
 
-        if ($request->hasFile('image')) {
-            if ($choose->image && Storage::disk('public')->exists($choose->image)) {
-                Storage::disk('public')->delete($choose->image);
-            }
-            $data['image'] = $request->file('image')->store('choose_us', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($choose, $request, ['image'], 'choose_us');
+        $data = array_merge($data, $imageUpload->paths());
 
         $choose->update($data);
+        $imageUpload->commit();
 
         return back()->with('success', 'Main Choose Us updated successfully.');
     }
@@ -90,7 +89,7 @@ class ChooseUsController extends Controller
         return back()->with('success', 'Feature added successfully.');
     }
 
-    public function updateItem(Request $request, $id)
+    public function updateItem(Request $request, $id, MediaStorage $media)
     {
         $item = ChooseUsItem::findOrFail($id);
 
@@ -127,14 +126,12 @@ class ChooseUsController extends Controller
 
         $data = $request->only(['text', 'icon', 'status']);
 
-        if ($request->hasFile('image')) {
-            if ($item->image && Storage::disk('public')->exists($item->image)) {
-                Storage::disk('public')->delete($item->image);
-            }
-            $data['image'] = $request->file('image')->store('choose_us_items', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($item, $request, ['image'], 'choose_us_items');
+        $data = array_merge($data, $imageUpload->paths());
 
         $item->update($data);
+        $imageUpload->commit();
 
         if ($request->has('order') && $request->order != $item->order) {
             $newOrder = $request->order;

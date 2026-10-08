@@ -861,6 +861,13 @@ input[type=number] {
   color: #fff;
   transform: translateY(-2px);
 }
+/* Header "Request a Quote": hover uses the menu bar gradient instead of black */
+.header-btn:hover,
+.header-btn:focus-visible {
+  background: linear-gradient(90deg, #FEB109 0%, #F14448 52.4%, #5B47C9 100%) border-box;
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgba(241, 68, 72, 0.7);
+}
 
 .slick-nav {
   z-index: 0;
@@ -1319,11 +1326,12 @@ header nav ul li .dropdown-submenu {
   display: block;
 }
 header nav ul li .dropdown-submenu.category-mega-menu {
-  width: 100vw !important;
-  max-width: 1250px !important;
+  width: max-content !important;
+  min-width: 300px !important;
+  max-width: min(1250px, 100vw - 40px) !important;
   left: 50% !important;
-  transform: translateX(-38%) translateY(0px);
-  padding: 50px 0 0;
+  transform: translateX(-50%) translateY(15px);
+  padding: 40px 0 0;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.9);
@@ -1331,25 +1339,13 @@ header nav ul li .dropdown-submenu.category-mega-menu {
   box-shadow: 0 50px 100px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
-@media (min-width: 1200px) {
-  header nav ul li .dropdown-submenu.category-mega-menu {
-    width: 1100px !important;
-    min-width: 1100px !important;
-  }
-}
-@media (min-width: 1440px) {
-  header nav ul li .dropdown-submenu.category-mega-menu {
-    width: 1250px !important;
-    min-width: 1250px !important;
-  }
-}
 header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-grid {
   display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-columns: repeat(var(--mega-cols, 5), minmax(220px, 250px)) !important;
   gap: 40px 0;
   width: 100%;
-  padding: 10px 10px 50px 0;
-  max-height: 350px;
+  padding: 10px 20px 40px;
+  max-height: min(60vh, 520px);
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -1376,7 +1372,7 @@ header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-col {
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
-header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-col:nth-child(5n) {
+header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-col:nth-child(5n), header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-col:last-child {
   border-right: none;
 }
 header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-title {
@@ -1433,7 +1429,7 @@ header nav ul li .dropdown-submenu.category-mega-menu ul li a:hover::after {
 }
 header nav ul li .dropdown-submenu.category-mega-menu .mega-menu-footer {
   background: rgba(0, 0, 0, 0.03);
-  padding: 25px 50px;
+  padding: 25px 40px;
   display: flex;
   justify-content: center;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -9950,3 +9946,36 @@ h5,
 p {
   margin-bottom: 0;
 }/*# sourceMappingURL=style.css.map */
+/* Country-code dropdown: sit above the fields that follow it, fit inside the popup, no sideways scroll */
+.formGroup:has(.iti__country-list:not(.iti__hide)) {
+  z-index: 20 !important;
+}
+.iti .iti__country-list {
+  z-index: 30;
+  width: max-content;
+  min-width: 300px;
+  max-width: min(360px, calc(100vw - 48px));
+  max-height: 220px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  background: #fff;
+}
+.iti .iti__country-list .iti__country {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+}
+.iti .iti__country-list .iti__country .iti__country-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.iti .iti__country-list .iti__flag-box {
+  flex: none;
+  margin-right: 0;
+}
+.iti .iti__country-list .iti__dial-code {
+  flex: none;
+  margin-left: auto;
+}

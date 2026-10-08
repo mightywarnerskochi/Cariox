@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 
 use App\Models\SiteSetting;
@@ -16,7 +17,7 @@ class SiteSettingController extends Controller
         return view('admin.settings.site_information', compact('settings'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, MediaStorage $media)
     {
         $settings = SiteSetting::first() ?? SiteSetting::create();
 
@@ -45,30 +46,24 @@ class SiteSettingController extends Controller
         $data = $request->except(['logo', 'footer_logo', 'favicon']);
 
         // Handle Logo
-        if ($request->hasFile('logo')) {
-            if ($settings->logo && Storage::disk('public')->exists($settings->logo)) {
-                Storage::disk('public')->delete($settings->logo);
-            }
-            $data['logo'] = $request->file('logo')->store('settings', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $logoUpload = $media->stage($settings, $request, ['logo'], 'settings');
+        $data = array_merge($data, $logoUpload->paths());
 
         // Handle Footer Logo
-        if ($request->hasFile('footer_logo')) {
-            if ($settings->footer_logo && Storage::disk('public')->exists($settings->footer_logo)) {
-                Storage::disk('public')->delete($settings->footer_logo);
-            }
-            $data['footer_logo'] = $request->file('footer_logo')->store('settings', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $footerLogoUpload = $media->stage($settings, $request, ['footer_logo'], 'settings');
+        $data = array_merge($data, $footerLogoUpload->paths());
 
         // Handle Favicon
-        if ($request->hasFile('favicon')) {
-            if ($settings->favicon && Storage::disk('public')->exists($settings->favicon)) {
-                Storage::disk('public')->delete($settings->favicon);
-            }
-            $data['favicon'] = $request->file('favicon')->store('settings', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $faviconUpload = $media->stage($settings, $request, ['favicon'], 'settings');
+        $data = array_merge($data, $faviconUpload->paths());
 
         $settings->update($data);
+        $logoUpload->commit();
+        $footerLogoUpload->commit();
+        $faviconUpload->commit();
 
         return back()->with('success', 'Site information updated successfully.');
     }

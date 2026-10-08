@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Testimonial;
 use App\Models\SectionContent;
@@ -81,7 +82,7 @@ class TestimonialController extends Controller
         return redirect()->route('admin.testimonial.index')->with('success', 'Testimonial added successfully.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $testimonial = Testimonial::findOrFail($id);
 
@@ -119,11 +120,10 @@ class TestimonialController extends Controller
 
         if ($request->hasFile('image')) {
             $request->validate(['image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240']);
-            if ($testimonial->image && Storage::disk('public')->exists($testimonial->image)) {
-                Storage::disk('public')->delete($testimonial->image);
-            }
-            $testimonial->image = $request->file('image')->store('testimonials', 'public');
         }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($testimonial, $request, ['image'], 'testimonials');
+        $testimonial->forceFill($imageUpload->paths());
 
         $testimonial->name = $request->name;
         $testimonial->designation = $request->designation;
@@ -149,6 +149,7 @@ class TestimonialController extends Controller
         }
 
         $testimonial->save();
+        $imageUpload->commit();
 
         return redirect()->route('admin.testimonial.index')->with('success', 'Testimonial updated successfully.');
     }

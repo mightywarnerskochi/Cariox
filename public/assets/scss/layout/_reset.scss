@@ -1125,6 +1125,14 @@ input[type=number] {
   }
 }
 
+// Header "Request a Quote": hover uses the menu bar gradient instead of black
+.header-btn:hover,
+.header-btn:focus-visible {
+  background: $brandGradient border-box;
+  color: $white;
+  box-shadow: 0 10px 24px -10px rgba(241, 68, 72, 0.7);
+}
+
 
 
 

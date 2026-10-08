@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\HomeBannerMedia;
 use App\Models\HomeBannerContent;
@@ -69,9 +70,10 @@ class HomeBannerMediaController extends Controller
         return back()->with('success', 'Media added successfully.');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $storage)
     {
         $media = HomeBannerMedia::findOrFail($id);
+        $replaced = [];
 
         $request->validate([
             'position' => 'nullable|integer|min:1',
@@ -86,27 +88,20 @@ class HomeBannerMediaController extends Controller
                 $request->validate(['thumbnail' => 'file|image|mimes:jpeg,png,jpg,gif,svg|max:5120']);
             }
             
-            if ($request->hasFile('file') || $request->pre_uploaded_path) {
-                if ($media->file_path && Storage::disk('public')->exists($media->file_path)) {
-                    Storage::disk('public')->delete($media->file_path);
-                }
-                
-                if ($request->pre_uploaded_path) {
-                    $media->type = 'video';
-                    $media->file_path = $request->pre_uploaded_path;
-                } else {
-                    $file = $request->file('file');
-                    $media->type = str_contains($file->getMimeType(), 'image') ? 'image' : 'video';
-                    $media->file_path = $file->store('banner_media', 'public');
-                }
+            // New files are stored first; the ones they replace are removed once the record is saved
+            if ($request->pre_uploaded_path) {
+                // Chunked video upload: the file is already on the disk
+                $replaced[] = $media->file_path;
+                $media->type = 'video';
+                $media->file_path = $request->pre_uploaded_path;
+            } elseif ($request->hasFile('file')) {
+                $type = str_contains($request->file('file')->getMimeType(), 'image') ? 'image' : 'video';
+                $fileUpload = $storage->stage($media, $request, ['file' => 'file_path'], 'banner_media');
+                $media->forceFill($fileUpload->paths() + ['type' => $type]);
             }
 
-            if ($request->hasFile('thumbnail')) {
-                if ($media->thumbnail_path && Storage::disk('public')->exists($media->thumbnail_path)) {
-                    Storage::disk('public')->delete($media->thumbnail_path);
-                }
-                $media->thumbnail_path = $request->file('thumbnail')->store('banner_media_thumbnails', 'public');
-            }
+            $thumbnailUpload = $storage->stage($media, $request, ['thumbnail' => 'thumbnail_path'], 'banner_media_thumbnails');
+            $media->forceFill($thumbnailUpload->paths());
         }
 
         if ($request->has('alt_text')) {
@@ -133,6 +128,9 @@ class HomeBannerMediaController extends Controller
         }
 
         $media->save();
+        isset($fileUpload) && $fileUpload->commit();
+        isset($thumbnailUpload) && $thumbnailUpload->commit();
+        $storage->deleteUnused(array_diff($replaced, [$media->file_path]));
 
         return back()->with('success', 'Media updated successfully.');
     }

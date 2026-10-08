@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Subcategory;
 use App\Models\Category;
@@ -84,7 +85,7 @@ class SubcategoryController extends Controller
         return view('admin.subcategory.edit', compact('subcategory', 'categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $subcategory = Subcategory::findOrFail($id);
 
@@ -110,12 +111,9 @@ class SubcategoryController extends Controller
             'other_meta_tags' => 'nullable|string',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($subcategory->image && Storage::disk('public')->exists($subcategory->image)) {
-                Storage::disk('public')->delete($subcategory->image);
-            }
-            $subcategory->image = $request->file('image')->store('subcategories', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($subcategory, $request, ['image'], 'subcategories');
+        $subcategory->forceFill($imageUpload->paths());
 
         $oldCategoryId = $subcategory->category_id;
         $newCategoryId = $request->category_id;
@@ -134,6 +132,7 @@ class SubcategoryController extends Controller
         }
 
         $subcategory->save();
+        $imageUpload->commit();
 
         // Update Meta
         $meta = $subcategory->meta()->firstOrNew(['metable_type' => Subcategory::class]);

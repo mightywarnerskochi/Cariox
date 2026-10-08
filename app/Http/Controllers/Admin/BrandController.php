@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\SectionContent;
@@ -73,7 +74,7 @@ class BrandController extends Controller
         return view('admin.brand.edit', compact('brand'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $brand = Brand::findOrFail($id);
 
@@ -85,11 +86,10 @@ class BrandController extends Controller
 
         if ($request->hasFile('image')) {
             $request->validate(['image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240']);
-            if ($brand->image && Storage::disk('public')->exists($brand->image)) {
-                Storage::disk('public')->delete($brand->image);
-            }
-            $brand->image = $request->file('image')->store('brands', 'public');
         }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($brand, $request, ['image'], 'brands');
+        $brand->forceFill($imageUpload->paths());
 
         $brand->name = $request->name;
 
@@ -102,6 +102,7 @@ class BrandController extends Controller
         }
 
         $brand->save();
+        $imageUpload->commit();
         $this->normalizeBrandOrder();
         return redirect()->route('admin.brand.index')->with('success', 'Brand updated successfully.');
     }

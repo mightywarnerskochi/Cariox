@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
@@ -44,7 +45,7 @@ class AdminController extends Controller
         return view('admin.profile', compact('admin'));
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request, MediaStorage $media)
     {
         $admin = auth('admin')->user();
 
@@ -67,14 +68,12 @@ class AdminController extends Controller
             $admin->password = \Illuminate\Support\Facades\Hash::make($request->password);
         }
 
-        if ($request->hasFile('profile_image')) {
-            if ($admin->profile_image) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($admin->profile_image);
-            }
-            $admin->profile_image = $request->file('profile_image')->store('admins', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $profileImageUpload = $media->stage($admin, $request, ['profile_image'], 'admins');
+        $admin->forceFill($profileImageUpload->paths());
 
         $admin->save();
+        $profileImageUpload->commit();
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 
 use App\Models\Contact;
@@ -83,7 +84,7 @@ class ContactController extends Controller
         return view('admin.contact.edit', compact('contact'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $contact = Contact::findOrFail($id);
 
@@ -138,19 +139,13 @@ class ContactController extends Controller
             return back()->withErrors(['phone_numbers' => 'Phone numbers must be unique within the same address'])->withInput();
         }
 
-        if ($request->hasFile('country_logo')) {
-            if ($contact->country_logo && Storage::disk('public')->exists($contact->country_logo)) {
-                Storage::disk('public')->delete($contact->country_logo);
-            }
-            $contact->country_logo = $request->file('country_logo')->store('contacts/logos', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $countryLogoUpload = $media->stage($contact, $request, ['country_logo'], 'contacts/logos');
+        $contact->forceFill($countryLogoUpload->paths());
 
-        if ($request->hasFile('icon')) {
-            if ($contact->icon && Storage::disk('public')->exists($contact->icon)) {
-                Storage::disk('public')->delete($contact->icon);
-            }
-            $contact->icon = $request->file('icon')->store('contacts/icons', 'public');
-        }
+        // Stored first; the file it replaces is removed once the record is saved
+        $iconUpload = $media->stage($contact, $request, ['icon'], 'contacts/icons');
+        $contact->forceFill($iconUpload->paths());
 
         // Handle order change in full update
         if ($request->has('order') && $request->order != $contact->order) {
@@ -178,6 +173,8 @@ class ContactController extends Controller
             'icon_alt' => $request->icon_alt,
             'status' => $request->status ?? $contact->status,
         ]);
+        $countryLogoUpload->commit();
+        $iconUpload->commit();
         $contact->order = $request->order ?? $contact->order;
         $contact->save();
 

@@ -65,3 +65,37 @@
 .iti.iti--allow-dropdown input.phone_number {
   padding-left: 95px !important; // standard offset for flag + caret space
 }
+
+/* Country-code dropdown: sit above the fields that follow it, fit inside the popup, no sideways scroll */
+.formGroup:has(.iti__country-list:not(.iti__hide)) {
+  z-index: 20 !important;
+}
+.iti .iti__country-list {
+  z-index: 30;
+  width: max-content;
+  min-width: 300px;
+  max-width: min(360px, calc(100vw - 48px));
+  max-height: 220px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  background: #fff;
+}
+.iti .iti__country-list .iti__country {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+}
+.iti .iti__country-list .iti__country .iti__country-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.iti .iti__country-list .iti__flag-box {
+  flex: none;
+  margin-right: 0;
+}
+.iti .iti__country-list .iti__dial-code {
+  flex: none;
+  margin-left: auto;
+}

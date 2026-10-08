@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 
 use App\Models\Journey;
@@ -60,7 +61,7 @@ class JourneyController extends Controller
         return view('admin.about.journey_edit', compact('journey'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $journey = Journey::findOrFail($id);
 
@@ -93,11 +94,10 @@ class JourneyController extends Controller
 
         if ($request->hasFile('image')) {
             $request->validate(['image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240']);
-            if ($journey->image && Storage::disk('public')->exists($journey->image)) {
-                Storage::disk('public')->delete($journey->image);
-            }
-            $data['image'] = $request->file('image')->store('journeys', 'public');
         }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($journey, $request, ['image'], 'journeys');
+        $data = array_merge($data, $imageUpload->paths());
 
         if ($request->has('order') && $request->order != $journey->order) {
             $newOrder = $request->order;
@@ -112,6 +112,7 @@ class JourneyController extends Controller
         }
 
         $journey->update($data);
+        $imageUpload->commit();
         $journey->save();
 
         return redirect()->route('admin.journey.index')->with('success', 'Journey updated successfully.');

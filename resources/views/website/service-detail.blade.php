@@ -148,12 +148,12 @@ $page_desc = '';
                 <div class="service-gallery ">
                     @if($service->base_image1)
                     <div class="gallery-item">
-                        <img src="{{ asset('storage/' . $service->base_image1) }}" alt="{{ $service->name }}">
+                        <img src="{{ asset('storage/' . $service->base_image1) }}" alt="{{ $service->base_image1_alt_text ?: $service->name }}" loading="lazy">
                     </div>
                     @endif
                     @if($service->base_image2)
                     <div class="gallery-item">
-                        <img src="{{ asset('storage/' . $service->base_image2) }}" alt="{{ $service->name }}">
+                        <img src="{{ asset('storage/' . $service->base_image2) }}" alt="{{ $service->base_image2_alt_text ?: $service->name }}" loading="lazy">
                     </div>
                     @endif
                 </div>

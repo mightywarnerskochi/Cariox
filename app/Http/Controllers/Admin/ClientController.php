@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\SectionContent;
@@ -73,7 +74,7 @@ class ClientController extends Controller
         return view('admin.client.edit', compact('client'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, MediaStorage $media)
     {
         $client = Client::findOrFail($id);
 
@@ -85,11 +86,10 @@ class ClientController extends Controller
 
         if ($request->hasFile('image')) {
             $request->validate(['image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240']);
-            if ($client->image && Storage::disk('public')->exists($client->image)) {
-                Storage::disk('public')->delete($client->image);
-            }
-            $client->image = $request->file('image')->store('clients', 'public');
         }
+        // Stored first; the file it replaces is removed once the record is saved
+        $imageUpload = $media->stage($client, $request, ['image'], 'clients');
+        $client->forceFill($imageUpload->paths());
 
         if ($request->has('name')) {
             $client->name = $request->name;
@@ -104,6 +104,7 @@ class ClientController extends Controller
         }
 
         $client->save();
+        $imageUpload->commit();
         $this->normalizeClientOrder();
         return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
     }

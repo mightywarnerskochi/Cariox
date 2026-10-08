@@ -18,7 +18,7 @@
                             </svg>
                         </a>
                         <div class="dropdown-submenu category-mega-menu">
-                            <div class="mega-menu-grid">
+                            <div class="mega-menu-grid" style="--mega-cols: {{ max(1, min($globalCategories->count(), 5)) }}">
                                 @foreach($globalCategories as $cat)
                                 <div class="mega-menu-col">
                                     <h4 class="mega-menu-title">{{ $cat->name }}</h4>
@@ -59,9 +59,9 @@
             @php
                 $headerBtnUrl = $globalHeaderLink->link ?? url('products');
                 $headerBtnTitle = $globalHeaderLink->title ?? 'Industrial Automation';
-                $isExternalHeaderBtn = str_starts_with($headerBtnUrl, 'http://') || str_starts_with($headerBtnUrl, 'https://');
             @endphp
-            <a href="{{ $headerBtnUrl }}" class="header-btn d-none d-lg-block" @if($isExternalHeaderBtn) target="_blank" rel="noopener" @endif>{{ $headerBtnTitle }}</a>
+            {{-- Opens the general enquiry popup; the admin link is the no-JS fallback --}}
+            <a href="{{ $headerBtnUrl }}" class="header-btn d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#siteGeneralEnquiryForm" role="button" aria-label="{{ $headerBtnTitle }} - open enquiry form">{{ $headerBtnTitle }}</a>
 
             <button class="navbar-toggler d-xl-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#burgerMenu">
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
