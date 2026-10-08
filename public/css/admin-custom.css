@@ -906,3 +906,254 @@ input:checked + .slider::after {
     font-size: 0.875rem;
 }
 
+
+/* =====================================================================
+   Admin forms - Cariox logo palette (amber > orange > pink-red > magenta > violet)
+   Applies to every form section; markup is unchanged.
+   ===================================================================== */
+:root {
+    --form-gradient: linear-gradient(110deg, #f7a600 0%, #f05a28 30%, #e5304f 58%, #b0307f 82%, #6050c0 100%);
+    --form-accent: #e5304f;
+    --form-ring: rgba(229, 48, 79, 0.14);
+    --form-field-bg: #fbfafd;
+    --form-line: #e6e2ee;
+    --form-ink: #1e1b2e;
+}
+
+/* Section cards */
+.section-container {
+    position: relative;
+    border: 1px solid var(--form-line);
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(30, 27, 46, 0.04), 0 12px 32px -20px rgba(96, 80, 192, 0.25);
+    overflow: hidden;
+}
+
+.section-container::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--form-gradient);
+}
+
+.section-header {
+    padding: 1.1rem 1.5rem;
+    background: linear-gradient(100deg, #fff8f1 0%, #fdf2f4 55%, #f6f3fc 100%);
+    border-bottom: 1px solid var(--form-line);
+    border-radius: 0;
+    color: var(--form-ink);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.section-body {
+    padding: 1.75rem 1.5rem 1.5rem;
+}
+
+/* Labels */
+.form-group {
+    margin-bottom: 1.35rem;
+}
+
+.form-group label,
+.section-body label {
+    color: #3b3650;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.45rem;
+}
+
+.form-group label span[style*="color: red"],
+.form-group label span[style*="color:red"] {
+    color: var(--form-accent) !important;
+}
+
+/* Inputs, selects, textareas */
+.form-control,
+.section-body input[type="text"],
+.section-body input[type="email"],
+.section-body input[type="number"],
+.section-body input[type="url"],
+.section-body input[type="tel"],
+.section-body input[type="password"],
+.section-body input[type="date"],
+.section-body select,
+.section-body textarea {
+    background-color: var(--form-field-bg);
+    border: 1px solid var(--form-line);
+    border-radius: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+    color: var(--form-ink);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.form-control:hover {
+    border-color: #d6d0e3;
+}
+
+.form-control:focus,
+.section-body input:focus,
+.section-body select:focus,
+.section-body textarea:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: var(--form-accent);
+    box-shadow: 0 0 0 4px var(--form-ring);
+}
+
+.form-control::placeholder {
+    color: #a7a3b5;
+}
+
+select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23e5304f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    cursor: pointer;
+}
+
+select.form-control[multiple] {
+    background-image: none;
+    padding-right: 0.9rem;
+}
+
+/* File inputs: gradient "Choose file" button */
+input[type="file"].form-control {
+    padding: 0.4rem;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    margin-right: 0.85rem;
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: var(--form-gradient);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    filter: brightness(1.08);
+}
+
+/* Checkboxes and radios */
+.section-body input[type="checkbox"],
+.section-body input[type="radio"] {
+    accent-color: var(--form-accent);
+}
+
+/* Rich text editor (TinyMCE) */
+.section-body .tox-tinymce {
+    border: 1px solid var(--form-line) !important;
+    border-radius: 0.8rem !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.section-body .tox-tinymce.tox-edit-focus,
+.section-body .tox-tinymce:focus-within {
+    border-color: var(--form-accent) !important;
+    box-shadow: 0 0 0 4px var(--form-ring);
+}
+
+.section-body .tox .tox-editor-header {
+    background: linear-gradient(100deg, #fffaf5, #fbf7fd) !important;
+    border-bottom: 1px solid var(--form-line) !important;
+    box-shadow: none !important;
+}
+
+.section-body .tox .tox-toolbar,
+.section-body .tox .tox-toolbar__primary,
+.section-body .tox .tox-toolbar__overflow {
+    background: transparent !important;
+}
+
+.section-body .tox .tox-tbtn:hover,
+.section-body .tox .tox-tbtn--enabled {
+    background: #fde8ec !important;
+    color: var(--form-accent) !important;
+}
+
+.section-body .tox .tox-tbtn:hover svg,
+.section-body .tox .tox-tbtn--enabled svg {
+    fill: var(--form-accent) !important;
+}
+
+/* Image previews inside forms */
+.section-body img {
+    border-radius: 0.6rem;
+}
+
+/* Buttons */
+.btn-update,
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.6rem;
+    border: none;
+    border-radius: 0.7rem;
+    background: var(--form-gradient);
+    background-size: 160% 100%;
+    background-position: 0 0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 22px -12px rgba(229, 48, 79, 0.8);
+    transition: background-position 0.4s, transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-update:hover,
+.btn-submit:hover {
+    background: var(--form-gradient);
+    background-size: 160% 100%;
+    background-position: 100% 0;
+    color: #fff;
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 26px -12px rgba(176, 48, 127, 0.8);
+}
+
+.btn-update:focus-visible,
+.btn-submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--form-ring);
+}
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    background: var(--form-gradient);
+    font-weight: 600;
+    box-shadow: 0 8px 18px -12px rgba(229, 48, 79, 0.8);
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.btn-add:hover {
+    color: #fff;
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+}
+
+/* Validation messages */
+.error-text {
+    color: var(--form-accent);
+}
+
+.form-control.is-invalid,
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: var(--form-accent);
+}

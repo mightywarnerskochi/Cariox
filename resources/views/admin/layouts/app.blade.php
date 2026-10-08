@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="{{ asset('css/admin-custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-custom.css') }}?v={{ @filemtime(public_path('css/admin-custom.css')) }}">
     @stack('styles')
 </head>
 <body>
@@ -348,7 +348,7 @@
             });
         });
     </script>
-    <script src="{{ asset('js/admin-tinymce.js') }}"></script>
+    <script src="{{ asset('js/admin-tinymce.js') }}?v={{ @filemtime(public_path('js/admin-tinymce.js')) }}"></script>
     <script src="{{ asset('js/image-dimensions-check.js') }}"></script>
     @include('admin.partials.section_heading_validation')
     @stack('scripts')

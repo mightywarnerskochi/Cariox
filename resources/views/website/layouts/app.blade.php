@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 
     <!-- Main Style -->
-    <link rel="stylesheet" href="{{ asset('assets/scss/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/scss/style.css') }}?v={{ @filemtime(public_path('assets/scss/style.css')) }}" />
 
     @if($siteSetting->gtm_ids)
         @foreach(explode("\n", str_replace("\r", "", $siteSetting->gtm_ids)) as $gtmId)
@@ -96,7 +96,7 @@
 <script src="{{ asset('assets/js/lib/jquery.star-rating-svg.min.js') }}" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
-<script src="{{ asset('assets/js/script.js') }}" defer></script>
+<script src="{{ asset('assets/js/script.js') }}?v={{ @filemtime(public_path('assets/js/script.js')) }}" defer></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("currentyear").textContent = new Date().getFullYear();
